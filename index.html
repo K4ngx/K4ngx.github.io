@@ -161,7 +161,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
-<p><img src="1.png" alt=""></p>
+<p><img src="ISCC_2017_Web_writeup/1.png" alt=""></p>
 <h2 id="WelcomeToMySQL"><a href="#WelcomeToMySQL" class="headerlink" title="WelcomeToMySQL"></a>WelcomeToMySQL</h2><p>F12发现数据库信息在<code>../base.php</code>。上传php5</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
