@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>ISCC_2017_Web_writeup | K4ng&#39;s blog</title>
+  <title>K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问upload/xxx.php可拿到base.php源码。再上传一个php5连接数据库可拿到flag。 123456&amp;lt">
+  <meta name="description" content="title: ISCC_2017_Web_writeupdate: 2017-05-25 11:55:54 tags:Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问u">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ISCC_2017_Web_writeup">
-<meta property="og:url" content="K4ngx.github.io/2017/05/25/ISCC-2017-Web-writeup/index.html">
+<meta property="og:title" content="K4ng&#39;s blog">
+<meta property="og:url" content="K4ngx.github.io/2017/10/04/ISCC-2017-Web-writeup/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问upload/xxx.php可拿到base.php源码。再上传一个php5连接数据库可拿到flag。 123456&amp;lt">
+<meta property="og:description" content="title: ISCC_2017_Web_writeupdate: 2017-05-25 11:55:54 tags:Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问u">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/1.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/2.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/3.png">
-<meta property="og:updated_time" content="2017-05-25T04:41:22.930Z">
+<meta property="og:updated_time" content="2017-10-03T16:22:43.341Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ISCC_2017_Web_writeup">
-<meta name="twitter:description" content="Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问upload/xxx.php可拿到base.php源码。再上传一个php5连接数据库可拿到flag。 123456&amp;lt">
+<meta name="twitter:title" content="K4ng&#39;s blog">
+<meta name="twitter:description" content="title: ISCC_2017_Web_writeupdate: 2017-05-25 11:55:54 tags:Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问u">
 <meta name="twitter:image" content="/2017/05/25/ISCC-2017-Web-writeup/1.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
@@ -146,24 +146,39 @@
             <article id="post-ISCC-2017-Web-writeup" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      ISCC_2017_Web_writeup
-    </h1>
-  
 
-        
-        <a href="/2017/05/25/ISCC-2017-Web-writeup/" class="archive-article-date">
-  	<time datetime="2017-05-25T03:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
-</a>
-        
-      </header>
+
     
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tags"><span class="toc-number">1.</span> <span class="toc-text">tags:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web签到题，来和我换flag啊！"><span class="toc-number">2.</span> <span class="toc-text">Web签到题，来和我换flag啊！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WelcomeToMySQL"><span class="toc-number">3.</span> <span class="toc-text">WelcomeToMySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#where-is-your-flag"><span class="toc-number">4.</span> <span class="toc-text">where is your flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我们一起来日站"><span class="toc-number">5.</span> <span class="toc-text">我们一起来日站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自相矛盾"><span class="toc-number">6.</span> <span class="toc-text">自相矛盾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-sqli"><span class="toc-number">7.</span> <span class="toc-text">Simple sqli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-have-a-jpg-i-upload-a-txt"><span class="toc-number">8.</span> <span class="toc-text">I have a jpg,i upload a txt.</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
+
+
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
+        <p>title: ISCC_2017_Web_writeup<br>date: 2017-05-25 11:55:54</p>
+<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
 <p><img src="/2017/05/25/ISCC-2017-Web-writeup/1.png" alt=""></p>
 <h2 id="WelcomeToMySQL"><a href="#WelcomeToMySQL" class="headerlink" title="WelcomeToMySQL"></a>WelcomeToMySQL</h2><p>F12发现数据库信息在<code>../base.php</code>。上传php5</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
@@ -248,7 +263,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2017/05/25/ISCC-2017-Web-writeup/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2017/10/04/ISCC-2017-Web-writeup/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -262,18 +277,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/03/Xdebug/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/05/14/hexo/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">用Hexo和Github搭建blog</div>
+    <a href="/2017/10/03/Xdebug/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序</div>
       <i class="icon-circle-right"></i>
     </a>
   

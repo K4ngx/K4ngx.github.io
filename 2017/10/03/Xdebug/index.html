@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="K4ngx.github.io">
   <title>Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)  首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用php">
+  <meta name="description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :) 首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用phpi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序">
 <meta property="og:url" content="K4ngx.github.io/2017/10/03/Xdebug/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)  首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用php">
+<meta property="og:description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :) 首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用phpi">
 <meta property="og:image" content="/2017/10/03/Xdebug/0.png">
 <meta property="og:image" content="/2017/10/03/Xdebug/1.png">
-<meta property="og:updated_time" content="2017-10-03T15:53:56.214Z">
+<meta property="og:updated_time" content="2017-10-03T15:57:43.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序">
-<meta name="twitter:description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)  首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用php">
+<meta name="twitter:description" content="今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :) 首先你得有phpstudy下载phpstudy，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&amp;gt;PHP扩展及设置-&amp;gt;PHP扩展里把”Xdebug”√上。然后你开始用phpi">
 <meta name="twitter:image" content="/2017/10/03/Xdebug/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
@@ -160,10 +160,14 @@
         
       </header>
     
+
+
+    		
+
+
     <div class="article-entry" itemprop="articleBody">
       
         <p>今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)</p>
-<hr>
 <h2 id="首先你得有phpstudy"><a href="#首先你得有phpstudy" class="headerlink" title="首先你得有phpstudy"></a>首先你得有phpstudy</h2><p><a href="http://www.phpstudy.net/" target="_blank" rel="external">下载phpstudy</a>，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&gt;PHP扩展及设置-&gt;PHP扩展里把”Xdebug”√上。然后你开始用<code>phpinfo();</code>测试一下，如果出现了Xdebug，那就成功了第一步了。</p>
 <p><img src="/2017/10/03/Xdebug/0.png" alt=""></p>
 <h2 id="在sublime中安装Xdebug-Client"><a href="#在sublime中安装Xdebug-Client" class="headerlink" title="在sublime中安装Xdebug Client"></a>在sublime中安装Xdebug Client</h2><p>看了网上的一些教程，看到某位sublime2使用者安装的是Xdebug而不是Xdebug Client，而我在sublime3的Install Package中只看到了Xdebug Client，于是就安装了（BTW：据说两者都安装会有冲突）。使用<code>Ctrl+Alt+P</code>键入Install Package,搜索Xdebug并安装。</p>
@@ -252,9 +256,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2017/10/04/ISCC-2017-Web-writeup/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
-    <a href="/2017/05/25/ISCC-2017-Web-writeup/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ISCC_2017_Web_writeup</div>
+  
+    <a href="/2017/05/14/hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用Hexo和Github搭建blog</div>
       <i class="icon-circle-right"></i>
     </a>
   
