@@ -17,7 +17,7 @@
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/1.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/2.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/3.png">
-<meta property="og:updated_time" content="2017-10-03T16:27:01.722Z">
+<meta property="og:updated_time" content="2017-10-03T16:28:18.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ISCC_2017_Web_writeup">
 <meta name="twitter:description" content="Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问upload/xxx.php可拿到base.php源码。再上传一个php5连接数据库可拿到flag。 123456&amp;lt">
@@ -163,7 +163,31 @@
     
 
 
-    		
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web签到题，来和我换flag啊！"><span class="toc-number">1.</span> <span class="toc-text">Web签到题，来和我换flag啊！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WelcomeToMySQL"><span class="toc-number">2.</span> <span class="toc-text">WelcomeToMySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#where-is-your-flag"><span class="toc-number">3.</span> <span class="toc-text">where is your flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我们一起来日站"><span class="toc-number">4.</span> <span class="toc-text">我们一起来日站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自相矛盾"><span class="toc-number">5.</span> <span class="toc-text">自相矛盾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-sqli"><span class="toc-number">6.</span> <span class="toc-text">Simple sqli</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I-have-a-jpg-i-upload-a-txt"><span class="toc-number">7.</span> <span class="toc-text">I have a jpg,i upload a txt.</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
 
 
     <div class="article-entry" itemprop="articleBody">
