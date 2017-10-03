@@ -140,6 +140,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Xdebug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/03/Xdebug/">Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/03/Xdebug/" class="archive-article-date">
+  	<time datetime="2017-10-03T15:44:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)</p>
+<hr>
+<h2 id="首先你得有phpstudy"><a href="#首先你得有phpstudy" class="headerlink" title="首先你得有phpstudy"></a>首先你得有phpstudy</h2><p><a href="http://www.phpstudy.net/" target="_blank" rel="external">下载phpstudy</a>，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&gt;PHP扩展及设置-&gt;PHP扩展里把”Xdebug”√上。然后你开始用<code>phpinfo();</code>测试一下，如果出现了Xdebug，那就成功了第一步了。</p>
+<p><img src="/2017/10/03/Xdebug/0.png" alt=""></p>
+<h2 id="在sublime中安装Xdebug-Client"><a href="#在sublime中安装Xdebug-Client" class="headerlink" title="在sublime中安装Xdebug Client"></a>在sublime中安装Xdebug Client</h2><p>看了网上的一些教程，看到某位sublime2使用者安装的是Xdebug而不是Xdebug Client，而我在sublime3的Install Package中只看到了Xdebug Client，于是就安装了（BTW：据说两者都安装会有冲突）。使用<code>Ctrl+Alt+P</code>键入Install Package,搜索Xdebug并安装。</p>
+<h2 id="在chrome中下载Xdebug-helper"><a href="#在chrome中下载Xdebug-helper" class="headerlink" title="在chrome中下载Xdebug helper"></a>在chrome中下载Xdebug helper</h2><p>下载地址：<a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc" target="_blank" rel="external">Chrome应用商店Xdebug helper</a></p>
+<p>在IDE Key中选择<code>other</code>，然后输入<code>sublime.xdebug</code>,最后save。</p>
+<p><img src="/2017/10/03/Xdebug/1.png" alt=""></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>在chrome中打开要调试的地址，如<code>localhost/test.php</code>，然后启用Xdebug helper，会变绿 :)</li>
+<li>在sublime里下断点，断点的快捷键为<code>Ctrl+F8</code>,其他的快捷键可以在Installed Packages\Xdebug Client.sublime-package中的Default.sublime-keymap查看。</li>
+<li><code>Ctrl+Shift+F9</code>开启调试，在chrome中F5刷新。</li>
+<li>在sublime中可看到变量信息等等。<code>Ctrl+Shift+f5</code>运行到下一个断点;<code>Ctrl+Shift+f6</code>单步;<code>alt+shift+1</code>退出debug。</li>
+</ol>
+<hr>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://quericy.me/blog/196/" target="_blank" rel="external">使用sublime2配合phpstudy+xdebug+chrome调试php</a></p>
+<p><a href="http://www.jianshu.com/p/7ad1e59baed2" target="_blank" rel="external">Windows 下 Sublime Text 3 使用 Xdebug （配合Xdebug helper 插件）</a></p>
+<p><a href="http://www.cnblogs.com/pthlp/p/5522869.html" target="_blank" rel="external">sublime 修改Xdebug插件快捷键</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/03/Xdebug/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-ISCC-2017-Web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
