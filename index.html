@@ -283,8 +283,10 @@
 </li>
 <li><p>@import引入一段CSS代码</p>
 <ul>
-<li><p>可在任意地方插入<code>&#39;\&#39;</code>以及<code>&#39;\&#39;+0</code>的组合，如：</p>
+<li><p>可在任意地方插入<code>&#39;\&#39;</code>以及<code>&#39;\&#39;+0</code>的组合（IE7及以下），如：</p>
   <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@\<span class="keyword">iMp</span>\<span class="keyword">00or</span>\<span class="keyword">0T</span> <span class="string">"url"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>IE8开始<code>&#39;\&#39;+0</code>不可用，<code>&#39;\&#39;</code>仍然可用。</p>
 </li>
 </ul>
 </li>
