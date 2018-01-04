@@ -248,11 +248,10 @@
 <li><p>对下面的代码，过滤器可能会认为<code>&quot;--&gt;&lt;img src=x onerror=alert(1)//&quot;</code>是属性href的值。</p>
   <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- &lt;a href="--&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)//</span>"&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
 </li>
-</ul>
+<li><p>如<code>&lt;! foo=&quot;&gt;&lt;script&gt;&lt;/script&gt;&quot;&gt;</code></p>
 </li>
 </ul>
-<pre><code>- 如`&lt;! foo=&quot;&gt;&lt;script&gt;&lt;/script&gt;&quot;&gt;`
-</code></pre><ul>
+</li>
 <li>IE HTML 条件控制语句<ul>
 <li>如 <code>&lt;!--[if IE 6]&gt;only IE6..test..&lt;![endif]--&gt;</code></li>
 <li>如 <code>&lt;!--[if &lt;img src=x onerror=alert(2)//]&gt; --&gt;</code></li>
