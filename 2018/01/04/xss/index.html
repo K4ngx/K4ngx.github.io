@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Archives: 2017/9 | K4ng&#39;s blog</title>
+  <title>XSS总结 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/archives/2017/09/index.html">
+  <meta name="description" content="0x01 XSS常见输出点 HTML标签之间 HTML标签之内 成为JavaScript代码的值（类似后文中输出在on*事件） 闭合引号 宽字节环境可采用宽字节注入或者&amp;lt;/script&amp;gt;闭合(高优先级)   成为CSS代码的值（类似后文中输出在style属性内）  HTML标签之间1&amp;lt;div id=&quot;body&quot;&amp;gt;[输出]&amp;lt;/div&amp;gt; 注： 有些标签无法执行脚本，">
+<meta name="keywords" content="xss,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS总结">
+<meta property="og:url" content="K4ngx.github.io/2018/01/04/xss/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="FZU 15级本科生">
+<meta property="og:description" content="0x01 XSS常见输出点 HTML标签之间 HTML标签之内 成为JavaScript代码的值（类似后文中输出在on*事件） 闭合引号 宽字节环境可采用宽字节注入或者&amp;lt;/script&amp;gt;闭合(高优先级)   成为CSS代码的值（类似后文中输出在style属性内）  HTML标签之间1&amp;lt;div id=&quot;body&quot;&amp;gt;[输出]&amp;lt;/div&amp;gt; 注： 有些标签无法执行脚本，">
+<meta property="og:updated_time" content="2018-01-04T12:26:31.926Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
-<meta name="twitter:description" content="FZU 15级本科生">
+<meta name="twitter:title" content="XSS总结">
+<meta name="twitter:description" content="0x01 XSS常见输出点 HTML标签之间 HTML标签之内 成为JavaScript代码的值（类似后文中输出在on*事件） 闭合引号 宽字节环境可采用宽字节注入或者&amp;lt;/script&amp;gt;闭合(高优先级)   成为CSS代码的值（类似后文中输出在style属性内）  HTML标签之间1&amp;lt;div id=&quot;body&quot;&amp;gt;[输出]&amp;lt;/div&amp;gt; 注： 有些标签无法执行脚本，">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -150,60 +152,288 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-xss" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/30/bugkuctf-web-writeup/" class="archive-article-date">
-  	<time datetime="2017-09-30T06:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/30/bugkuctf-web-writeup/">bugkuctf_web_writeup</a>
+    <h1 class="article-title" itemprop="name">
+      XSS总结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/04/xss/" class="archive-article-date">
+  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
+</a>
+        
+      </header>
+    
+
+
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-XSS常见输出点"><span class="toc-number">1.</span> <span class="toc-text">0x01 XSS常见输出点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之间"><span class="toc-number">1.1.</span> <span class="toc-text">HTML标签之间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之内"><span class="toc-number">1.2.</span> <span class="toc-text">HTML标签之内</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-HTML和JavaScript自解码"><span class="toc-number">2.</span> <span class="toc-text">0x02 HTML和JavaScript自解码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-具备HtmlEncode功能的标签"><span class="toc-number">3.</span> <span class="toc-text">0x03 具备HtmlEncode功能的标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-浏览器URL编码差异造成的XSS"><span class="toc-number">4.</span> <span class="toc-text">0x04 浏览器URL编码差异造成的XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-HTML中的代码注入技巧"><span class="toc-number">5.</span> <span class="toc-text">0x05 HTML中的代码注入技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标签"><span class="toc-number">5.1.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性"><span class="toc-number">5.2.</span> <span class="toc-text">属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-CSS中代码注入技巧"><span class="toc-number">6.</span> <span class="toc-text">0x06 CSS中代码注入技巧</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x01-XSS常见输出点"><a href="#0x01-XSS常见输出点" class="headerlink" title="0x01 XSS常见输出点"></a>0x01 XSS常见输出点</h2><ul>
+<li>HTML标签之间</li>
+<li>HTML标签之内</li>
+<li>成为JavaScript代码的值（类似后文中输出在on*事件）<ul>
+<li>闭合引号</li>
+<li>宽字节环境可采用宽字节注入或者<code>&lt;/script&gt;</code>闭合(高优先级)</li>
+</ul>
+</li>
+<li>成为CSS代码的值（类似后文中输出在style属性内）</li>
+</ul>
+<h3 id="HTML标签之间"><a href="#HTML标签之间" class="headerlink" title="HTML标签之间"></a>HTML标签之间</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"body"</span>&gt;</span>[输出]<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>注：</strong> 有些标签无法执行脚本，如<code>&lt;title&gt;、&lt;textarea&gt;</code>等</p>
+<h3 id="HTML标签之内"><a href="#HTML标签之内" class="headerlink" title="HTML标签之内"></a>HTML标签之内</h3><ol>
+<li><code>&lt;input type=&quot;text&quot; value=&quot;[输出]&quot; /&gt;</code><ul>
+<li>闭合属性，payload: <code>&quot; onmouseover=&quot;alert(1);&quot; x=&quot;</code></li>
+<li>闭合标签，payload: <code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>输出在src/href/action等属性内<ul>
+<li>javascript:伪协议，如<code>javascript:alert(1)//</code>,若<code>/</code>被过滤，可用JS逻辑与算数表达式代替，如<code>alert(1)-</code></li>
+<li>data:伪协议（仅IE不支持）</li>
+<li>伪协议不区分大小写</li>
+</ul>
+</li>
+<li>输出在on*事件内<ul>
+<li>具体判断输出作为on*事件的值或某个函数的参数值出现。</li>
+</ul>
+</li>
+<li>输出在style属性内<ul>
+<li>对IE，注入expression关键字并适当闭合</li>
+</ul>
+</li>
+</ol>
+<h2 id="0x02-HTML和JavaScript自解码"><a href="#0x02-HTML和JavaScript自解码" class="headerlink" title="0x02 HTML和JavaScript自解码"></a>0x02 HTML和JavaScript自解码</h2><ul>
+<li>输出的上下文环境为HTML时，可进行HTML形式的编码<ul>
+<li>进制编码：<code>&amp;#xH;、&amp;#D;</code></li>
+<li>HTML实体编码：<code>&amp;lt;</code>等</li>
+</ul>
+</li>
+<li>输出的上下文环境为JavaScript时，可进行JavaScript编码<ul>
+<li>Unicode形式：<code>\uH</code></li>
+<li>十六进制：<code>\xH</code></li>
+<li>转义：<code>\&#39;、\&quot;</code>等</li>
+</ul>
+</li>
+<li>编码可参考 <a href="https://security.yirendai.com/news/share/26" target="_blank" rel="external">XSS字符编码与浏览器解析原理</a></li>
+</ul>
+<h2 id="0x03-具备HtmlEncode功能的标签"><a href="#0x03-具备HtmlEncode功能的标签" class="headerlink" title="0x03 具备HtmlEncode功能的标签"></a>0x03 具备HtmlEncode功能的标签</h2><ul>
+<li><code>&lt;textarea&gt;、&lt;title&gt;、&lt;iframe&gt;、&lt;noscript&gt;、&lt;noframes&gt;</code>等具有HtmlEncode编码功能</li>
+<li><code>&lt;xmp&gt;</code>没有编码功能</li>
+<li><code>&lt;plaintext&gt;</code>在浏览器中存在差异</li>
+</ul>
+<h2 id="0x04-浏览器URL编码差异造成的XSS"><a href="#0x04-浏览器URL编码差异造成的XSS" class="headerlink" title="0x04 浏览器URL编码差异造成的XSS"></a>0x04 浏览器URL编码差异造成的XSS</h2><ul>
+<li>对’”`&lt;&gt;的编码差异</li>
+<li>对location.hash值的编码差异</li>
+</ul>
+<h2 id="0x05-HTML中的代码注入技巧"><a href="#0x05-HTML中的代码注入技巧" class="headerlink" title="0x05 HTML中的代码注入技巧"></a>0x05 HTML中的代码注入技巧</h2><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><ul>
+<li>标签大小写不敏感</li>
+<li><p>根据浏览器对XHTML的支持插入XML代码、SVG代码或未知标签</p>
+<ul>
+<li><p>如在IE6可构造</p>
+<p>  <code>&lt;XSS STYLE=&quot;xss:expression(alert(&#39;xss&#39;))&quot;&gt;</code></p>
+</li>
+</ul>
+</li>
+<li><p>标签的优先级绕过过滤器</p>
+<ul>
+<li>如<code>&lt;textarea&gt;、&lt;title&gt;、&lt;style&gt;、&lt;script&gt;、&lt;xmp&gt;</code>和注释<code>&lt;!-- --&gt;</code>或<code>&lt;!-- --!&gt;</code>具有高优先级。</li>
+<li><p>对下面的代码，过滤器可能会认为<code>&quot;--&gt;&lt;img src=x onerror=alert(1)//&quot;</code>是属性href的值。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- &lt;a href="--&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)//</span>"&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 如`&lt;! foo=&quot;&gt;&lt;script&gt;&lt;/script&gt;&quot;&gt;`
+</code></pre><ul>
+<li>IE HTML 条件控制语句<ul>
+<li>如 <code>&lt;!--[if IE 6]&gt;only IE6..test..&lt;![endif]--&gt;</code></li>
+<li>如 <code>&lt;!--[if &lt;img src=x onerror=alert(2)//]&gt; --&gt;</code></li>
+</ul>
+</li>
+<li><p><code>&lt;svg&gt;</code>标签下的<code>&lt;script&gt;</code>或其他CDATA元素会先进行XML解析,因此，可进行HTML实体编码或进制编码。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x31;&amp;#x29;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li>属性大小写不敏感</li>
+<li>IE中属性可用反引号包括</li>
+<li>标签与属性、属性名与等号、等号与属性值之间可插入空格、换行符、回车符或Tab等。</li>
+<li><p>在属性值的头部和尾部（引号内）插入控制字符（ASCII值1~32),如:</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> &amp;#<span class="attr">8</span> <span class="attr">href</span>=<span class="string">"&amp;#32javascript:alert(1)"</span>&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>黑膜法：<code>&lt;input type=&quot;image&quot;</code></p>
+</li>
+</ul>
+<h2 id="0x06-CSS中代码注入技巧"><a href="#0x06-CSS中代码注入技巧" class="headerlink" title="0x06 CSS中代码注入技巧"></a>0x06 CSS中代码注入技巧</h2><ul>
+<li>大小写不敏感</li>
+<li>属性值对单双引号不敏感</li>
+<li>资源类属性的URL部分对单双引号或无引号不敏感</li>
+<li>空格可用tab、回车和换行符替代被浏览器解析</li>
+<li><p>资源类属性中通过伪协议完成XSS利用,如：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'jAvasCRipT:alert(1)'</span>);&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>behavior引入一段含JS的代码片段，不能跨域。(IE)</p>
+</li>
+<li><p>@import引入一段CSS代码</p>
+<ul>
+<li><p>可在任意地方插入<code>&#39;\&#39;</code>以及<code>&#39;\&#39;+0</code>的组合，如：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@\<span class="keyword">iMp</span>\<span class="keyword">00or</span>\<span class="keyword">0T</span> <span class="string">"url"</span>;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>expression(IE7及以下版本)</p>
+<ul>
+<li><p>用注释混淆：</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">body&#123;xs/*zzz*/s:ex/**/press/**/ion((window.x==1)?'':eval('x=1;alert(2);'));&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在IE6下，可用全角字符混淆：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">xss</span>:exｐｒｅｓｓ<span class="built_in">ion</span>((window.x==1)?<span class="string">''</span>:<span class="built_in">eval</span>(<span class="string">'x=1;alert(2);'</span>));&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>16进制编码：<br>  <code>body{\078\073\073:\065\078\070\072\065\073\073\069\06f\06e((window.x==1)?&#39;&#39;:eval(&#39;x=1;alert(2);&#39;));}</code></p>
+</li>
+<li><p>utf-7编码：</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">charset</span> <span class="string">"utf-7"</span>;</div><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line"> <span class="attribute">aaa</span>:e+AHgAcABy-e+AHMAcw-i+AG8-n+ACg-if+ACgAdw-ind+AG8AdwAuAHgAIQA9ADEAKQB7AGEAbA-e+AHIAdAAoADEAKQA7AHc-ind+AG8AdwAuAHgAPQAxADsAfQApADs-</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/01/04/xss/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/10/03/Xdebug/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-    
+  
+
+  
 
 
           </div>
@@ -226,8 +456,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
