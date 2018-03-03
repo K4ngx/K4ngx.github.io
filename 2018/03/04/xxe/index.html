@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>K4ng&#39;s blog</title>
+  <title>浅谈XXE漏洞 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="XXE（XML External Entity Injection），即XML外部实体注入。漏洞发生在应用程序解析 XML 输入时，没有禁止外部实体的加载。 XML与DTD的关系DTD（Document Type Definition）文档类型定义,一种XML约束模式语言，属于XML文件组成的一部分。 123456789101112131415&amp;lt;!--文档声明--&amp;gt;&amp;lt;?xml v">
 <meta name="keywords" content="Web,XXE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="K4ng&#39;s blog">
+<meta property="og:title" content="浅谈XXE漏洞">
 <meta property="og:url" content="K4ngx.github.io/2018/03/04/xxe/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="XXE（XML External Entity Injection），即XML外部实体注入。漏洞发生在应用程序解析 XML 输入时，没有禁止外部实体的加载。 XML与DTD的关系DTD（Document Type Definition）文档类型定义,一种XML约束模式语言，属于XML文件组成的一部分。 123456789101112131415&amp;lt;!--文档声明--&amp;gt;&amp;lt;?xml v">
@@ -20,9 +20,9 @@
 <meta property="og:image" content="/2018/03/04/xxe/2.png">
 <meta property="og:image" content="/2018/03/04/xxe/3.png">
 <meta property="og:image" content="/2018/03/04/xxe/4.png">
-<meta property="og:updated_time" content="2018-03-03T18:16:42.918Z">
+<meta property="og:updated_time" content="2018-03-03T18:20:21.031Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
+<meta name="twitter:title" content="浅谈XXE漏洞">
 <meta name="twitter:description" content="XXE（XML External Entity Injection），即XML外部实体注入。漏洞发生在应用程序解析 XML 输入时，没有禁止外部实体的加载。 XML与DTD的关系DTD（Document Type Definition）文档类型定义,一种XML约束模式语言，属于XML文件组成的一部分。 123456789101112131415&amp;lt;!--文档声明--&amp;gt;&amp;lt;?xml v">
 <meta name="twitter:image" content="/2018/03/04/xxe/0.png">
   
@@ -161,6 +161,21 @@
             <article id="post-xxe" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈XXE漏洞
+    </h1>
+  
+
+        
+        <a href="/2018/03/04/xxe/" class="archive-article-date">
+  	<time datetime="2018-03-03T18:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-04</time>
+</a>
+        
+      </header>
+    
 
 
     
@@ -202,6 +217,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径"&gt;</span></div></pre></td></tr></table></figure>
 <p>内外部DTD文档结合：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径" [定义内容]&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="XXE漏洞原理——XML实体"><a href="#XXE漏洞原理——XML实体" class="headerlink" title="XXE漏洞原理——XML实体"></a>XXE漏洞原理——XML实体</h2><p>实体主要分为四种:</p>
 <ul>
 <li>内置实体 (Built-in entities)</li>
