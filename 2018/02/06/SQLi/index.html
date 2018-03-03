@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="K4ngx.github.io">
   <title>浅谈SQLi | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
+  <meta name="description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
 <meta name="keywords" content="sql,Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈SQLi">
 <meta property="og:url" content="K4ngx.github.io/2018/02/06/SQLi/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
-<meta property="og:updated_time" content="2018-02-18T12:18:20.000Z">
+<meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
+<meta property="og:updated_time" content="2018-03-03T18:22:14.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈SQLi">
-<meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入  0x02 MySQL常用函数字符串连接 concat(str1, str2, s">
+<meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -215,6 +215,7 @@
 <li>宽字节注入</li>
 <li>堆叠注入</li>
 </ul>
+<a id="more"></a>
 <h2 id="0x02-MySQL常用函数"><a href="#0x02-MySQL常用函数" class="headerlink" title="0x02 MySQL常用函数"></a>0x02 MySQL常用函数</h2><h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ul>
 <li><p><code>concat(str1, str2, str3...)</code></p>
 <p>  concat函数连接一个或者多个字符串，若其中一个为null，则返回null.</p>

