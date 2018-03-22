@@ -301,6 +301,79 @@
 
 
   
+    <article id="post-pwReset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/17/pwReset/">十类任意密码重置</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/17/pwReset/" class="archive-article-date">
+  	<time datetime="2018-02-17T07:42:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-17</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接<a href="https://www.ichunqiu.com/course/59045" target="_blank" rel="external">https://www.ichunqiu.com/course/59045</a></p>
+<h3 id="0x01-验证码不失效（存在暴力破解可能性）"><a href="#0x01-验证码不失效（存在暴力破解可能性）" class="headerlink" title="0x01 验证码不失效（存在暴力破解可能性）"></a>0x01 验证码不失效（存在暴力破解可能性）</h3><h3 id="0x02-验证码直接显示在response中"><a href="#0x02-验证码直接显示在response中" class="headerlink" title="0x02 验证码直接显示在response中"></a>0x02 验证码直接显示在response中</h3><h3 id="0x03-验证码未绑定用户"><a href="#0x03-验证码未绑定用户" class="headerlink" title="0x03 验证码未绑定用户"></a>0x03 验证码未绑定用户</h3><p>在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在提交手机号和验证码时可更换成他人手机号通过验证。）</p>
+<h3 id="0x04-修改接收的手机或邮箱"><a href="#0x04-修改接收的手机或邮箱" class="headerlink" title="0x04 修改接收的手机或邮箱"></a>0x04 修改接收的手机或邮箱</h3><p>未对用户名，手机号和验证码三者做统一的验证，仅判断了手机号和验证码是否匹配和正确。</p>
+<h3 id="0x05-本地验证的绕过（修改返回包）"><a href="#0x05-本地验证的绕过（修改返回包）" class="headerlink" title="0x05 本地验证的绕过（修改返回包）"></a>0x05 本地验证的绕过（修改返回包）</h3><p>随意输入验证码，从返回包中将标志值<code>false</code>改为<code>true</code>，从而使客户端误以为验证成功，绕过验证步骤进入密码重置界面。</p>
+<p>解决方法：在重置密码处在服务端进行二次验证；在验证中加入token；在session中加入状态值。</p>
+<h3 id="0x06-跳过验证步骤"><a href="#0x06-跳过验证步骤" class="headerlink" title="0x06 跳过验证步骤"></a>0x06 跳过验证步骤</h3><p>对于验证步骤没有做校验，导致可以直接输入最终重置密码的网址达到重置密码的目的。</p>
+<h3 id="0x07-未检验用户字段值"><a href="#0x07-未检验用户字段值" class="headerlink" title="0x07 未检验用户字段值"></a>0x07 未检验用户字段值</h3><p>在设置新密码步骤时，缺少对操作用户的身份判断，导致可通过修改数据包内的用户身份来修改他人的密码。</p>
+<h3 id="0x08-修改密码处id可替换"><a href="#0x08-修改密码处id可替换" class="headerlink" title="0x08 修改密码处id可替换"></a>0x08 修改密码处id可替换</h3><p>类似与上一种。在修改用户密码时，通过id字段来修改用户密码，执行了类似<code>update user set password=&#39;qwe123456&#39; where id=&#39;1&#39;</code>的sql语句。</p>
+<h3 id="0x09-cookie值可替换"><a href="#0x09-cookie值可替换" class="headerlink" title="0x09 cookie值可替换"></a>0x09 cookie值可替换</h3><p>在重置密码的最后一步仅判断了唯一用户标志cookie是否存在，未判断该cookie是否有通过之前的验证流程。导致可以通过替换cookie来修改他人密码。（目标用户cookie可通过第一阶段来获取）</p>
+<h3 id="0x0A-修改信息时替换隐藏参数（精）"><a href="#0x0A-修改信息时替换隐藏参数（精）" class="headerlink" title="0x0A 修改信息时替换隐藏参数（精）"></a>0x0A 修改信息时替换隐藏参数（<strong>精</strong>）</h3><p>在执行修改个人信息的sql语句的时候，用户的密码也当作字段执行了，且根据隐藏参数<code>loginId</code>来执行。只要在修改信息的POST数据包中添加或替换成他人的<code>loginId</code>和对应的值，即可修改他人密码。（参数名一般可在页面中找到）</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/17/pwReset/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-SQLi" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -493,7 +566,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/03/Xdebug/">Phpstudy+Sublime3+Xdebug+Chrome调试PHP程序</a>
+      <a class="article-title" href="/2017/10/03/Xdebug/">利用Xdebug调试PHP程序（PhpStorm/Sublime3）</a>
     </h1>
   
 
@@ -511,10 +584,11 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天折腾了一下这个Xdebug打算用来方便审计一下开源CMS，然后就开始玩起了sublime的Color Scheme…越调越心塞，虽然最后还是选择了自带的mariana。当然。。这不是重点 :)</p>
-<h2 id="首先你得有phpstudy"><a href="#首先你得有phpstudy" class="headerlink" title="首先你得有phpstudy"></a>首先你得有phpstudy</h2><p><a href="http://www.phpstudy.net/" target="_blank" rel="external">下载phpstudy</a>，phpstudy里自带了Xdebug的扩展，可以在其他选项菜单-&gt;PHP扩展及设置-&gt;PHP扩展里把”Xdebug”√上。然后你开始用<code>phpinfo();</code>测试一下，如果出现了Xdebug，那就成功了第一步了。</p>
-<p><img src="/2017/10/03/Xdebug/0.png" alt=""></p>
-<h2 id="在sublime中安装Xdebug-Client"><a href="#在sublime中安装Xdebug-Client" class="headerlink" title="在sublime中安装Xdebug Client"></a>在sublime中安装Xdebug Client</h2><p>看了网上的一些教程，看到某位sublime2使用者安装的是Xdebug而不是Xdebug Client，而我在sublime3的Install Package中只看到了Xdebug Client，于是就安装了（BTW：据说两者都安装会有冲突）。使用<code>Ctrl+Alt+P</code>键入Install Package,搜索Xdebug并安装。</p>
+        <p>记录下分别在PhpStorm和sublime3中，用Xdebug来调试PHP程序的配置方法。</p>
+<h2 id="PhpStorm-chrome-VMware-docker-Xdebug扩展"><a href="#PhpStorm-chrome-VMware-docker-Xdebug扩展" class="headerlink" title="PhpStorm+chrome+VMware+docker+Xdebug扩展"></a>PhpStorm+chrome+VMware+docker+Xdebug扩展</h2><h3 id="在虚拟机中设置共享文件夹"><a href="#在虚拟机中设置共享文件夹" class="headerlink" title="在虚拟机中设置共享文件夹"></a>在虚拟机中设置共享文件夹</h3><p>虚拟机&gt;设置&gt;选项&gt;共享文件夹&gt;启用&gt;添加路径</p>
+<p><strong>注意：需要在虚拟机关闭的情况下启用和设置共享文件夹目录</strong></p>
+<p>即可在虚拟机的<code>/mnt/hgfs</code>目录下看到目标文件夹。把要调试的代码或文件夹放入主机的共享文件夹内。</p>
+<p><img src="/2017/10/03/Xdebug/00.png" alt=""></p>
         
           <a class="article-more-a" href="/2017/10/03/Xdebug/#more">more >></a>
         
