@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="K4ngx.github.io">
   <title>N1CTF2018_Easyphp_WP | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112131415161718import hashlib, iter">
+  <meta name="description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112import hashlib, itertools, strin">
 <meta name="keywords" content="writeup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="N1CTF2018_Easyphp_WP">
 <meta property="og:url" content="K4ngx.github.io/2018/03/14/N1CTF2018-Easyphp-WP/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112131415161718import hashlib, iter">
+<meta property="og:description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112import hashlib, itertools, strin">
 <meta property="og:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/0.png">
 <meta property="og:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/1.png">
 <meta property="og:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/2.png">
 <meta property="og:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/3.png">
 <meta property="og:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/4.png">
-<meta property="og:updated_time" content="2018-03-13T17:40:46.361Z">
+<meta property="og:updated_time" content="2018-03-22T18:19:30.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="N1CTF2018_Easyphp_WP">
-<meta name="twitter:description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112131415161718import hashlib, iter">
+<meta name="twitter:description" content="划了两天水~ 题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。 看了下主要有注册，登录，发表签名和心情，删除签名的功能。 注册和登录页面需要提交验证码: substr(md5($input,0,5))==$captcha getmd5.py123456789101112import hashlib, itertools, strin">
 <meta name="twitter:image" content="/2018/03/14/N1CTF2018-Easyphp-WP/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
@@ -187,7 +187,7 @@
 <p>题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。</p>
 <p>看了下主要有注册，登录，发表签名和心情，删除签名的功能。</p>
 <p>注册和登录页面需要提交验证码: <code>substr(md5($input,0,5))==$captcha</code></p>
-<figure class="highlight python"><figcaption><span>getmd5.py</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hashlib, itertools, string</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute</span><span class="params">(s, n)</span>:</span></div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</div><div class="line">		<span class="keyword">for</span> x <span class="keyword">in</span> itertools.product(string.digits + string.ascii_lowercase, repeat=i):</div><div class="line">			s1 = <span class="string">''</span>.join(x)</div><div class="line">			m = hashlib.md5()</div><div class="line">			m.update(s1.encode(<span class="string">'utf8'</span>))</div><div class="line">			s2 = m.hexdigest()</div><div class="line">			<span class="keyword">if</span> s == s2[<span class="number">0</span>:n]:</div><div class="line">				print(s1)</div><div class="line">				print(<span class="string">"hash:"</span>+s2)</div><div class="line">				<span class="keyword">return</span></div><div class="line"></div><div class="line">num = int(input(<span class="string">"input num:"</span>))</div><div class="line"><span class="keyword">while</span>(<span class="number">1</span>):</div><div class="line">	s = input()</div><div class="line">	brute(s, num)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>getmd5.py</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hashlib, itertools, string</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute</span><span class="params">(s)</span>:</span></div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</div><div class="line">		<span class="keyword">for</span> x <span class="keyword">in</span> itertools.product(string.digits + string.ascii_lowercase, repeat=i):</div><div class="line">			s1 = <span class="string">''</span>.join(x)</div><div class="line">			<span class="keyword">if</span> hashlib.md5(s1.encode(<span class="string">'utf8'</span>)).hexdigest().startwith(s):</div><div class="line">				print(s1)</div><div class="line">				<span class="keyword">return</span></div><div class="line"><span class="keyword">while</span>(<span class="number">1</span>):</div><div class="line">	s = input()</div><div class="line">	brute(s)</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>0x01. 通过加<code>~</code>获取到源码:<code>index.php</code>,<code>user.php</code>,<code>config.php</code>等，views/下有login等其他php文件源码。<br>0x02. 通过phpinfo，得到session文件位于<code>../../var/lib/php5/sess_xxxxxx</code>,也可通过获取进程的文件描述符来获取<code>../../proc/self/fd/24</code><br>0x03. 通过源码审计发现user.php中的publish函数处存在insert注入。</p>
 <p>我们POST提交的signature和mood参数，未经过滤就传进了insert()函数，在insert函数中，先调用了get_column函数将数组元素用反引号包裹，并用逗号隔开：<code>`signature`,`mood` </code>。（先在session中获取自己的用户id。</p>
