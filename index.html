@@ -328,15 +328,9 @@
       
         <p>补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接<a href="https://www.ichunqiu.com/course/59045" target="_blank" rel="external">https://www.ichunqiu.com/course/59045</a></p>
 <h3 id="0x01-验证码不失效（存在暴力破解可能性）"><a href="#0x01-验证码不失效（存在暴力破解可能性）" class="headerlink" title="0x01 验证码不失效（存在暴力破解可能性）"></a>0x01 验证码不失效（存在暴力破解可能性）</h3><h3 id="0x02-验证码直接显示在response中"><a href="#0x02-验证码直接显示在response中" class="headerlink" title="0x02 验证码直接显示在response中"></a>0x02 验证码直接显示在response中</h3><h3 id="0x03-验证码未绑定用户"><a href="#0x03-验证码未绑定用户" class="headerlink" title="0x03 验证码未绑定用户"></a>0x03 验证码未绑定用户</h3><p>在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在提交手机号和验证码时可更换成他人手机号通过验证。）</p>
-<h3 id="0x04-修改接收的手机或邮箱"><a href="#0x04-修改接收的手机或邮箱" class="headerlink" title="0x04 修改接收的手机或邮箱"></a>0x04 修改接收的手机或邮箱</h3><p>未对用户名，手机号和验证码三者做统一的验证，仅判断了手机号和验证码是否匹配和正确。</p>
-<h3 id="0x05-本地验证的绕过（修改返回包）"><a href="#0x05-本地验证的绕过（修改返回包）" class="headerlink" title="0x05 本地验证的绕过（修改返回包）"></a>0x05 本地验证的绕过（修改返回包）</h3><p>随意输入验证码，从返回包中将标志值<code>false</code>改为<code>true</code>，从而使客户端误以为验证成功，绕过验证步骤进入密码重置界面。</p>
-<p>解决方法：在重置密码处在服务端进行二次验证；在验证中加入token；在session中加入状态值。</p>
-<h3 id="0x06-跳过验证步骤"><a href="#0x06-跳过验证步骤" class="headerlink" title="0x06 跳过验证步骤"></a>0x06 跳过验证步骤</h3><p>对于验证步骤没有做校验，导致可以直接输入最终重置密码的网址达到重置密码的目的。</p>
-<h3 id="0x07-未检验用户字段值"><a href="#0x07-未检验用户字段值" class="headerlink" title="0x07 未检验用户字段值"></a>0x07 未检验用户字段值</h3><p>在设置新密码步骤时，缺少对操作用户的身份判断，导致可通过修改数据包内的用户身份来修改他人的密码。</p>
-<h3 id="0x08-修改密码处id可替换"><a href="#0x08-修改密码处id可替换" class="headerlink" title="0x08 修改密码处id可替换"></a>0x08 修改密码处id可替换</h3><p>类似与上一种。在修改用户密码时，通过id字段来修改用户密码，执行了类似<code>update user set password=&#39;qwe123456&#39; where id=&#39;1&#39;</code>的sql语句。</p>
-<h3 id="0x09-cookie值可替换"><a href="#0x09-cookie值可替换" class="headerlink" title="0x09 cookie值可替换"></a>0x09 cookie值可替换</h3><p>在重置密码的最后一步仅判断了唯一用户标志cookie是否存在，未判断该cookie是否有通过之前的验证流程。导致可以通过替换cookie来修改他人密码。（目标用户cookie可通过第一阶段来获取）</p>
-<h3 id="0x0A-修改信息时替换隐藏参数（精）"><a href="#0x0A-修改信息时替换隐藏参数（精）" class="headerlink" title="0x0A 修改信息时替换隐藏参数（精）"></a>0x0A 修改信息时替换隐藏参数（<strong>精</strong>）</h3><p>在执行修改个人信息的sql语句的时候，用户的密码也当作字段执行了，且根据隐藏参数<code>loginId</code>来执行。只要在修改信息的POST数据包中添加或替换成他人的<code>loginId</code>和对应的值，即可修改他人密码。（参数名一般可在页面中找到）</p>
-
+        
+          <a class="article-more-a" href="/2018/02/17/pwReset/#more">more >></a>
+        
       
 
       

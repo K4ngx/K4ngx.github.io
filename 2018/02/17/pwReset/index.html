@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/02/17/pwReset/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接https://www.ichunqiu.com/course/59045 0x01 验证码不失效（存在暴力破解可能性）0x02 验证码直接显示在response中0x03 验证码未绑定用户在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在">
-<meta property="og:updated_time" content="2018-03-22T09:31:10.374Z">
+<meta property="og:updated_time" content="2018-03-22T09:59:32.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="十类任意密码重置">
 <meta name="twitter:description" content="补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接https://www.ichunqiu.com/course/59045 0x01 验证码不失效（存在暴力破解可能性）0x02 验证码直接显示在response中0x03 验证码未绑定用户在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在">
@@ -179,6 +179,7 @@
       
         <p>补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接<a href="https://www.ichunqiu.com/course/59045" target="_blank" rel="external">https://www.ichunqiu.com/course/59045</a></p>
 <h3 id="0x01-验证码不失效（存在暴力破解可能性）"><a href="#0x01-验证码不失效（存在暴力破解可能性）" class="headerlink" title="0x01 验证码不失效（存在暴力破解可能性）"></a>0x01 验证码不失效（存在暴力破解可能性）</h3><h3 id="0x02-验证码直接显示在response中"><a href="#0x02-验证码直接显示在response中" class="headerlink" title="0x02 验证码直接显示在response中"></a>0x02 验证码直接显示在response中</h3><h3 id="0x03-验证码未绑定用户"><a href="#0x03-验证码未绑定用户" class="headerlink" title="0x03 验证码未绑定用户"></a>0x03 验证码未绑定用户</h3><p>在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在提交手机号和验证码时可更换成他人手机号通过验证。）</p>
+<a id="more"></a>
 <h3 id="0x04-修改接收的手机或邮箱"><a href="#0x04-修改接收的手机或邮箱" class="headerlink" title="0x04 修改接收的手机或邮箱"></a>0x04 修改接收的手机或邮箱</h3><p>未对用户名，手机号和验证码三者做统一的验证，仅判断了手机号和验证码是否匹配和正确。</p>
 <h3 id="0x05-本地验证的绕过（修改返回包）"><a href="#0x05-本地验证的绕过（修改返回包）" class="headerlink" title="0x05 本地验证的绕过（修改返回包）"></a>0x05 本地验证的绕过（修改返回包）</h3><p>随意输入验证码，从返回包中将标志值<code>false</code>改为<code>true</code>，从而使客户端误以为验证成功，绕过验证步骤进入密码重置界面。</p>
 <p>解决方法：在重置密码处在服务端进行二次验证；在验证中加入token；在session中加入状态值。</p>
