@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/02/06/SQLi/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
-<meta property="og:updated_time" content="2018-03-29T11:44:15.560Z">
+<meta property="og:updated_time" content="2018-04-22T14:57:26.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈SQLi">
 <meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
@@ -238,7 +238,10 @@
 </ul>
 <h3 id="ascii"><a href="#ascii" class="headerlink" title="ascii()"></a><code>ascii()</code></h3><p>返回的字符的ascii码值。ord()相比还适用于多字节字符。</p>
 <h3 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h3><p>查找flag开头的字符串：<code>select flag from flag where flag regexp &#39;^flag&#39;</code></p>
-<h2 id="0x03-sql注入方法与技巧"><a href="#0x03-sql注入方法与技巧" class="headerlink" title="0x03 sql注入方法与技巧"></a>0x03 sql注入方法与技巧</h2><p>可用<code>&#39;or 1=1#</code>或<code>&#39;)and 1=2#</code>等来初步测试sqli。</p>
+<h2 id="0x03-sql注入方法与技巧"><a href="#0x03-sql注入方法与技巧" class="headerlink" title="0x03 sql注入方法与技巧"></a>0x03 sql注入方法与技巧</h2><ol>
+<li>可用<code>&#39;or 1=1#</code>或<code>&#39;)and 1=2#</code>等来初步测试sqli。</li>
+<li>当concat函数被过滤且需要使用updatexml来报错注入时，可找类似函数，如lpad()、reverse()、repeat()、export_set()。（lpad()、reverse()、repeat() 这三个函数使用的前提是所查询的值中，必须至少含有一个特殊字符，否则会漏掉一些数据）。</li>
+</ol>
 <h3 id="a-常用查询"><a href="#a-常用查询" class="headerlink" title="a.常用查询"></a>a.常用查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">database</span>();</div><div class="line"><span class="keyword">select</span> <span class="keyword">group_concat</span>(schema_name) <span class="keyword">from</span> information_schema.schemata;</div><div class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span>;</div><div class="line"><span class="keyword">select</span> COLUMN_NAME <span class="keyword">from</span> INFORMATION_SCHEMA.Columns <span class="keyword">where</span> table_schema=<span class="string">'ctf20xx'</span> <span class="keyword">and</span> table_name=<span class="string">'flag'</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mysql.user;</div></pre></td></tr></table></figure>
 <h3 id="b-联合查询"><a href="#b-联合查询" class="headerlink" title="b.联合查询"></a>b.联合查询</h3><p>通过闭合语句引号或括号，使用union来查询所需内容。需要相同字段。可用<code>select 1,2,3</code>或<code>order by 3</code>来测试字段数。</p>
 <h3 id="c-布尔盲注"><a href="#c-布尔盲注" class="headerlink" title="c.布尔盲注"></a>c.布尔盲注</h3><ul>
