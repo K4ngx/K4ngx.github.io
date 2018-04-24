@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://i.imgur.com/7vrxPv9.png">
 <meta property="og:image" content="https://i.imgur.com/0l7i1t0.png">
 <meta property="og:image" content="https://i.imgur.com/m1BUBNZ.png">
-<meta property="og:updated_time" content="2018-04-24T11:05:03.496Z">
+<meta property="og:updated_time" content="2018-04-24T11:07:20.101Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FineCMS v5.3.0 XSS&#x2F;CSRF">
 <meta name="twitter:description" content="0x01 版本类型源码信息：FineCMS v5.3.0 bulid 20180206 问题文件：/finecms/dayrui/libraries/Template.php 漏洞类型：反射型XSS、CSRF 0x02 漏洞详情FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。 在搜索框输入&amp;quot;&amp;gt;&amp;lt;svg/onload=alert(1)">
@@ -217,6 +217,7 @@
 <p>漏洞类型：反射型XSS、CSRF</p>
 <h2 id="0x02-漏洞详情"><a href="#0x02-漏洞详情" class="headerlink" title="0x02 漏洞详情"></a>0x02 漏洞详情</h2><p>FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。</p>
 <p>在搜索框输入<code>&quot;&gt;&lt;svg/onload=alert(1)//</code>，点击搜索并deBug跟踪数据。</p>
+<a id="more"></a>
 <p><img src="https://i.imgur.com/PR0MAhq.png" alt=""></p>
 <p>可发现POST参数<code>keyword</code>传进了<code>/finecms/dayrui/controllers/Root.php</code>中的index()方法，并通过<code>$this-&gt;input-&gt;post(&#39;keyword&#39;, TRUE)</code>来获取数值（进行XSS、不可见字符和基于黑名单等等的过滤._.）。</p>
 <p>然后送进了<code>$this-&gt;member_model-&gt;get_admin_all()</code>方法进行数据库查询操作（没有可乘之机）。接着通过<code>$this-&gt;template-&gt;
