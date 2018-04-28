@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/01/04/xss/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="0x01 XSS常见输出点 HTML标签之间 HTML标签之内 成为JavaScript代码的值（类似后文中输出在on*事件） 闭合引号 宽字节环境可采用宽字节注入或者&amp;lt;/script&amp;gt;闭合(高优先级)   成为CSS代码的值（类似后文中输出在style属性内）  HTML标签之间1&amp;lt;div id=&quot;body&quot;&amp;gt;[输出]&amp;lt;/div&amp;gt; 注： 有些标签无法执行脚本，">
-<meta property="og:updated_time" content="2018-03-03T18:22:51.634Z">
+<meta property="og:updated_time" content="2018-04-28T13:45:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈XSS">
 <meta name="twitter:description" content="0x01 XSS常见输出点 HTML标签之间 HTML标签之内 成为JavaScript代码的值（类似后文中输出在on*事件） 闭合引号 宽字节环境可采用宽字节注入或者&amp;lt;/script&amp;gt;闭合(高优先级)   成为CSS代码的值（类似后文中输出在style属性内）  HTML标签之间1&amp;lt;div id=&quot;body&quot;&amp;gt;[输出]&amp;lt;/div&amp;gt; 注： 有些标签无法执行脚本，">
@@ -180,7 +180,7 @@
 	<div id="toc-article" class="toc-article">
 	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
 		<strong class="toc-title">文章目录</strong>
-           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-XSS常见输出点"><span class="toc-number">1.</span> <span class="toc-text">0x01 XSS常见输出点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之间"><span class="toc-number">1.1.</span> <span class="toc-text">HTML标签之间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之内"><span class="toc-number">1.2.</span> <span class="toc-text">HTML标签之内</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-HTML和JavaScript自解码"><span class="toc-number">2.</span> <span class="toc-text">0x02 HTML和JavaScript自解码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-具备HtmlEncode功能的标签"><span class="toc-number">3.</span> <span class="toc-text">0x03 具备HtmlEncode功能的标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-浏览器URL编码差异造成的XSS"><span class="toc-number">4.</span> <span class="toc-text">0x04 浏览器URL编码差异造成的XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-HTML中的代码注入技巧"><span class="toc-number">5.</span> <span class="toc-text">0x05 HTML中的代码注入技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标签"><span class="toc-number">5.1.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性"><span class="toc-number">5.2.</span> <span class="toc-text">属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-CSS中代码注入技巧"><span class="toc-number">6.</span> <span class="toc-text">0x06 CSS中代码注入技巧</span></a></li></ol>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-XSS常见输出点"><span class="toc-number">1.</span> <span class="toc-text">0x01 XSS常见输出点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之间"><span class="toc-number">1.1.</span> <span class="toc-text">HTML标签之间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML标签之内"><span class="toc-number">1.2.</span> <span class="toc-text">HTML标签之内</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-HTML和JavaScript自解码"><span class="toc-number">2.</span> <span class="toc-text">0x02 HTML和JavaScript自解码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-具备HtmlEncode功能的标签"><span class="toc-number">3.</span> <span class="toc-text">0x03 具备HtmlEncode功能的标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-浏览器URL编码差异造成的XSS"><span class="toc-number">4.</span> <span class="toc-text">0x04 浏览器URL编码差异造成的XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-HTML中的代码注入技巧"><span class="toc-number">5.</span> <span class="toc-text">0x05 HTML中的代码注入技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#标签"><span class="toc-number">5.1.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性"><span class="toc-number">5.2.</span> <span class="toc-text">属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-CSS中代码注入技巧-大部分仅在IE低版本可用"><span class="toc-number">6.</span> <span class="toc-text">0x06 CSS中代码注入技巧(大部分仅在IE低版本可用)</span></a></li></ol>
          </div>
    <script type="text/javascript">
 	function showToc(){
@@ -296,7 +296,7 @@
 <li><p>黑膜法：<code>&lt;input type=&quot;image&quot;</code></p>
 </li>
 </ul>
-<h2 id="0x06-CSS中代码注入技巧"><a href="#0x06-CSS中代码注入技巧" class="headerlink" title="0x06 CSS中代码注入技巧"></a>0x06 CSS中代码注入技巧</h2><ul>
+<h2 id="0x06-CSS中代码注入技巧-大部分仅在IE低版本可用"><a href="#0x06-CSS中代码注入技巧-大部分仅在IE低版本可用" class="headerlink" title="0x06 CSS中代码注入技巧(大部分仅在IE低版本可用)"></a>0x06 CSS中代码注入技巧(大部分仅在IE低版本可用)</h2><ul>
 <li>大小写不敏感</li>
 <li>属性值对单双引号不敏感</li>
 <li>资源类属性的URL部分对单双引号或无引号不敏感</li>
@@ -537,10 +537,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">writeup</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sql</a>
               </li>
              
@@ -549,7 +545,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Xdebug</a>
+                <a href="javascript:void(0)" class="js-tag color3">writeup</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,6 +554,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">xss</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Xdebug</a>
               </li>
              
               <li class="article-tag-list-item">
