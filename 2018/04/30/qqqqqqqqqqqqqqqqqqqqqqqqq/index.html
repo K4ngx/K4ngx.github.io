@@ -9,11 +9,12 @@
   <title>K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/index.html">
+<meta property="og:url" content="K4ngx.github.io/2018/04/30/qqqqqqqqqqqqqqqqqqqqqqqqq/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="FZU 15级本科生">
+<meta property="og:updated_time" content="2018-04-29T17:48:52.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="K4ng&#39;s blog">
 <meta name="twitter:description" content="FZU 15级本科生">
@@ -150,9 +151,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-qqqqqqqqqqqqqqqqqqqqqqqqq" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-qqqqqqqqqqqqqqqqqqqqqqqqq" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
 
@@ -173,697 +172,74 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/30/qqqqqqqqqqqqqqqqqqqqqqqqq/">read more.. >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/04/30/qqqqqqqqqqqqqqqqqqqqqqqqq/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
 
-
-
-
-
   
-    <article id="post-starctf2018-SimpleWeb-wp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/25/starctf2018-SimpleWeb-wp/">StarCTF2018_SimpleWeb_writeup</a>
-    </h1>
   
-
-        
-        <a href="/2018/04/25/starctf2018-SimpleWeb-wp/" class="archive-article-date">
-  	<time datetime="2018-04-25T15:43:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-25</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如今的Web一点都不纯了:(<br>多多少少都参杂了一点re和pwn…然而只会做这Web第一题:(<br>题目给了nodejs的源码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</div><div class="line"></div><div class="line">flag=<span class="string">'fake_flag'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = net.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>) </span>&#123;</div><div class="line">   socket.on(<span class="string">'data'</span>, (data) =&gt; &#123; </div><div class="line">       <span class="comment">//m = data.toString().replace(/[\n\r]*$/, '');</span></div><div class="line">       ok = <span class="literal">true</span>;</div><div class="line">       arr = data.toString().split(<span class="string">' '</span>);</div><div class="line">       arr = arr.map(<span class="built_in">Number</span>);</div><div class="line">       <span class="keyword">if</span> (arr.length != <span class="number">5</span>) </div><div class="line">           ok = <span class="literal">false</span>;</div><div class="line">       arr1 = arr.slice(<span class="number">0</span>);</div><div class="line">       arr1.sort();</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           <span class="keyword">if</span> (arr1[i+<span class="number">1</span>] == arr1[i] || arr[i] &lt; <span class="number">0</span> || arr1[i+<span class="number">1</span>] &gt; <span class="number">127</span>)</div><div class="line">               ok = <span class="literal">false</span>;</div><div class="line">       arr2 = []</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           arr2.push(arr1[i] + arr1[i+<span class="number">1</span>]);</div><div class="line">       val = <span class="number">0</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           val = val * <span class="number">0x100</span> + arr2[i];</div><div class="line">       <span class="keyword">if</span> (val != <span class="number">0x23332333</span>)</div><div class="line">           ok = <span class="literal">false</span>;</div><div class="line">       <span class="keyword">if</span> (ok)</div><div class="line">           socket.write(flag+<span class="string">'\n'</span>);</div><div class="line">       <span class="keyword">else</span></div><div class="line">           socket.write(<span class="string">'nope\n'</span>);</div><div class="line">   &#125;);</div><div class="line">   <span class="comment">//socket.write('Echo server\r\n');</span></div><div class="line">   <span class="comment">//socket.pipe(socket);</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line">HOST = <span class="string">'0.0.0.0'</span></div><div class="line">PORT = <span class="number">23333</span></div><div class="line"></div><div class="line">server.listen(PORT, HOST);</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/04/25/starctf2018-SimpleWeb-wp/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/25/starctf2018-SimpleWeb-wp/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
+    <a href="/2018/04/25/starctf2018-SimpleWeb-wp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">StarCTF2018_SimpleWeb_writeup</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
-    <article id="post-finecms" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/21/finecms/">FineCMS v5.3.0 XSS/CSRF</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/21/finecms/" class="archive-article-date">
-  	<time datetime="2018-03-21T15:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x01-版本类型"><a href="#0x01-版本类型" class="headerlink" title="0x01 版本类型"></a>0x01 版本类型</h2><p>源码信息：FineCMS v5.3.0 bulid 20180206</p>
-<p>问题文件：/finecms/dayrui/libraries/Template.php</p>
-<p>漏洞类型：反射型XSS、CSRF</p>
-<h2 id="0x02-漏洞详情"><a href="#0x02-漏洞详情" class="headerlink" title="0x02 漏洞详情"></a>0x02 漏洞详情</h2><p>FineCMS后台的管理员管理和会员管理的搜索功能，未进行字符编码与过滤而导致反射型XSS。</p>
-<p>在搜索框输入<code>&quot;&gt;&lt;svg/onload=alert(1)//</code>，点击搜索并deBug跟踪数据。</p>
-        
-          <a class="article-more-a" href="/2018/03/21/finecms/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Vulnerable</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/21/finecms/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-N1CTF2018-Easyphp-WP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/N1CTF2018-Easyphp-WP/">N1CTF2018_Easyphp_WP</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/14/N1CTF2018-Easyphp-WP/" class="archive-article-date">
-  	<time datetime="2018-03-13T17:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>划了两天水~</p>
-<p>题目叫做easy php，然而感觉并不easy啊:)。。解题步骤主要是源码审计，sql注入，ssrf，文件上传。。</p>
-<p>看了下主要有注册，登录，发表签名和心情，删除签名的功能。</p>
-<p>注册和登录页面需要提交验证码: <code>substr(md5($input,0,5))==$captcha</code></p>
-<figure class="highlight python"><figcaption><span>getmd5.py</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hashlib, itertools, string</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</div><div class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> itertools.product(string.digits + string.ascii_lowercase, repeat=i):</div><div class="line">            s1 = <span class="string">''</span>.join(x)</div><div class="line">            <span class="keyword">if</span> hashlib.md5(s1.encode(<span class="string">'utf8'</span>)).hexdigest().startswith(s):</div><div class="line">                print(s1)</div><div class="line">                <span class="keyword">return</span></div><div class="line"><span class="keyword">while</span>(<span class="number">1</span>):</div><div class="line">    s = input()</div><div class="line">    brute(s)</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/03/14/N1CTF2018-Easyphp-WP/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/14/N1CTF2018-Easyphp-WP/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-xxe" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/04/xxe/">浅谈XXE漏洞</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/04/xxe/" class="archive-article-date">
-  	<time datetime="2018-03-03T18:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-04</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>XXE（XML External Entity Injection），即XML外部实体注入。漏洞发生在应用程序解析 XML 输入时，没有禁止外部实体的加载。</p>
-<h2 id="XML与DTD的关系"><a href="#XML与DTD的关系" class="headerlink" title="XML与DTD的关系"></a>XML与DTD的关系</h2><p>DTD（Document Type Definition）文档类型定义,一种XML约束模式语言，属于XML文件组成的一部分。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--文档声明--&gt;</span></div><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="comment">&lt;!--DTD--&gt;</span></div><div class="line"><span class="meta">&lt;!DOCTYPE poem [  &lt;!--定义此文档是 poem 类型的文档--&gt;</span></div><div class="line">&lt;!ELEMENT poem (author, title, content)&gt;  &lt;!--定义poem元素有三个子元素--&gt;</div><div class="line">&lt;!ELEMENT author (#PCDATA)&gt;  &lt;!--定义author元素为“#PCDATA”类型--&gt;</div><div class="line">&lt;!ELEMENT title (#PCDATA)&gt;  &lt;!--定义title元素为“#PCDATA”类型--&gt;</div><div class="line">&lt;!ELEMENT content (#PCDATA)&gt;  &lt;!--定义content元素为“#PCDATA”类型--&gt;</div><div class="line">]&gt;</div><div class="line"><span class="tag">&lt;<span class="name">note</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">to</span>&gt;</span>Dave<span class="tag">&lt;/<span class="name">to</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">from</span>&gt;</span>Tom<span class="tag">&lt;/<span class="name">from</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>DTD文档有三种应用形式。</p>
-<p>内部DTD文档：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 [定义内容]&gt;</span></div></pre></td></tr></table></figure>
-<p>外部DTD文档：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径"&gt;</span></div></pre></td></tr></table></figure>
-<p>内外部DTD文档结合：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE 根元素 SYSTEM "DTD文件路径" [定义内容]&gt;</span></div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/03/04/xxe/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">XXE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/04/xxe/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-pwReset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/17/pwReset/">十类任意密码重置</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/17/pwReset/" class="archive-article-date">
-  	<time datetime="2018-02-17T07:42:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-17</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>补天大佬carry_your之前讲解了一个视频，关于任意密码重置的十种姿势。顿时醍醐灌顶，深有感触。放上视频链接<a href="https://www.ichunqiu.com/course/59045" target="_blank" rel="external">https://www.ichunqiu.com/course/59045</a></p>
-<h3 id="0x01-验证码不失效（存在暴力破解可能性）"><a href="#0x01-验证码不失效（存在暴力破解可能性）" class="headerlink" title="0x01 验证码不失效（存在暴力破解可能性）"></a>0x01 验证码不失效（存在暴力破解可能性）</h3><h3 id="0x02-验证码直接显示在response中"><a href="#0x02-验证码直接显示在response中" class="headerlink" title="0x02 验证码直接显示在response中"></a>0x02 验证码直接显示在response中</h3><h3 id="0x03-验证码未绑定用户"><a href="#0x03-验证码未绑定用户" class="headerlink" title="0x03 验证码未绑定用户"></a>0x03 验证码未绑定用户</h3><p>在发送手机号和验证码时，仅对验证码是否正确进行了判断。未对该验证码是否与手机号匹配进行验证。（即在提交手机号和验证码时可更换成他人手机号通过验证。）</p>
-        
-          <a class="article-more-a" href="/2018/02/17/pwReset/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/17/pwReset/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-SQLi" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/SQLi/">浅谈SQLi</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/SQLi/" class="archive-article-date">
-  	<time datetime="2018-02-06T09:51:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(MySQL为例)</p>
-<p>(参考 <a href="http://www.cnblogs.com/lcamry/category/846064.html" target="_blank" rel="external">MySQL注入天书 made by lcamry</a>)</p>
-<p>注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。</p>
-<h2 id="0x01-注入类型"><a href="#0x01-注入类型" class="headerlink" title="0x01 注入类型"></a>0x01 注入类型</h2><ul>
-<li>联合查询</li>
-<li>盲注<ul>
-<li>布尔盲注</li>
-<li>时间盲注</li>
-</ul>
-</li>
-<li>报错注入</li>
-<li>宽字节注入</li>
-<li>堆叠注入</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/02/06/SQLi/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/SQLi/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-xss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/xss/">浅谈XSS</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/04/xss/" class="archive-article-date">
-  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="0x01-XSS常见输出点"><a href="#0x01-XSS常见输出点" class="headerlink" title="0x01 XSS常见输出点"></a>0x01 XSS常见输出点</h2><ul>
-<li>HTML标签之间</li>
-<li>HTML标签之内</li>
-<li>成为JavaScript代码的值（类似后文中输出在on*事件）<ul>
-<li>闭合引号</li>
-<li>宽字节环境可采用宽字节注入或者<code>&lt;/script&gt;</code>闭合(高优先级)</li>
-</ul>
-</li>
-<li>成为CSS代码的值（类似后文中输出在style属性内）</li>
-</ul>
-<h3 id="HTML标签之间"><a href="#HTML标签之间" class="headerlink" title="HTML标签之间"></a>HTML标签之间</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"body"</span>&gt;</span>[输出]<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p><strong>注：</strong> 有些标签无法执行脚本，如<code>&lt;title&gt;、&lt;textarea&gt;</code>等</p>
-<h3 id="HTML标签之内"><a href="#HTML标签之内" class="headerlink" title="HTML标签之内"></a>HTML标签之内</h3><ol>
-<li><code>&lt;input type=&quot;text&quot; value=&quot;[输出]&quot; /&gt;</code><ul>
-<li>闭合属性，payload: <code>&quot; onmouseover=&quot;alert(1);&quot; x=&quot;</code></li>
-<li>闭合标签，payload: <code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;</code></li>
-</ul>
-</li>
-<li>输出在src/href/action等属性内<ul>
-<li>javascript:伪协议，如<code>javascript:alert(1)//</code>,若<code>/</code>被过滤，可用JS逻辑与算数表达式代替，如<code>alert(1)-</code></li>
-<li>data:伪协议（仅IE不支持）</li>
-<li>伪协议不区分大小写</li>
-</ul>
-</li>
-<li>输出在on*事件内<ul>
-<li>具体判断输出作为on*事件的值或某个函数的参数值出现。</li>
-</ul>
-</li>
-<li>输出在style属性内<ul>
-<li>对IE，注入expression关键字并适当闭合</li>
-</ul>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/01/04/xss/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/04/xss/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-lnmp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/02/lnmp/">Ubuntu16.04搭建lnmp环境</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/02/lnmp/" class="archive-article-date">
-  	<time datetime="2018-01-01T17:26:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一劳永逸……</p>
-<h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><p>根据<a href="http://nginx.org/en/linux_packages.html#stable" target="_blank" rel="external">官网的教程</a>，在<code>/etc/apt/sources.list</code>文件中，添加以下两行，<strong>其中<code>codename</code><em>替换</em>为对应系统版本的<code>Codename</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">deb http://nginx.org/packages/ubuntu/ codename nginx</div><div class="line">deb-src http://nginx.org/packages/ubuntu/ codename nginx</div></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure>
-<p>安装完后可用<code>nginx -t</code>来查找nginx配置文件所在路径。<br>开启nginx服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start nginx</div></pre></td></tr></table></figure></p>
-<h2 id="安装php"><a href="#安装php" class="headerlink" title="安装php"></a>安装php</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install php7.0 php7.0-fpm</div></pre></td></tr></table></figure>
-<p>TCP配置方式建立nginx和php7.0-fpm的通信。</p>
-<p><code>/etc/nginx/conf.d/default.conf</code>部分：<br><figure class="highlight plain"><figcaption><span>default.conf</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">location ~ \.php$ &#123;</div><div class="line">         root           /var/www;</div><div class="line">         fastcgi_pass   127.0.0.1:9000;</div><div class="line">        #fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;</div><div class="line">         fastcgi_index  index.php;</div><div class="line">         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</div><div class="line">         include        fastcgi_params;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p><code>/etc/php/7.0/fpm/pool.d/www.conf</code>中php-fpm配置监听：<br><figure class="highlight plain"><figcaption><span>www.conf</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">;listen = /run/php/php7.0-fpm.sock</div><div class="line">listen = 127.0.0.1:9000</div></pre></td></tr></table></figure></p>
-<h2 id="安装MySQL5-7"><a href="#安装MySQL5-7" class="headerlink" title="安装MySQL5.7"></a>安装MySQL5.7</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server-5.7</div></pre></td></tr></table></figure>
-<p>设置用户名密码后，启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start mysql</div><div class="line">mysql -h 127.0.0.1 -uroot -proot</div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">noting</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/02/lnmp/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-Xdebug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/03/Xdebug/">利用Xdebug调试PHP程序（PhpStorm/Sublime3）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/03/Xdebug/" class="archive-article-date">
-  	<time datetime="2017-10-03T15:44:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-03</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>记录下分别在PhpStorm和sublime3中，用Xdebug来调试PHP程序的配置方法。</p>
-<h2 id="PhpStorm-chrome-VMware-docker-Xdebug扩展"><a href="#PhpStorm-chrome-VMware-docker-Xdebug扩展" class="headerlink" title="PhpStorm+chrome+VMware+docker+Xdebug扩展"></a>PhpStorm+chrome+VMware+docker+Xdebug扩展</h2><h3 id="在虚拟机中设置共享文件夹"><a href="#在虚拟机中设置共享文件夹" class="headerlink" title="在虚拟机中设置共享文件夹"></a>在虚拟机中设置共享文件夹</h3><p>虚拟机&gt;设置&gt;选项&gt;共享文件夹&gt;启用&gt;添加路径</p>
-<p><strong>注意：需要在虚拟机关闭的情况下启用和设置共享文件夹目录</strong></p>
-<p>即可在虚拟机的<code>/mnt/hgfs</code>目录下看到目标文件夹。把要调试的代码或文件夹放入主机的共享文件夹内。</p>
-<p><img src="/2017/10/03/Xdebug/00.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/10/03/Xdebug/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">nothing</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/03/Xdebug/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
+</nav>
 
 
 
@@ -871,9 +247,10 @@
 
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -896,8 +273,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
