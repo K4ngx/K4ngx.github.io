@@ -152,80 +152,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-starctf2018-SimpleWeb-wp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/25/starctf2018-SimpleWeb-wp/">\*CTF2018_SimpleWeb_writeup</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/25/starctf2018-SimpleWeb-wp/" class="archive-article-date">
-  	<time datetime="2018-04-25T15:43:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-25</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如今的Web一点都不纯了:(</p>
-<p>多多少少都参杂了一点re和pwn…然而只会做这Web第一题:(</p>
-<p>题目给了nodejs的源码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</div><div class="line"></div><div class="line">flag=<span class="string">'fake_flag'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = net.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">socket</span>) </span>&#123;</div><div class="line">   socket.on(<span class="string">'data'</span>, (data) =&gt; &#123; </div><div class="line">       <span class="comment">//m = data.toString().replace(/[\n\r]*$/, '');</span></div><div class="line">       ok = <span class="literal">true</span>;</div><div class="line">       arr = data.toString().split(<span class="string">' '</span>);</div><div class="line">       arr = arr.map(<span class="built_in">Number</span>);</div><div class="line">       <span class="keyword">if</span> (arr.length != <span class="number">5</span>) </div><div class="line">           ok = <span class="literal">false</span>;</div><div class="line">       arr1 = arr.slice(<span class="number">0</span>);</div><div class="line">       arr1.sort();</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           <span class="keyword">if</span> (arr1[i+<span class="number">1</span>] == arr1[i] || arr[i] &lt; <span class="number">0</span> || arr1[i+<span class="number">1</span>] &gt; <span class="number">127</span>)</div><div class="line">               ok = <span class="literal">false</span>;</div><div class="line">       arr2 = []</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           arr2.push(arr1[i] + arr1[i+<span class="number">1</span>]);</div><div class="line">       val = <span class="number">0</span>;</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">           val = val * <span class="number">0x100</span> + arr2[i];</div><div class="line">       <span class="keyword">if</span> (val != <span class="number">0x23332333</span>)</div><div class="line">           ok = <span class="literal">false</span>;</div><div class="line">       <span class="keyword">if</span> (ok)</div><div class="line">           socket.write(flag+<span class="string">'\n'</span>);</div><div class="line">       <span class="keyword">else</span></div><div class="line">           socket.write(<span class="string">'nope\n'</span>);</div><div class="line">   &#125;);</div><div class="line">   <span class="comment">//socket.write('Echo server\r\n');</span></div><div class="line">   <span class="comment">//socket.pipe(socket);</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line">HOST = <span class="string">'0.0.0.0'</span></div><div class="line">PORT = <span class="number">23333</span></div><div class="line"></div><div class="line">server.listen(PORT, HOST);</div></pre></td></tr></table></figure>
-<p>拿到flag的条件是使val最后等于0x23332333。因此我们可以先将0x23332333对0x100循环取余得到arr2。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> val = <span class="number">0x23332333</span></div><div class="line"><span class="keyword">var</span> arr2 = []</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++)</div><div class="line">&#123;</div><div class="line">	x = val % <span class="number">0x100</span></div><div class="line">	arr2.unshift(x)</div><div class="line">	val  = (val - x) / <span class="number">0x100</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(arr2)</div><div class="line"><span class="comment">// arr2 = [35, 51, 35, 51]</span></div></pre></td></tr></table></figure>
-<p>注意到源码中的<code>arr1.sort()</code>。在js中，sort方法在排序时是按照ascii码大小来排序的。因此会出现如下怪异的情况：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log([<span class="number">3</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">6</span>].sort())</div><div class="line"><span class="comment">// [ 100, 25, 3, 6 ]</span></div></pre></td></tr></table></figure>
-<p>于是可爆破出满足<code>sort()</code>排序的arr1</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr2 = [<span class="number">35</span>, <span class="number">51</span>, <span class="number">35</span>, <span class="number">51</span>]</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> a=<span class="number">0</span>; a&lt;=<span class="number">35</span>; a++)</div><div class="line">&#123;</div><div class="line">	b = <span class="number">35</span> - a</div><div class="line">	c = <span class="number">51</span> - b</div><div class="line">	d = <span class="number">35</span> - c</div><div class="line">	e = <span class="number">51</span> - d</div><div class="line">	<span class="keyword">if</span> (a==b || b==c || c==d || d==e) <span class="keyword">continue</span></div><div class="line">	<span class="keyword">var</span> arr = [a, b, c, d, e]</div><div class="line">	<span class="keyword">var</span> arr1 = arr.slice(<span class="number">0</span>)</div><div class="line">	<span class="keyword">if</span> (arr.sort().toString() == arr1.toString())</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">console</span>.log(arr)</div><div class="line">		<span class="keyword">break</span></div><div class="line">	&#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>得到结果为<code>[ 15, 20, 31, 4, 47 ]</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/25/starctf2018-SimpleWeb-wp/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
     <article id="post-finecms" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -908,10 +834,78 @@
 
 
   
+    <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/14/hexo/">用Hexo和Github搭建blog</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/14/hexo/" class="archive-article-date">
+  	<time datetime="2017-05-14T15:14:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-14</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这两天花了点时间在Ubuntu16.04的服务器上用<a href="https://hexo.io" target="_blank" rel="external">Hexo</a>的框架搭了个blog。总的来说，搭建的速度还是非常快的。然而过程中还是遇到了不少的坑，在此记录一下。</p>
+<h2 id="Git-、Node-js和Hexo的安装"><a href="#Git-、Node-js和Hexo的安装" class="headerlink" title="Git 、Node.js和Hexo的安装"></a>Git 、Node.js和Hexo的安装</h2><p>Git的安装不用多说，一条命令就OK。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install git-core</div></pre></td></tr></table></figure>
+<p>而Node.js要使用nvm来安装，Hexo官方教程给了两条命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh</div><div class="line">$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh</div></pre></td></tr></table></figure>
+<p>第一条命令尝试了几次发现都失败了，而第二条命令成功了，然而这不是重点。重点是在nvm安装成功之后在输入nvm命令时却显示</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zsh: <span class="built_in">command</span> not found: nvm</div></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2017/05/14/hexo/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/14/hexo/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
   
 
 
