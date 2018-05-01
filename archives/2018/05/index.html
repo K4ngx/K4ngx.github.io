@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>K4ng&#39;s blog</title>
+  <title>Archives: 2018/5 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="FZU 15级本科生">
 <meta property="og:type" content="website">
 <meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/page/2/index.html">
+<meta property="og:url" content="K4ngx.github.io/archives/2018/05/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="FZU 15级本科生">
 <meta name="twitter:card" content="summary">
@@ -152,46 +152,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-bugkuctf-web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/05/01/Redhat_wp/" class="archive-article-date">
+  	<time datetime="2018-05-01T15:24:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
+</a>
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/30/bugkuctf-web-writeup/">bugkuctf_web_writeup</a>
+      <a class="archive-article-title" href="/2018/05/01/Redhat_wp/">红帽杯2018_Writeup</a>
     </h1>
   
 
-        
-        <a href="/2017/09/30/bugkuctf-web-writeup/" class="archive-article-date">
-  	<time datetime="2017-09-30T06:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-30</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>写完这个WP简直快吐。</p>
-<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>F12即可发现flag在注释中</p>
-<h2 id="文件上传测试"><a href="#文件上传测试" class="headerlink" title="文件上传测试"></a>文件上传测试</h2><p>这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。</p>
-<h2 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h2><p>在Resource中找到code.js文件，发现flag。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/0.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/09/30/bugkuctf-web-writeup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -203,173 +191,19 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/30/bugkuctf-web-writeup/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-
-
-
   
-    <article id="post-ISCC-2017-Web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/25/ISCC-2017-Web-writeup/">ISCC_2017_Web_writeup</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/25/ISCC-2017-Web-writeup/" class="archive-article-date">
-  	<time datetime="2017-05-25T03:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Web签到题，来和我换flag啊！"><a href="#Web签到题，来和我换flag啊！" class="headerlink" title="Web签到题，来和我换flag啊！"></a>Web签到题，来和我换flag啊！</h2><p>POST提交三个f1ag，可在response中拿到flag。</p>
-<p><img src="/2017/05/25/ISCC-2017-Web-writeup/1.png" alt=""></p>
-<h2 id="WelcomeToMySQL"><a href="#WelcomeToMySQL" class="headerlink" title="WelcomeToMySQL"></a>WelcomeToMySQL</h2><p>F12发现数据库信息在<code>../base.php</code>。上传php5</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">show_source(<span class="string">"../base.php"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>访问upload/xxx.php可拿到base.php源码。<br>再上传一个php5连接数据库可拿到flag。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$conn = mysql_connect(<span class="string">"localhost"</span>, <span class="string">"iscc2017"</span>, <span class="string">"iscc2017"</span>);</div><div class="line">mysql_select_db(<span class="string">"flag"</span>,$conn);</div><div class="line">$result = mysql_query(<span class="string">"select * from flag"</span>);</div><div class="line">var_dump(mysql_fetch_row($result));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/25/ISCC-2017-Web-writeup/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/14/hexo/">用Hexo和Github搭建blog</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/14/hexo/" class="archive-article-date">
-  	<time datetime="2017-05-14T15:14:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-14</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两天花了点时间在Ubuntu16.04的服务器上用<a href="https://hexo.io" target="_blank" rel="external">Hexo</a>的框架搭了个blog。总的来说，搭建的速度还是非常快的。然而过程中还是遇到了不少的坑，在此记录一下。</p>
-<h2 id="Git-、Node-js和Hexo的安装"><a href="#Git-、Node-js和Hexo的安装" class="headerlink" title="Git 、Node.js和Hexo的安装"></a>Git 、Node.js和Hexo的安装</h2><p>Git的安装不用多说，一条命令就OK。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install git-core</div></pre></td></tr></table></figure>
-<p>而Node.js要使用nvm来安装，Hexo官方教程给了两条命令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh</div><div class="line">$ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh</div></pre></td></tr></table></figure>
-<p>第一条命令尝试了几次发现都失败了，而第二条命令成功了，然而这不是重点。重点是在nvm安装成功之后在输入nvm命令时却显示</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zsh: <span class="built_in">command</span> not found: nvm</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/05/14/hexo/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">nothing</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/14/hexo/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -391,9 +225,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

