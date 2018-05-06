@@ -6,19 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Ubuntu16.04搭建lnmp环境 | K4ng&#39;s blog</title>
+  <title>Tag: python | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一劳永逸…… 安装Nginx根据官网的教程，在/etc/apt/sources.list文件中，添加以下两行，其中codename替换为对应系统版本的Codename12deb http://nginx.org/packages/ubuntu/ codename nginxdeb-src http://nginx.org/packages/ubuntu/ codename nginx 12sudo">
-<meta name="keywords" content="nothing">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu16.04搭建lnmp环境">
-<meta property="og:url" content="K4ngx.github.io/2018/01/02/lnmp/index.html">
+  <meta name="description" content="FZU 15级本科生">
+<meta property="og:type" content="website">
+<meta property="og:title" content="K4ng&#39;s blog">
+<meta property="og:url" content="K4ngx.github.io/tags/python/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="一劳永逸…… 安装Nginx根据官网的教程，在/etc/apt/sources.list文件中，添加以下两行，其中codename替换为对应系统版本的Codename12deb http://nginx.org/packages/ubuntu/ codename nginxdeb-src http://nginx.org/packages/ubuntu/ codename nginx 12sudo">
-<meta property="og:updated_time" content="2018-04-29T18:37:17.441Z">
+<meta property="og:description" content="FZU 15级本科生">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu16.04搭建lnmp环境">
-<meta name="twitter:description" content="一劳永逸…… 安装Nginx根据官网的教程，在/etc/apt/sources.list文件中，添加以下两行，其中codename替换为对应系统版本的Codename12deb http://nginx.org/packages/ubuntu/ codename nginxdeb-src http://nginx.org/packages/ubuntu/ codename nginx 12sudo">
+<meta name="twitter:title" content="K4ng&#39;s blog">
+<meta name="twitter:description" content="FZU 15级本科生">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -152,176 +150,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-lnmp" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Ubuntu16.04搭建lnmp环境
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/04/30/ciscn2018/" class="archive-article-date">
+  	<time datetime="2018-04-30T07:17:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/04/30/ciscn2018/">国赛2018_Run_python继承链bypass</a>
     </h1>
   
 
-        
-        <a href="/2018/01/02/lnmp/" class="archive-article-date">
-  	<time datetime="2018-01-01T17:26:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
-</a>
-        
-      </header>
-    
-
-
-    
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-            <span class="btn-bg"></span>
-            <span class="btn-text">文章导航</span>
-          </p>
-	<div id="toc-article" class="toc-article">
-	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-		<strong class="toc-title">文章目录</strong>
-           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Nginx"><span class="toc-number">1.</span> <span class="toc-text">安装Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装php"><span class="toc-number">2.</span> <span class="toc-text">安装php</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装MySQL5-7"><span class="toc-number">3.</span> <span class="toc-text">安装MySQL5.7</span></a></li></ol>
-         </div>
-   <script type="text/javascript">
-	function showToc(){
-		var toc_article = document.getElementById("toc-article");
-		var show_toc_btn = document.getElementById("show-toc-btn");
-		toc_article.setAttribute("style","display:block");
-		show_toc_btn.setAttribute("style","display:none");
-		};
-	function showBtn(){
-		var toc_article = document.getElementById("toc-article");
-		var show_toc_btn = document.getElementById("show-toc-btn");
-		toc_article.setAttribute("style","display:none");
-		show_toc_btn.setAttribute("style","display:block");
-		};
-   </script>
-      		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一劳永逸……</p>
-<h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><p>根据<a href="http://nginx.org/en/linux_packages.html#stable" target="_blank" rel="external">官网的教程</a>，在<code>/etc/apt/sources.list</code>文件中，添加以下两行，<strong>其中<code>codename</code><em>替换</em>为对应系统版本的<code>Codename</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">deb http://nginx.org/packages/ubuntu/ codename nginx</div><div class="line">deb-src http://nginx.org/packages/ubuntu/ codename nginx</div></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure>
-<p>安装完后可用<code>nginx -t</code>来查找nginx配置文件所在路径。<br>开启nginx服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start nginx</div></pre></td></tr></table></figure></p>
-<h2 id="安装php"><a href="#安装php" class="headerlink" title="安装php"></a>安装php</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install php7.0 php7.0-fpm</div></pre></td></tr></table></figure>
-<p>TCP配置方式建立nginx和php7.0-fpm的通信。</p>
-<p><code>/etc/nginx/conf.d/default.conf</code>部分：<br><figure class="highlight nginx"><figcaption><span>default.conf</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</div><div class="line">         <span class="attribute">root</span>           /var/www;</div><div class="line">         <span class="attribute">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;</div><div class="line">        <span class="comment">#fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;</span></div><div class="line">         <span class="attribute">fastcgi_index</span>  index.php;</div><div class="line">         <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME  <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</div><div class="line">         <span class="attribute">include</span>        fastcgi_params;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p><code>/etc/php/7.0/fpm/pool.d/www.conf</code>中php-fpm配置监听：<br><figure class="highlight ini"><figcaption><span>www.conf</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;listen = /run/php/php7.0-fpm.sock</span></div><div class="line"><span class="attr">listen</span> = <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">9000</span></div></pre></td></tr></table></figure></p>
-<h2 id="安装MySQL5-7"><a href="#安装MySQL5-7" class="headerlink" title="安装MySQL5.7"></a>安装MySQL5.7</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server-5.7</div></pre></td></tr></table></figure>
-<p>设置用户名密码后，启动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start mysql</div><div class="line">mysql -h 127.0.0.1 -uroot -proot</div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">nothing</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/01/02/lnmp/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/01/04/xss/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          浅谈XSS
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/10/03/Xdebug/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">利用Xdebug调试PHP程序（PhpStorm/Sublime3）</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
+    
 
 
           </div>
@@ -344,9 +230,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
