@@ -152,6 +152,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-xss" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/04/xss/">浅谈XSS</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/04/xss/" class="archive-article-date">
+  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="0x01-XSS常见输出点"><a href="#0x01-XSS常见输出点" class="headerlink" title="0x01 XSS常见输出点"></a>0x01 XSS常见输出点</h2><ul>
+<li>HTML标签之间</li>
+<li>HTML标签之内</li>
+<li>成为JavaScript代码的值（类似后文中输出在on*事件）<ul>
+<li>闭合引号</li>
+<li>宽字节环境可采用宽字节注入或者<code>&lt;/script&gt;</code>闭合(高优先级)</li>
+</ul>
+</li>
+<li>成为CSS代码的值（类似后文中输出在style属性内）</li>
+</ul>
+<h3 id="HTML标签之间"><a href="#HTML标签之间" class="headerlink" title="HTML标签之间"></a>HTML标签之间</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"body"</span>&gt;</span>[输出]<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>注：</strong> 有些标签无法执行脚本，如<code>&lt;title&gt;、&lt;textarea&gt;</code>等</p>
+<h3 id="HTML标签之内"><a href="#HTML标签之内" class="headerlink" title="HTML标签之内"></a>HTML标签之内</h3><ol>
+<li><code>&lt;input type=&quot;text&quot; value=&quot;[输出]&quot; /&gt;</code><ul>
+<li>闭合属性，payload: <code>&quot; onmouseover=&quot;alert(1);&quot; x=&quot;</code></li>
+<li>闭合标签，payload: <code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>输出在src/href/action等属性内<ul>
+<li>javascript:伪协议，如<code>javascript:alert(1)//</code>,若<code>/</code>被过滤，可用JS逻辑与算数表达式代替，如<code>alert(1)-</code></li>
+<li>data:伪协议（仅IE不支持）</li>
+<li>伪协议不区分大小写</li>
+</ul>
+</li>
+<li>输出在on*事件内<ul>
+<li>具体判断输出作为on*事件的值或某个函数的参数值出现。</li>
+</ul>
+</li>
+<li>输出在style属性内<ul>
+<li>对IE，注入expression关键字并适当闭合</li>
+</ul>
+</li>
+</ol>
+        
+          <a class="article-more-a" href="/2018/01/04/xss/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/04/xss/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-lnmp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

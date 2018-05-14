@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Archives: 2018 | K4ng&#39;s blog</title>
+  <title>php在windows中的奇淫巧技 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/archives/2018/page/2/index.html">
+  <meta name="description" content="最近的比赛中接触到一个php在windows中的骚姿势。利用&amp;lt;&amp;gt;&amp;quot;这三个字符来进行目录文件的扫描和上传bypass。  具体原文：File Upload and PHP on IIS: &amp;gt;=? and &amp;lt;=* and “=  当然这里不仅仅是说&amp;lt;&amp;gt;&amp;quot;，还有一个可以搭配使用的技巧是Windows下的文件和目录的简写。比如 /aaaaaa~1/b">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php在windows中的奇淫巧技">
+<meta property="og:url" content="K4ngx.github.io/2018/05/15/php_win/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="FZU 15级本科生">
+<meta property="og:description" content="最近的比赛中接触到一个php在windows中的骚姿势。利用&amp;lt;&amp;gt;&amp;quot;这三个字符来进行目录文件的扫描和上传bypass。  具体原文：File Upload and PHP on IIS: &amp;gt;=? and &amp;lt;=* and “=  当然这里不仅仅是说&amp;lt;&amp;gt;&amp;quot;，还有一个可以搭配使用的技巧是Windows下的文件和目录的简写。比如 /aaaaaa~1/b">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/0.png">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/1.png">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/2.png">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/3.png">
+<meta property="og:updated_time" content="2018-05-14T18:11:35.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
-<meta name="twitter:description" content="FZU 15级本科生">
+<meta name="twitter:title" content="php在windows中的奇淫巧技">
+<meta name="twitter:description" content="最近的比赛中接触到一个php在windows中的骚姿势。利用&amp;lt;&amp;gt;&amp;quot;这三个字符来进行目录文件的扫描和上传bypass。  具体原文：File Upload and PHP on IIS: &amp;gt;=? and &amp;lt;=* and “=  当然这里不仅仅是说&amp;lt;&amp;gt;&amp;quot;，还有一个可以搭配使用的技巧是Windows下的文件和目录的简写。比如 /aaaaaa~1/b">
+<meta name="twitter:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -150,36 +157,100 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-php_win" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/04/xss/" class="archive-article-date">
-  	<time datetime="2018-01-04T12:23:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/04/xss/">浅谈XSS</a>
+    <h1 class="article-title" itemprop="name">
+      php在windows中的奇淫巧技
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/05/15/php_win/" class="archive-article-date">
+  	<time datetime="2018-05-14T16:21:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-15</time>
+</a>
+        
+      </header>
+    
+
+
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通配符-lt-gt-quot"><span class="toc-number">1.</span> <span class="toc-text">通配符<>"</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHAT"><span class="toc-number">1.1.</span> <span class="toc-text">WHAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WHY"><span class="toc-number">1.2.</span> <span class="toc-text">WHY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HOW"><span class="toc-number">1.3.</span> <span class="toc-text">HOW</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-文件名的扫描"><span class="toc-number">1.3.1.</span> <span class="toc-text">a. 文件名的扫描</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-已知文件名对目录名的爆破"><span class="toc-number">1.3.2.</span> <span class="toc-text">b. 已知文件名对目录名的爆破</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows下的文件名简写"><span class="toc-number">2.</span> <span class="toc-text">Windows下的文件名简写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WHAT-1"><span class="toc-number">2.1.</span> <span class="toc-text">WHAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HOW-1"><span class="toc-number">2.2.</span> <span class="toc-text">HOW</span></a></li></ol></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的比赛中接触到一个php在windows中的骚姿势。利用<code>&lt;&gt;&quot;</code>这三个字符来进行目录文件的扫描和上传bypass。</p>
+<blockquote>
+<p>具体原文：<a href="https://soroush.secproject.com/blog/2014/07/file-upload-and-php-on-iis-wildcards/" target="_blank" rel="external">File Upload and PHP on IIS: &gt;=? and &lt;=* and “=</a></p>
+</blockquote>
+<p>当然这里不仅仅是说<code>&lt;&gt;&quot;</code>，还有一个可以搭配使用的技巧是Windows下的文件和目录的简写。比如 <code>/aaaaaa~1/bbbbbb~1.php</code> </p>
+<a id="more"></a>
+<h2 id="通配符-lt-gt-quot"><a href="#通配符-lt-gt-quot" class="headerlink" title="通配符&lt;&gt;&quot;"></a>通配符<code>&lt;&gt;&quot;</code></h2><h3 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h3><p>PHP语言在Windows环境下有如下特性：</p>
+<ul>
+<li>大于号<code>&gt;</code>相当于通配符问号<code>?</code>。可匹配<strong>除点号<code>.</code>外</strong>的0个或1个字符</li>
+<li>小于号<code>&lt;</code> 相当于通配符星号<code>*</code>。可匹配0个或多个字符，<strong>匹配到文件后缀的<code>.</code>字符结束</strong></li>
+<li>双引号<code>&quot;</code> 相当于普通的点字符<code>.</code></li>
+</ul>
+<h3 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h3><p>不做分析了。。有人调试总结好了：<a href="https://mp.weixin.qq.com/s/U9nX2_UqfOEcI0mc-NG8hA" target="_blank" rel="external">PHP源码调试之Windows文件通配符分析</a></p>
+<ol>
+<li>问题的产生的根本原因PHP调用了Windows API里的FindFirstFileExW()/FindFirstFile()方法</li>
+<li>该Windows API方法对于这个三个字符做了特别的对待和处理</li>
+<li>任何调用该Windows API方法的语言都有可能存在以上这个问题，比如：Python</li>
+</ol>
+<h3 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h3><p>测试时的目录列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── index.php</div><div class="line">├── flag.php</div><div class="line">└── dddir</div><div class="line">    └── test.php</div></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>index.php</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span> </div><div class="line">    highlight_file(<span class="keyword">__file__</span>); </div><div class="line">    <span class="keyword">echo</span> <span class="string">"&lt;br/&gt;"</span>; </div><div class="line">    @<span class="keyword">include</span> $_GET[<span class="string">'file'</span>]; </div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="a-文件名的扫描"><a href="#a-文件名的扫描" class="headerlink" title="a. 文件名的扫描"></a>a. 文件名的扫描</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://localhost/?file=f&lt;&lt;</div><div class="line">http://localhost/?file=f&lt;&quot;php</div></pre></td></tr></table></figure>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/0.png" alt=""></p>
+<h4 id="b-已知文件名对目录名的爆破"><a href="#b-已知文件名对目录名的爆破" class="headerlink" title="b. 已知文件名对目录名的爆破"></a>b. 已知文件名对目录名的爆破</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/?file=d&lt;&lt;/test.php</div></pre></td></tr></table></figure>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/1.png" alt=""></p>
+<h2 id="Windows下的文件名简写"><a href="#Windows下的文件名简写" class="headerlink" title="Windows下的文件名简写"></a>Windows下的文件名简写</h2><h3 id="WHAT-1"><a href="#WHAT-1" class="headerlink" title="WHAT"></a>WHAT</h3><p>在Windows下，支持一种简写的规则。当你输入<code>dir /x</code>命令后，就可以看到文件名的简写为 <code>{前6个字符}~1.{后缀前3个字符}</code> ，即所谓的文件命名的8.3格式。</p>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/2.png" alt=""></p>
+<p>可参考 <a href="https://xz.aliyun.com/t/2318#toc-3" target="_blank" rel="external">https://xz.aliyun.com/t/2318#toc-3</a></p>
+<h3 id="HOW-1"><a href="#HOW-1" class="headerlink" title="HOW"></a>HOW</h3><p>测试时的目录列表(<code>index.php</code> 内容没变)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── index.php</div><div class="line">└── dddirsxxxxxxxxxx</div><div class="line">    ├── 1.txt</div><div class="line">    └── testmexxxxxxxxxxxxxxxx.phpisnothing</div></pre></td></tr></table></figure>
+<p>我们可通过一个文件名较短的已知文件如<code>1.txt</code>，并结合上文的通配符特性，来爆出6个字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/?file=d&lt;&lt;/1.txt</div></pre></td></tr></table></figure>
+<p>于是我们可利用文件名或目录简写的特点，将url请求写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost/?file=dddirs~1/t&lt;&lt;</div></pre></td></tr></table></figure>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/php_win/3.png" alt=""></p>
+<p>或者你要是闲着蛋疼，也可以继续爆出6位文件名和3位后缀，然后再简写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http://localhost/?file=dddirs~1/t&lt;.p&lt;</div><div class="line">http://localhost/?file=dddirs~1/testme~1.php</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -187,68 +258,92 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">xss</a>
-        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/05/15/php_win/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/02/lnmp/" class="archive-article-date">
-  	<time datetime="2018-01-01T17:26:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/02/lnmp/">Ubuntu16.04搭建lnmp环境</a>
-    </h1>
+  
+    <a href="/2018/05/01/Redhat_wp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">红帽杯2018_Writeup</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">nothing</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -272,8 +367,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
