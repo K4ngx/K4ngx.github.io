@@ -152,6 +152,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mssql" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/23/mssql/">SQL Server 划水水</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/23/mssql/" class="archive-article-date">
+  	<time datetime="2018-08-23T03:01:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-23</time>
+</a>
+        
+      </header>
+    
+
+
+    		
+
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。</p>
+<h2 id="0x01-基础"><a href="#0x01-基础" class="headerlink" title="0x01 基础"></a>0x01 基础</h2><h3 id="常用查询"><a href="#常用查询" class="headerlink" title="常用查询"></a>常用查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 查询所有的数据库名</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span>  master..sysdatabases <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">NOT</span> <span class="keyword">IN</span> ( <span class="string">'master'</span>, <span class="string">'model'</span>, <span class="string">'msdb'</span>, <span class="string">'tempdb'</span>, <span class="string">'northwind'</span>,<span class="string">'pubs'</span> );</div><div class="line"></div><div class="line"><span class="comment">-- 获取某数据库的所有表（假设库名为fooDB）</span></div><div class="line"><span class="comment">-- XType='U':表示所有用户表;</span></div><div class="line"><span class="comment">-- XType='S':表示所有系统表;</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> fooDB..sysobjects <span class="keyword">Where</span> xtype=<span class="string">'U'</span>;</div><div class="line"></div><div class="line"><span class="comment">-- 获取某表所有字段名（假设表名为fooTable）</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> SysColumns <span class="keyword">WHERE</span> <span class="keyword">id</span>=Object_id(<span class="string">'fooTable'</span>);</div><div class="line"></div><div class="line"><span class="comment">-- 延时注入</span></div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fooTable <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">1</span> WAITFOR DELAY <span class="string">'0:0:3'</span>;</div></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/08/23/mssql/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/08/23/mssql/">read more.. >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-php_win" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -777,89 +848,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/02/17/pwReset/">read more.. >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
-    <article id="post-SQLi" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/SQLi/">浅谈SQLi</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/SQLi/" class="archive-article-date">
-  	<time datetime="2018-02-06T09:51:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-
-
-    		
-
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(MySQL为例)</p>
-<p>(参考 <a href="http://www.cnblogs.com/lcamry/category/846064.html" target="_blank" rel="external">MySQL注入天书 made by lcamry</a>)</p>
-<p>注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。</p>
-<h2 id="0x01-注入类型"><a href="#0x01-注入类型" class="headerlink" title="0x01 注入类型"></a>0x01 注入类型</h2><ul>
-<li>联合查询</li>
-<li>盲注<ul>
-<li>布尔盲注</li>
-<li>时间盲注</li>
-</ul>
-</li>
-<li>报错注入</li>
-<li>宽字节注入</li>
-<li>堆叠注入</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/02/06/SQLi/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/SQLi/">read more.. >></a>
         </p>
       
 
