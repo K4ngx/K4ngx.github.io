@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="K4ngx.github.io">
   <title>国赛2018_Run_python继承链bypass | K4ng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字典。">
+  <meta name="description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses__() 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字">
 <meta name="keywords" content="writeup,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="国赛2018_Run_python继承链bypass">
 <meta property="og:url" content="K4ngx.github.io/2018/04/30/ciscn2018/index.html">
 <meta property="og:site_name" content="K4ng&#39;s blog">
-<meta property="og:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字典。">
-<meta property="og:updated_time" content="2018-05-06T09:08:07.884Z">
+<meta property="og:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses__() 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字">
+<meta property="og:updated_time" content="2018-09-11T02:26:39.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="国赛2018_Run_python继承链bypass">
-<meta name="twitter:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字典。">
+<meta name="twitter:description" content="python继承链基础 __class__ 返回一个实例所属的类 __base__、__bases__ 返回一个类所直接继承的类 __subclasses__() 获取一个类的子类list __builtins__ 内置模块，包含了list、print等函数 __getattribute__() 通过传入字符串来进行方法的调用 __globals__ 返回一个当前空间下能使用的模块，方法和变量的字">
   
     <link rel="alternative" href="/atom.xml" title="K4ng&#39;s blog" type="application/atom+xml">
   
@@ -204,7 +204,7 @@
         <h2 id="python继承链基础"><a href="#python继承链基础" class="headerlink" title="python继承链基础"></a>python继承链基础</h2><ul>
 <li><code>__class__</code> 返回一个实例所属的类</li>
 <li><code>__base__</code>、<code>__bases__</code> 返回一个类所直接继承的类</li>
-<li><code>__subclasses</code> 获取一个类的子类list</li>
+<li><code>__subclasses__()</code> 获取一个类的子类list</li>
 <li><code>__builtins__</code> 内置模块，包含了<code>list</code>、<code>print</code>等函数</li>
 <li><code>__getattribute__()</code> 通过传入字符串来进行方法的调用</li>
 <li><code>__globals__</code> 返回一个当前空间下能使用的模块，方法和变量的字典。</li>
